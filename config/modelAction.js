@@ -5,6 +5,10 @@ module.exports = [
     url: `${publicPath}resources/action/rainbowBeat/rainbowBeat.vmd`
   },
   {
+    label: '彩虹节拍1',
+    url: `${publicPath}resources/action/rainbowBeat/rainbowBeat1.vmd`
+  },
+  {
     label: '蔬菜汁',
     url: `${publicPath}resources/action/vegetableJuice/vegetableJuice.vmd`
   },

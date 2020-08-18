@@ -23,6 +23,24 @@ module.exports = {
         desp: '飞翼初音',
         poster: `${publicPath}resources/character/KiannaCheongsam/poster.png`,
         model: `${publicPath}resources/character/LatFlyMiku/LatFlyMiku.pmd`
+      },
+      VinatgeMiku: {
+        name: 'VinatgeMiku',
+        desp: '葡萄晚礼服初音',
+        poster: `${publicPath}resources/character/KiannaCheongsam/poster.png`,
+        model: `${publicPath}resources/character/VinatgeMiku/VinatgeMiku.pmd`
+      },
+      VinatgeMikuV5: {
+        name: 'VinatgeMikuV5',
+        desp: '葡萄晚礼服初音V5',
+        poster: `${publicPath}resources/character/KiannaCheongsam/poster.png`,
+        model: `${publicPath}resources/character/VinatgeMiku/VinatgeMikuV5.pmd`
+      },
+      VinatgeMikuV6: {
+        name: 'VinatgeMikuV6',
+        desp: '葡萄晚礼服初音V6',
+        poster: `${publicPath}resources/character/KiannaCheongsam/poster.png`,
+        model: `${publicPath}resources/character/VinatgeMiku/VinatgeMikuV6.pmd`
       }
     }
   },
@@ -30,7 +48,7 @@ module.exports = {
     name: 'spectacle',
     desp: '场景',
     icon: '#icon-yonghu',
-    show: false,
+    show: true,
     children: {
       meeting: {
         name: 'meeting',
@@ -44,7 +62,7 @@ module.exports = {
     name: 'prop',
     desp: '道具',
     icon: '#icon-yonghu',
-    show: false,
+    show: true,
     children: []
   }
 }
