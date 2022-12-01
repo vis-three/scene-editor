@@ -13,7 +13,7 @@
 ## 项目关联
 
 - [vis-three 框架](https://github.com/Shiotsukikaedesari/vis-three)
-- [编辑器后台服务]()
+- [display-service编辑器后台服务](https://github.com/Shiotsukikaedesari/display-service)
 
 ## 版权与支持
 
