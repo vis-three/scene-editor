@@ -83,7 +83,7 @@ export default {
   data() {
     return {
       classifyName: "", // 分类名
-      classifyVisible: false
+      classifyVisible: false,
     };
   },
   computed: {
@@ -113,7 +113,7 @@ export default {
     },
     addressList() {
       const result = [this.currentFloder];
-      const traverse = list => {
+      const traverse = (list) => {
         if (list.parent) {
           result.unshift(list.parent);
           traverse(list.parent);
@@ -121,7 +121,7 @@ export default {
       };
       traverse(this.currentFloder);
       return result;
-    }
+    },
   },
   methods: {
     chouseFile(item) {
@@ -140,8 +140,8 @@ export default {
       formData.append("classifyId", this.currentFloder.id);
 
       this.axios
-        .upload("api/components/upload", formData)
-        .then(res => {
+        .upload("/component/upload", formData)
+        .then((res) => {
           this.$store.commit("componentLibrary/addChildren", res.data);
         })
         .finally(() => {
@@ -151,11 +151,11 @@ export default {
     addClassify() {
       if (this.classifyName.trim()) {
         this.axios
-          .post("api/components/addClassify", {
+          .post("/component/addClassify", {
             name: this.classifyName.trim(),
-            parentId: this.currentFloder.id
+            parentId: this.currentFloder.id,
           })
-          .then(res => {
+          .then((res) => {
             if (res.status === 200) {
               this.$store.commit("componentLibrary/addChildren", res.data);
               this.classifyName = "";
@@ -169,8 +169,8 @@ export default {
         this.classifyName = "";
         this.classifyVisible = false;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

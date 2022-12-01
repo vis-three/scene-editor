@@ -14,8 +14,8 @@ export const module = {
   },
   mutations: {
     add(state, { config, configuration }) {
-      state.map[config.cid] = config;
-      state.configuration[config.cid] = configuration;
+      state.map[config.$cid] = config;
+      state.configuration[config.$cid] = configuration;
     },
   },
   actions: {},

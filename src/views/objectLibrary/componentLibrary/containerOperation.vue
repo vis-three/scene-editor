@@ -23,7 +23,7 @@ vabse
         <vis-icon :size="iconSize" code="#iconwenjianjia"></vis-icon>
       </template>
       <template v-else>
-        <vis-image :src="`api${item.preview}`" :auth="true"></vis-image>
+        <img :src="item.preview" />
       </template>
 
       <span class="item-title" v-text="item.name"></span>
@@ -95,12 +95,13 @@ export default {
 
       const { resource, config } = await engine.componentManager.generate(
         url,
-        packageJSON
+        packageJSON,
+        {
+          $cid: v4(),
+          $url: url,
+          $pkg: pkg,
+        }
       );
-
-      config.cid = v4();
-      config.url = url;
-      config.pkg = pkg;
 
       this.$store.commit("component/add", {
         config,
@@ -109,11 +110,11 @@ export default {
 
       // 生成css3D对象
       engine.registerResources({
-        [config.cid]: resource,
+        [config.$cid]: resource,
       });
 
       const css3D = generateConfig(CONFIGTYPE.CSS3DPLANE, {
-        element: config.cid,
+        element: config.$cid,
         width: 20,
         height: 20,
       });
@@ -133,7 +134,7 @@ export default {
           type: "warning",
         }).then(() => {
           this.axios
-            .post("api/components/removeClassify", {
+            .post("/component/removeClassify", {
               id: item.id,
             })
             .then((res) => {
@@ -159,7 +160,7 @@ export default {
           }
         ).then(() => {
           this.axios
-            .post("api/components/removeComponent", {
+            .post("/component/removeComponent", {
               id: item.id,
             })
             .then((res) => {

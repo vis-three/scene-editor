@@ -11,19 +11,6 @@ export class ComponentManager {
   async generate(url, packageJSON, config) {
     install(packageJSON);
 
-    if (this.cacheURL.has(url)) {
-      url = this.cacheURL.get(url);
-    } else {
-      const res = await axios.get(url);
-
-      const cacheUrl = URL.createObjectURL(
-        new Blob([res], { type: "text/javascript" })
-      );
-
-      this.cacheURL.set(url, cacheUrl);
-      url = cacheUrl;
-    }
-
     const component = await new Promise((resolve, reject) => {
       // console.log({ ...window.importShim.getImportMap().imports });
       window
@@ -58,7 +45,7 @@ export class ComponentManager {
       },
     });
 
-    this.cacheComponent.set(config.cid, dom);
+    this.cacheComponent.set(config.$cid, dom);
 
     return { resource: dom, config: app._data };
   }

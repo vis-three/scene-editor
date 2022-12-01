@@ -8,20 +8,6 @@
         </div>
         <file-system class="file-system"></file-system>
       </el-tab-pane>
-      <!-- <el-tab-pane label="社区" name="community">
-        <div class="tab-pane" slot="label">
-          <vis-icon code="#iconkongjian"></vis-icon>
-          <span>社区</span>
-        </div>
-        <file-system class="file-system"></file-system>
-      </el-tab-pane>
-      <el-tab-pane label="平台" name="platform">
-        <div class="tab-pane" slot="label">
-          <vis-icon code="#iconhecheng"></vis-icon>
-          <span>平台</span>
-        </div>
-        <file-system class="file-system"></file-system>
-      </el-tab-pane> -->
     </el-tabs>
   </div>
 </template>

@@ -276,7 +276,7 @@ export default {
         },
         {
           icon: "#iconpingmianjihe",
-          label: "DOM3D",
+          label: "DOM",
           list: [
             {
               icon: "#iconpingmianjihe",
@@ -286,7 +286,12 @@ export default {
             {
               icon: "#iconpingmianjihe",
               label: "3D精灵",
-              geometry: CONFIGTYPE.CSS3DSPRITE,
+              type: CONFIGTYPE.CSS3DSPRITE,
+            },
+            {
+              icon: "#iconpingmianjihe",
+              label: "2D精灵",
+              type: CONFIGTYPE.CSS2DPLANE,
             },
           ],
           click: function (item) {

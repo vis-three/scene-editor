@@ -9,6 +9,7 @@
         :label="item.label"
         v-model="config[item.key]"
         v-bind="item.props"
+        :keyframe="false"
       ></component>
     </de-collapse-layout>
   </div>
@@ -35,8 +36,8 @@ export default {
     controllers() {
       console.log(translater(this.configuration));
       return this.cid ? translater(this.configuration) : null;
-    }
-  }
+    },
+  },
 };
 </script>
 

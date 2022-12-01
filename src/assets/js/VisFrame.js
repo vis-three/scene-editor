@@ -51,7 +51,9 @@ export const engine = new ModelingEngineSupport({
   spriteDataSupport,
   lineDataSupport,
   object3DDataSupport,
-}).install(ENGINEPLUGIN.CSS3DRENDERER);
+})
+  .install(ENGINEPLUGIN.CSS3DRENDERER)
+  .install(ENGINEPLUGIN.CSS2DRENDERER);
 
 engine.loaderManager
   .getLoader("glb")
