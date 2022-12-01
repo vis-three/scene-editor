@@ -1,0 +1,136 @@
+@import "./common.less";
+
+iframe,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+p,
+blockquote,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+pre,
+form,
+fieldset,
+legend,
+button,
+input,
+textarea,
+th,
+td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+  font-size: @text-fontSize;
+  font-family: @font-family;
+  color: @text-color;
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: couriernew, courier, monospace;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: @theme-color;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+fieldset,
+img {
+  border: 0;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+canvas {
+  &:focus {
+    outline: none;
+  }
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+}
+
+html {
+  overflow: hidden;
+}
+
+body {
+  background-color: @darkestTheme-backgroundColor;
+}
+
+div {
+  box-sizing: @box-boxSizing;
+}
+
+input {
+  outline: none;
+  height: 20px !important;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid @brightestTheme-backgroundColor;
+  border-radius: 0;
+  color: @text-color;
+  .transitionSetting({border-color: @placeHolderText-color;});
+  &:focus {
+    background-color: unset;
+    // color: #4d4d4d;
+    border-color: @theme-color;
+  }
+}
+
+::-webkit-input-placeholder {
+  color: @placeHolderText-color;
+}
+
+// 全局滚动条样式
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background: @disabledText-color;
+  .transitionSetting({background: lighten(@disabledText-color, 5%) ;});
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 3px;
+  background: @darkestTheme-backgroundColor;
+}

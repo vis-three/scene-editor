@@ -1,0 +1,57 @@
+@import "../common.less";
+
+/* 按钮 STR */
+.el-button {
+  border: 0;
+  color: @text-color;
+  .transitionSetting();
+}
+
+.el-button.is-plain {
+  border-style: solid;
+  border-width: 1px;
+}
+
+.el-button--success.is-plain {
+  color: @success-color;
+  border-color: @success-color;
+  background: fade(@success-color, 10);
+}
+.el-button--default {
+  color: @text-color;
+  background-color: @disabledText-color;
+  .transitionSetting(
+    {background: @placeHolderText-color; border-color: @placeHolderText-color; color:
+      @text-color;}
+  );
+}
+.el-button--primary {
+  background-color: @theme-color;
+  .transitionSetting(
+    {color: @text-color; background-color: @themeHover-color;}
+  );
+  &:focus {
+    color: @text-color;
+    background-color: @theme-color;
+  }
+}
+
+.el-button--info {
+  background-color: @info-color;
+  .transitionSetting(
+    {color: @text-color; background-color: lighten(@info-color, 10) ;}
+  );
+  &:focus {
+    color: @text-color;
+    background-color: @info-color;
+  }
+}
+
+.el-button--text {
+  background: transparent;
+  color: @theme-color;
+  .transitionSetting(
+    {background-color: transparent; color: @themeHover-color;}
+  ) !important;
+}
+/* 按钮 END */

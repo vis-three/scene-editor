@@ -1,0 +1,104 @@
+/* 标题 */
+@bigTitle-fontSize: 20px;
+@bigTitle-margin: 20px;
+
+@title-fontSize: 18px;
+@title-margin: 15px;
+
+@smallTitle-fontSize: 16px;
+@smallTitle-margin: 10px;
+
+@text-fontSize: 14px;
+@text-margin: 10px;
+
+@smallText-fontSize: 13px;
+@smallText-margin: 10px;
+
+@assistText-fontSize: 12px;
+@assistText-margin: 5px;
+
+/* 文字颜色 */
+@font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
+  "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+@text-color: rgb(236, 236, 236);
+@disabledText-color: rgb(100, 100, 100);
+@placeHolderText-color: rgb(157, 157, 157);
+
+/* 系统主题色 */
+@theme-color: rgb(241, 50, 193);
+@themeHover-color: rgb(241, 60, 214);
+@themeDarkHover-color: rgba(230, 20, 240, 0.5);
+@theme-backgroundColor: rgb(29, 29, 36);
+@brighterTheme-backgroundColor: rgb(41, 42, 45);
+@brightestTheme-backgroundColor: rgb(47, 55, 55);
+@darkerTheme-backgroundColor: rgb(27, 27, 27);
+@darkestTheme-backgroundColor: rgb(0, 0, 0);
+
+/* 盒子设置 */
+@box-margin: 10px;
+@box-padding: 10px;
+@box-boxSizing: border-box;
+
+/* 场景色 */
+@success-color: #6ae530;
+@error-color: #ff4c4c;
+@warining-color: #ffb13b;
+@info-color: #409eff;
+
+/* 层级 */
+@top-zIndex: 600;
+@middle-zIndex: 400;
+@bottom-zIndex: 200;
+
+// 动画
+@transitionTime: 800ms;
+
+/* 常用函数 */
+.boxSetting(@width: 100%, @height: 100%, @padding: 0, @margin: 0) {
+  width: @width;
+  height: @height;
+  padding: @padding;
+  margin: @margin;
+}
+
+.flexLayout(@direction: row, @justify-content: flex-start, @align-items: flex-start) {
+  display: flex;
+  flex-direction: @direction;
+  justify-content: @justify-content;
+  align-items: @align-items;
+}
+
+.fixedPosition(@top: 0, @right: unset, @bottom: unset, @left: 0, @z-index: 200) {
+  position: fixed;
+  top: @top;
+  right: @right;
+  bottom: @bottom;
+  left: @left;
+  z-index: @z-index;
+}
+
+.absolutePosition(@top: 0, @right: unset, @bottom: unset, @left: 0, @z-index: 1) {
+  position: absolute;
+  top: @top;
+  right: @right;
+  bottom: @bottom;
+  left: @left;
+  z-index: @z-index;
+}
+
+.transitionSetting(@hoverDo: {}, @activeDo: {}, @hoverElem: {}, @activeElem: {}, @hover: 300ms, @active: 100ms) {
+  transition: all ease @hover;
+  &:hover @{hoverElem} {
+    @hoverDo();
+  }
+  &:active @{activeElem} {
+    transition-duration: @active;
+    @activeDo();
+  }
+}
+
+.bacgroundImage (@repeat: no-repeat, @size: contain, @position: 50% 50%) {
+  background-repeat: @repeat;
+  background-size: @size;
+  background-position: @position;
+}

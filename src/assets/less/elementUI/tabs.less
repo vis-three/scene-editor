@@ -1,0 +1,64 @@
+@import "../common.less";
+
+/* tab切换 STR */
+.el-tabs {
+  .boxSetting();
+  background-color: @theme-backgroundColor;
+  > .el-tabs__header {
+    margin: 0;
+    border: 0;
+    height: 40px;
+    margin-bottom: @box-margin;
+    > .el-tabs__nav-wrap {
+      > .el-tabs__nav-scroll {
+        .boxSetting();
+        > .el-tabs__nav {
+          .boxSetting();
+          border: 0;
+          .flexLayout(row, space-between, center);
+          // 滚条
+
+          // 标题
+          > .el-tabs__item {
+            border: 0;
+            flex: 1;
+            padding: 0;
+            text-align: center;
+            color: @text-color;
+            background: @theme-backgroundColor;
+            border-bottom: 2px solid transparent;
+            border-right: 1px solid @darkestTheme-backgroundColor;
+            border-left: 1px solid @darkestTheme-backgroundColor;
+            .transitionSetting({border-bottom: 2px solid @text-color;});
+          }
+          > .el-tabs__item:first-child {
+            border-left: 0;
+          }
+          > .el-tabs__item:last-child {
+            border-right: 0;
+          }
+          > .is-active {
+            color: @theme-color;
+            border-bottom: 2px solid @theme-color;
+          }
+        }
+      }
+    }
+  }
+  > .el-tabs__content {
+    .boxSetting(100%, calc(~"100% - 40px" - @box-margin));
+    overflow: auto;
+    > .el-tab-pane {
+      .boxSetting();
+    }
+  }
+}
+
+.el-tabs--border-card {
+  border: 0;
+  background-color: @theme-backgroundColor;
+  > .el-tabs__header {
+    background-color: unset;
+  }
+}
+/* tab切换 END */

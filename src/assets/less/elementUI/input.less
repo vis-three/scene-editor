@@ -1,0 +1,31 @@
+@import "../common.less";
+.el-input {
+  .el-input__inner {
+    background-color: unset;
+    border: 0;
+    border-bottom: 1px solid @brightestTheme-backgroundColor;
+    border-radius: 0;
+    color: @text-color;
+    .transitionSetting({border-color: @placeHolderText-color;});
+    &:focus {
+      background-color: unset;
+      // color: #4d4d4d;
+      border-color: @theme-color;
+    }
+  }
+}
+
+.el-input.is-disabled .el-input__inner {
+  cursor: default;
+  background: unset;
+  border-color: @disabledText-color;
+}
+.el-input--mini {
+  > input {
+    height: 20px !important;
+  }
+  .el-input__icon {
+    line-height: 20px;
+  }
+}
+/* 输入框 END */

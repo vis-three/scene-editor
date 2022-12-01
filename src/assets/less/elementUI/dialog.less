@@ -1,0 +1,26 @@
+@import "../common.less";
+
+.el-dialog__wrapper {
+  .flexLayout(row, center, center);
+  > .el-dialog {
+    margin: 0;
+    margin-top: 0 !important;
+    background: @theme-backgroundColor;
+    > .el-dialog__header {
+      padding-bottom: 0;
+      > .el-dialog__title {
+        color: @text-color;
+        font-size: @smallTitle-fontSize;
+      }
+      > .el-dialog__headerbtn {
+        > i {
+          color: @text-color;
+        }
+      }
+    }
+    > .el-dialog__body {
+      padding: @box-padding * 2;
+      color: @text-color;
+    }
+  }
+}
