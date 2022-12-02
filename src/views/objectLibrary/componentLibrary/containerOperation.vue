@@ -17,6 +17,8 @@ vabse
       class="file-item-box"
       :class="{ active: false }"
       @click="chouseFile(item)"
+      :draggable="!item.dir"
+      @dragstart="dragstart($event, item)"
       v-tooltip.bottom="`${item.name}`"
     >
       <template v-if="item.dir">
@@ -56,13 +58,16 @@ export default {
   data() {
     return {
       iconSize: "35px",
-      timer: "",
       fileIcon: {
         mtl: "#iconmtl",
       },
 
       configTemplateCache: {}, // 配置缓存
       configRootCache: {}, // 根物体缓存
+
+      timer: "",
+      throttleTime: 1000 / 45,
+      canMove: true,
     };
   },
   computed: {
@@ -83,10 +88,39 @@ export default {
     chouseFile(item) {
       if (item.dir) {
         this.$store.commit("componentLibrary/currentFloder", item);
-      } else {
-        this.modelSelected(item);
       }
     },
+
+    dragstart(event, item) {
+      event.preventDefault();
+      this.$store.commit("component/draggedComponentItem", item);
+      this.$store.commit("component/dragging", true);
+
+      const image = new Image();
+      image.src = event.target.src;
+      image.style.position = "fixed";
+      image.style.zIndex = 20;
+      image.style.opacity = 0.6;
+      document.body.appendChild(image);
+      const dragMove = ($event) => {
+        if (this.canMove) {
+          this.canMove = false;
+          this.timer = setTimeout(() => {
+            image.style.top = `${$event.clientY + 10}px`;
+            image.style.left = `${$event.clientX + 10}px`;
+            this.canMove = true;
+          }, this.throttleTime);
+        }
+      };
+      const dragOver = ($event) => {
+        document.body.removeChild(image);
+        document.body.removeEventListener("mousemove", dragMove);
+        document.body.removeEventListener("mouseup", dragOver);
+      };
+      document.body.addEventListener("mousemove", dragMove);
+      document.body.addEventListener("mouseup", dragOver);
+    },
+
     async modelSelected(file) {
       const url = file.entry;
       const pkg = file.pkg;

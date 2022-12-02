@@ -27,6 +27,7 @@ import { ChangeMaterialAction } from "./action/ChangeMaterialAction";
 import { object3DDataSupport } from "../../store/modules/object3D";
 import { ComponentManager } from "@/assets/js/plugins/ComponentMnanager";
 import { CopyObjectAction } from "./action/CopyObjectAction";
+import { ChangeComponentAction } from "./action/ChangeComponentAction";
 
 window.VIS = {};
 
@@ -187,7 +188,7 @@ engine.eventManager.addEventListener("pointerup", (event) => {
       const vid = engine.compilerManager.getObjectSymbol(object);
 
       if (vid) {
-        // 材质替换
+        // 材质替换 组件替换
         if (store.getters["material/dragging"]) {
           history.apply(
             new ChangeMaterialAction({
@@ -198,6 +199,21 @@ engine.eventManager.addEventListener("pointerup", (event) => {
             true
           );
           store.commit("material/dragging", false);
+        } else if (
+          store.getters["component/dragging"] &&
+          (object.isCSS3DObject || object.isCSS2DObject)
+        ) {
+          const action = new ChangeComponentAction({
+            engine,
+            store,
+            componentItem: store.getters["component/draggedComponentItem"],
+            objectSymbol: vid,
+          });
+
+          action.generateComponent().then(() => {
+            history.apply(action, true);
+            store.commit("component/dragging", false);
+          });
         }
       }
     }
