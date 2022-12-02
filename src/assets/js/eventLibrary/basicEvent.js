@@ -10,9 +10,9 @@ export default {
           label: "链接地址",
           key: "url",
           component: "de-controller-input",
-          props: {}
-        }
-      ]
+          props: {},
+        },
+      ],
     },
     {
       name: "visibleObject",
@@ -23,14 +23,14 @@ export default {
           key: "target",
           component: "de-controller-select",
           props: {
-            options: "objects"
-          }
+            options: "objects",
+          },
         },
         {
           label: "显示",
           key: "visible",
           component: "de-controller-switch",
-          props: {}
+          props: {},
         },
         {
           label: "延迟时长",
@@ -39,10 +39,10 @@ export default {
           props: {
             step: 1,
             displayAccuracy: 0,
-            min: 0
-          }
-        }
-      ]
+            min: 0,
+          },
+        },
+      ],
     },
     {
       name: "changeScene",
@@ -53,8 +53,8 @@ export default {
           key: "scene",
           component: "de-controller-select",
           props: {
-            options: "scenes"
-          }
+            options: "scenes",
+          },
         },
         {
           label: "延迟时长",
@@ -63,10 +63,10 @@ export default {
           props: {
             step: 1,
             displayAccuracy: 0,
-            min: 0
-          }
-        }
-      ]
+            min: 0,
+          },
+        },
+      ],
     },
     {
       name: "changeCamera",
@@ -77,8 +77,8 @@ export default {
           key: "camera",
           component: "de-controller-select",
           props: {
-            options: "cameras"
-          }
+            options: "cameras",
+          },
         },
         {
           label: "延迟时长",
@@ -87,10 +87,10 @@ export default {
           props: {
             step: 1,
             displayAccuracy: 0,
-            min: 0
-          }
-        }
-      ]
+            min: 0,
+          },
+        },
+      ],
     },
     {
       name: "switchAnimate",
@@ -101,8 +101,8 @@ export default {
           key: "target",
           component: "de-controller-select",
           props: {
-            options: "animations"
-          }
+            options: "animations",
+          },
         },
         {
           label: "切换",
@@ -112,9 +112,9 @@ export default {
             options: [
               { label: "开", value: "on" },
               { label: "关", value: "off" },
-              { label: "自动", value: "auto" }
-            ]
-          }
+              { label: "自动", value: "auto" },
+            ],
+          },
         },
         {
           label: "延迟时长",
@@ -123,10 +123,10 @@ export default {
           props: {
             step: 1,
             displayAccuracy: 0,
-            min: 0
-          }
-        }
-      ]
-    }
-  ]
+            min: 0,
+          },
+        },
+      ],
+    },
+  ],
 };

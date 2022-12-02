@@ -16,13 +16,13 @@
 const fileSystem = () => import("./componentLibrary/fileSystem.vue");
 export default {
   components: {
-    fileSystem
+    fileSystem,
   },
   data() {
     return {
-      active: "user"
+      active: "user",
     };
-  }
+  },
 };
 </script>
 

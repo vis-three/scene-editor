@@ -65,6 +65,7 @@ export default {
   computed: {
     // 当前场景
     currentScene() {
+      console.log(this.$store.getters["scene/currentScene"]);
       return this.$store.getters["scene/currentScene"];
     },
 
