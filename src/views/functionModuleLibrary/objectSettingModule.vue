@@ -142,7 +142,7 @@
 </template>
 
 <script>
-import { CONFIGTYPE, MODULETYPE, CONFIGMODULE } from "vis-three";
+import { CONFIGTYPE, MODULETYPE, CONFIGMODULE, getModule } from "vis-three";
 const geometrySettingModule = () => import("./geometrySettingModule.vue");
 const componentSettingModule = () => import("./componentSettingModule.vue");
 
@@ -159,6 +159,8 @@ const PerspectiveCamera = () =>
   import("./objectSettingModule/camera/PerspectiveCamera");
 
 const CSS3DPlane = () => import("./objectSettingModule/CSS3DPlane.vue");
+const CSS3DSprite = () => import("./objectSettingModule/CSS3DSprite.vue");
+const CSS2DPlane = () => import("./objectSettingModule/CSS2DPlane.vue");
 
 const Sprite = () => import("./objectSettingModule/Sprite.vue");
 const Group = () => import("./objectSettingModule/Group.vue");
@@ -170,6 +172,8 @@ export default {
 
     Mesh,
     CSS3DPlane,
+    CSS3DSprite,
+    CSS2DPlane,
     Sprite,
     Group,
 
@@ -204,6 +208,10 @@ export default {
           label: "C3物体",
           icon: "#iconchuangkou",
         },
+        [MODULETYPE.CSS2D]: {
+          label: "C2物体",
+          icon: "#iconchuangkou",
+        },
         [MODULETYPE.SPRITE]: {
           label: "精灵",
           icon: "#iconchuangkou",
@@ -228,7 +236,7 @@ export default {
       return this.$store.getters["active/geometry"];
     },
     transMessage() {
-      return this.transMap[CONFIGMODULE[this.config.type]];
+      return this.transMap[getModule(this.config.type)];
     },
 
     objectList() {
