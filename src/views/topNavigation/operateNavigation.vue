@@ -7,11 +7,13 @@
     >
       快照
     </el-button>
-    <!-- <el-button size="mini" type="primary" @click="exportDialogVisible = true">
+    <!-- <el-button size="mini" type="primary" @click="buildDialogVisible = true">
       导出
     </el-button> -->
     <el-button size="mini" type="primary" @click="save">保存</el-button>
-    <el-button size="mini" type="success" @click="build">构建</el-button>
+    <el-button size="mini" type="success" @click="buildDialogVisible = true">
+      构建
+    </el-button>
     <el-button size="mini" type="info" @click="preivew">在线</el-button>
     <el-button size="mini" type="info" @click="download">下载</el-button>
     <el-dialog
@@ -49,26 +51,27 @@
       </span>
     </el-dialog>
 
-    <!-- <el-dialog
-      title="文件设置"
-      :visible.sync="exportDialogVisible"
+    <el-dialog
+      title="构建设置"
+      :visible.sync="buildDialogVisible"
       width="30%"
       center
     >
       <el-form label-position="left" label-width="90px">
         <el-form-item label="文件名">
-          <el-input size="mini" v-model="exportSetting.name"></el-input>
+          <el-input size="mini" v-model="buildForm.name"></el-input>
+        </el-form-item>
+        <el-form-item label="地址前缀">
+          <el-input size="mini" v-model="buildForm.publicPath"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button size="mini" @click="exportDialogVisible = false">
+        <el-button size="mini" @click="buildDialogVisible = false">
           取 消
         </el-button>
-        <el-button size="mini" type="primary" @click="exportFile">
-          确 定
-        </el-button>
+        <el-button size="mini" type="primary" @click="build">确 定</el-button>
       </span>
-    </el-dialog> -->
+    </el-dialog>
   </div>
 </template>
 
@@ -80,7 +83,7 @@ export default {
   data() {
     return {
       screenshotDialogVisible: false,
-      exportDialogVisible: false,
+      buildDialogVisible: false,
       screenshotSetting: {
         width: 1920,
         height: 1080,
@@ -91,28 +94,23 @@ export default {
         name: "vis-scene",
       },
       saveStatus: false,
+
+      buildForm: {
+        name: "",
+        publicPath: "./",
+      },
+
+      watcher: "",
     };
   },
-  methods: {
-    // async exportFile() {
-    //   const loading = this.$loading({
-    //     text: "正在导出文件...",
-    //     spinner: "el-icon-loading",
-    //     background: "rgba(0, 0, 0, 0.4)"
-    //   });
-    //   const config = engine.toJSON();
-    //   const blob = new Blob([config], { type: "text/json" });
 
-    //   const a = document.createElement("a");
-    //   a.download = `${this.exportSetting.name}.json`;
-    //   a.href = window.URL.createObjectURL(blob);
-    //   a.click();
-    //   loading.close();
-    //   this.exportDialogVisible = false;
-    //   this.exportSetting = {
-    //     name: "vis-scene"
-    //   };
-    // },
+  computed: {
+    name() {
+      return this.$store.getters.name;
+    },
+  },
+
+  methods: {
     async getScreenshot() {
       const data = await engine.getScreenshot({
         width: this.screenshotSetting.width,
@@ -154,9 +152,14 @@ export default {
         });
     },
     async build() {
+      this.buildDialogVisible = false;
       const tips = this.$notify.loading("正在构建应用,请稍后...");
 
-      this.$socket.emit("buildApp", this.$store.getters.id);
+      this.$socket.emit("buildApp", {
+        id: this.$store.getters.id,
+        name: this.buildForm.name,
+        publicPath: this.buildForm.publicPath || "./",
+      });
 
       this.$socket.on("buildQueue", (res) => {
         if (!res.data) {
@@ -180,6 +183,11 @@ export default {
 
         this.$socket.off("buildQueue");
         this.$socket.off("builded");
+
+        this.buildForm = {
+          name: this.$store.state.name,
+          publicPath: "./",
+        };
       });
     },
 
@@ -204,6 +212,11 @@ export default {
         event.stopPropagation();
         this.save();
       },
+    });
+
+    this.watcher = this.$watch("$store.state.name", function (value) {
+      this.buildForm.name = value;
+      this.watcher();
     });
   },
 };

@@ -16,6 +16,7 @@
 
 - [vis-three 框架](https://github.com/Shiotsukikaedesari/vis-three)
 - [display-service 编辑器后台服务](https://github.com/Shiotsukikaedesari/display-service)
+- [项目展厅](https://github.com/Shiotsukikaedesari/vis-three-exhibition-hall)
 
 ## 版权与支持
 
