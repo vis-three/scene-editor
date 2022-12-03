@@ -2,6 +2,8 @@
 
 [vis-three 框架](https://github.com/Shiotsukikaedesari/vis-three)衍生出的自定义编辑器类应用。
 
+> 本项目仅为产品 DEMO，并不是完整产品，作者主要提供产品思路与实现思路，所以会存在许多 bug 或者交互方面的问题，本项目也为开源项目，欢迎大家动手完善。
+
 ## 项目相关
 
 相关技术栈，项目命令详情可查看：package.json
