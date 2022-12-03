@@ -48,14 +48,19 @@ export default {
           component: "basic-model-library",
         },
         {
-          label: "模型",
-          icon: "#iconkucunfenxi",
-          component: "model-library",
+          label: "模板",
+          icon: "#iconmobanguanli",
+          component: "template-library",
         },
         {
           label: "UI组件",
           icon: "#iconvuejs",
           component: "component-library",
+        },
+        {
+          label: "模型",
+          icon: "#iconkucunfenxi",
+          component: "model-library",
         },
         {
           label: "灯光",
@@ -104,7 +109,7 @@ export default {
   .boxSetting();
 
   /deep/ .el-tabs {
-    .boxSetting(334px, unset);
+    .boxSetting(376px, unset);
     max-height: 70vh;
     .flexLayout(column);
     overflow: visible;

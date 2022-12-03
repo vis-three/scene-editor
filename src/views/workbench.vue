@@ -9,13 +9,18 @@
     :show-close="false"
   >
     <div class="workbench-container">
-      <file-system ref=""></file-system>
+      <file-system></file-system>
     </div>
     <span slot="footer" class="dialog-footer">
-      <el-button type="primary" size="mini" v-if="!selected" @click="addNew">
+      <el-button
+        type="primary"
+        size="mini"
+        v-if="!selected && currentFloder.parent"
+        @click="addNew"
+      >
         新 建
       </el-button>
-      <el-button type="primary" size="mini" v-else @click="select">
+      <el-button type="primary" size="mini" v-if="selected" @click="select">
         确 定
       </el-button>
     </span>
@@ -36,6 +41,10 @@ export default {
   computed: {
     selected() {
       return this.$store.getters["appLibrary/selected"];
+    },
+    currentFloder() {
+      console.log(this.$store.getters["appLibrary/currentFloder"]);
+      return this.$store.getters["appLibrary/currentFloder"];
     },
   },
   methods: {

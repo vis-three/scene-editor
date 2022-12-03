@@ -15,10 +15,7 @@ vabse
       v-for="(item, index) in floderChildren"
       :key="index"
       class="file-item-box"
-      :class="{ active: false }"
       @click="chouseFile(item)"
-      :draggable="!item.dir"
-      @dragstart="dragstart($event, item)"
       v-tooltip.bottom="`${item.name}`"
     >
       <template v-if="item.dir">
@@ -26,6 +23,17 @@ vabse
       </template>
       <template v-else>
         <img :src="item.preview" />
+        <div
+          class="item-selected-mask"
+          v-show="selected.id === item.id"
+          @click.stop="$store.commit('templateLibrary/cancelSelected')"
+        >
+          <vis-icon
+            class="item-selected"
+            size="60px"
+            code="#icongou"
+          ></vis-icon>
+        </div>
       </template>
 
       <span class="item-title" v-text="item.name"></span>
@@ -49,33 +57,32 @@ vabse
 </template>
 
 <script>
-import { engine } from "@/assets/js/VisFrame";
-import Vue from "vue";
-import { v4 } from "uuid";
-import { generateConfig, CONFIGTYPE } from "vis-three";
+import {
+  CONFIGTYPE,
+  JSONHandler,
+  MODULETYPE,
+  Template,
+  Utils,
+  uniqueSymbol,
+} from "vis-three";
+
+import { AddTemplateAction } from "@/assets/js/action/AddTemplateAction.js";
+import { history, engine } from "@/assets/js/VisFrame";
 
 export default {
   data() {
     return {
       iconSize: "35px",
-      fileIcon: {
-        mtl: "#iconmtl",
-      },
-
-      configTemplateCache: {}, // 配置缓存
-      configRootCache: {}, // 根物体缓存
-
       timer: "",
-      throttleTime: 1000 / 45,
-      canMove: true,
+      cacheMap: {}, // url -> template
     };
   },
   computed: {
     loading() {
-      return this.$store.getters["componentLibrary/loading"];
+      return this.$store.getters["templateLibrary/loading"];
     },
     currentFloder() {
-      return this.$store.getters["componentLibrary/currentFloder"];
+      return this.$store.getters["templateLibrary/currentFloder"];
     },
     floderChildren() {
       return this.currentFloder.children;
@@ -83,81 +90,70 @@ export default {
     currentScene() {
       return this.$store.getters["scene/currentScene"];
     },
+    selected() {
+      return this.$store.getters["templateLibrary/selected"];
+    },
   },
   methods: {
     chouseFile(item) {
       if (item.dir) {
-        this.$store.commit("componentLibrary/currentFloder", item);
+        this.$store.commit("templateLibrary/currentFloder", item);
+      } else {
+        console.log(item);
+        const url = item.app;
+        if (this.cacheMap[url]) {
+          const { config, detail } = Template.clone(this.cacheMap[url], {
+            detail: true,
+            fillName: true,
+          });
+
+          console.log(detail);
+
+          const template = new Utils.Pipeline(config)
+            .pipe((c) => {
+              delete c[MODULETYPE.SCENE];
+              delete c[MODULETYPE.RENDERER];
+              delete c[MODULETYPE.CONTROLS];
+              c[MODULETYPE.LIGHT].forEach((elem, i, arr) => {
+                if (elem.type === CONFIGTYPE.AMBIENTLIGHT) {
+                  arr.splice(i, 1);
+                }
+              });
+              return c;
+            })
+            .pipe((c) => JSON.stringify(c, JSONHandler.stringify))
+            .pipe((c) =>
+              c.replace(
+                new RegExp(detail[uniqueSymbol(CONFIGTYPE.SCENE)], "g"),
+                this.currentScene.vid
+              )
+            )
+            .pipe((c) => JSON.parse(c, JSONHandler.parse))
+            .get();
+
+          console.log(template);
+
+          history.apply(
+            new AddTemplateAction({
+              engine,
+              store: this.$store,
+              template,
+            }),
+            true
+          );
+        } else {
+          const loading = this.$message.loading("正在加载配置...");
+          this.axios
+            .get(url)
+            .then((res) => {
+              this.cacheMap[url] = res;
+              this.chouseFile(item);
+            })
+            .finally(() => {
+              loading.close();
+            });
+        }
       }
-    },
-
-    dragstart(event, item) {
-      event.preventDefault();
-      this.$store.commit("component/draggedComponentItem", item);
-      this.$store.commit("component/dragging", true);
-
-      const image = new Image();
-      image.src = event.target.src;
-      image.style.position = "fixed";
-      image.style.zIndex = 20;
-      image.style.opacity = 0.6;
-      document.body.appendChild(image);
-      const dragMove = ($event) => {
-        if (this.canMove) {
-          this.canMove = false;
-          this.timer = setTimeout(() => {
-            image.style.top = `${$event.clientY + 10}px`;
-            image.style.left = `${$event.clientX + 10}px`;
-            this.canMove = true;
-          }, this.throttleTime);
-        }
-      };
-      const dragOver = ($event) => {
-        document.body.removeChild(image);
-        document.body.removeEventListener("mousemove", dragMove);
-        document.body.removeEventListener("mouseup", dragOver);
-      };
-      document.body.addEventListener("mousemove", dragMove);
-      document.body.addEventListener("mouseup", dragOver);
-    },
-
-    async modelSelected(file) {
-      const url = file.entry;
-      const pkg = file.pkg;
-      console.log(file);
-      const packageJSON = await this.axios.get(pkg);
-
-      const { resource, config } = await engine.componentManager.generate(
-        url,
-        packageJSON,
-        {
-          $cid: v4(),
-          $url: url,
-          $pkg: pkg,
-        }
-      );
-
-      this.$store.commit("component/add", {
-        config,
-        configuration: packageJSON.configuration,
-      });
-
-      // 生成css3D对象
-      engine.registerResources({
-        [config.$cid]: resource,
-      });
-
-      const css3D = generateConfig(CONFIGTYPE.CSS3DPLANE, {
-        element: config.$cid,
-        width: 20,
-        height: 20,
-      });
-
-      css3D.name = `${packageJSON.name}-${css3D.vid.slice(-2)}`;
-
-      engine.applyConfig(Vue.observable(css3D));
-
-      this.currentScene.children.push(css3D.vid);
     },
     // 删除文件
     remove(item) {
@@ -168,7 +164,7 @@ export default {
           type: "warning",
         }).then(() => {
           this.axios
-            .post("/component/removeClassify", {
+            .post("/app/removeClassify", {
               id: item.id,
             })
             .then((res) => {
@@ -177,7 +173,7 @@ export default {
                   type: "success",
                   message: "删除成功!",
                 });
-                this.$store.commit("componentLibrary/removeChildren", item);
+                this.$store.commit("templateLibrary/removeChildren", item);
               } else {
                 this.$message.error(res.message);
               }
@@ -193,21 +189,21 @@ export default {
             type: "warning",
           }
         ).then(() => {
-          this.axios
-            .post("/component/removeComponent", {
-              id: item.id,
-            })
-            .then((res) => {
-              if (res.status === 200) {
-                this.$message({
-                  type: "success",
-                  message: "删除成功!",
-                });
-                this.$store.commit("componentLibrary/removeChildren", item);
-              } else {
-                this.$message.error(res.message);
-              }
-            });
+          // this.axios
+          //   .post("/model/removeModel", {
+          //     id: item.id,
+          //   })
+          //   .then((res) => {
+          //     if (res.status === 200) {
+          //       this.$message({
+          //         type: "success",
+          //         message: "删除成功!",
+          //       });
+          //       this.$store.commit("templateLibrary/removeChildren", item);
+          //     } else {
+          //       this.$message.error(res.message);
+          //     }
+          //   });
         });
       }
     },
@@ -221,7 +217,7 @@ export default {
   background: @darkerTheme-backgroundColor;
   margin-bottom: @box-margin;
   padding: @box-padding;
-  .flexLayout(row, space-around, center);
+  .flexLayout(row);
   flex-wrap: wrap;
   overflow: auto;
   max-height: 65vh;
@@ -256,17 +252,14 @@ export default {
       color: @error-color;
       opacity: 0;
     }
-  }
-  .active {
-    position: relative;
-    &::after {
-      .absolutePosition(0, 0, unset, unset);
-      content: "\2611";
-      font-size: @title-fontSize;
-      color: @theme-color;
-      .boxSetting(@title-fontSize, @title-fontSize);
-      text-align: center;
-      line-height: @title-fontSize;
+    .item-selected-mask {
+      .boxSetting();
+      .absolutePosition(0, 0);
+      .flexLayout(row, center, center);
+      background-color: rgba(0, 0, 0, 0.3);
+      .icon-container {
+        color: @success-color;
+      }
     }
   }
   > .loading-mask {

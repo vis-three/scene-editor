@@ -1,14 +1,6 @@
 <template>
   <div class="componentLibarary-container">
-    <el-tabs v-model="active" tab-position="left">
-      <el-tab-pane name="user">
-        <div class="tab-pane" slot="label">
-          <vis-icon code="#iconhuakuai"></vis-icon>
-          <span>我的</span>
-        </div>
-        <file-system class="file-system"></file-system>
-      </el-tab-pane>
-    </el-tabs>
+    <file-system class="file-system"></file-system>
   </div>
 </template>
 

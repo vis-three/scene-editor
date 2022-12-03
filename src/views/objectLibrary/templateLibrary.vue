@@ -5,7 +5,7 @@
 </template>
 
 <script>
-const fileSystem = () => import("./modelLibrary/fileSystem.vue");
+const fileSystem = () => import("./templateLibrary/fileSystem.vue");
 export default {
   components: {
     fileSystem,
