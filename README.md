@@ -49,7 +49,7 @@ QQ 群：1025827206
 ## 赞助者
 
 <a href="https://space.bilibili.com/581519199">
-  <img src="https://i0.hdslb.com/bfs/face/member/noface.jpg@100w_100h_1c_1s.webp" />
+  <img src="https://i0.hdslb.com/bfs/face/61b6e85db9f26e305283e32d5be7a43a0a3319b9.jpg@100w_100h_1c_1s.webp" />
 </a>
 <a href="https://space.bilibili.com/355100720">
   <img src="https://i0.hdslb.com/bfs/face/member/noface.jpg@100w_100h_1c_1s.webp" />
