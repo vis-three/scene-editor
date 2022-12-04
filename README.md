@@ -8,6 +8,12 @@
 
 相关技术栈，项目命令详情可查看：package.json
 
+### 环境说明
+
+- node: 14.20.0
+- npm: 6.14.17
+- @vue/cli: 4.5.12
+
 ## 演示教程
 
 [https://space.bilibili.com/3048588](https://space.bilibili.com/3048588)
@@ -22,7 +28,7 @@
 
 本项目的 license 为`MIT`，这个 license 对于目前的环境也只是一个提示作用，大家都不容易，如果你觉得本项目对你有所帮助，或者能对你产生收益，那么在你获益之余，可以来这里支持我：[https://space.bilibili.com/3048588](https://space.bilibili.com/3048588)，支持形式可以采取充电或者你的一键三连，大家根据能力进行就行。
 
-你的支持是这个项目与[vis-three 框架](https://github.com/Shiotsukikaedesari/vis-three)乃至其他产品的发展动力，如果作者的收入能够平衡生存生活，后面会采取更自由的 license 与开源更多的项目源码。
+你的支持是这个项目与[vis-three 框架](https://github.com/Shiotsukikaedesari/vis-three)乃至其他产品的发展动力，如果作者的收入能够平衡生存生活，后面会开源更多的项目源码。
 
 ## 交流合作
 
@@ -30,7 +36,9 @@ QQ 群：1025827206
 
 ## 备注
 
-vis-three 依赖更新看群公告
+- 如果 package.json 的依赖为本地，请手动安装：`npm i vis-three@latest`
+
+- vis-three 依赖更新看群公告
 
 ## 贡献者
 
