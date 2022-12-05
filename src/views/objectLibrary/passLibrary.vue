@@ -51,6 +51,7 @@
 
 <script>
 import { CONFIGTYPE, generateConfig } from "vis-three";
+import Vue from "vue";
 
 export default {
   components: {},
@@ -60,20 +61,20 @@ export default {
         {
           label: "虚幻光影",
           value: "",
-          type: CONFIGTYPE.UNREALBLOOMPASS
+          type: CONFIGTYPE.UNREALBLOOMPASS,
         },
         {
           label: "选择光影",
           value: "",
-          type: CONFIGTYPE.SELECTIVEBLOOMPASS
+          type: CONFIGTYPE.SELECTIVEBLOOMPASS,
         },
         {
           label: "SMAA",
           value: "",
-          type: CONFIGTYPE.SMAAPASS
-        }
+          type: CONFIGTYPE.SMAAPASS,
+        },
       ],
-      chouseValue: ""
+      chouseValue: "",
     };
   },
   computed: {
@@ -82,11 +83,13 @@ export default {
     },
     currentPass() {
       return this.$store.getters["active/pass"];
-    }
+    },
   },
   methods: {
     addPass(command) {
-      const config = generateConfig(command.type);
+      const config = generateConfig(command.type, undefined, {
+        handler: (c) => Vue.observable(c),
+      });
       config.name = `${command.label}-${config.vid.slice(-2)}`;
       console.log(config);
       this.$store.commit("pass/add", config);
@@ -96,7 +99,7 @@ export default {
       this.$confirm(`是否删除后期：${data.name}。`, "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       }).then(() => {
         if (this.currentPass.vid === data.vid) {
           this.$store.commit("active/pass", "");
@@ -107,8 +110,8 @@ export default {
     nodeClick(data) {
       const config = this.$store.getters["pass/get"][data.vid];
       this.$store.commit("active/pass", config);
-    }
-  }
+    },
+  },
 };
 </script>
 

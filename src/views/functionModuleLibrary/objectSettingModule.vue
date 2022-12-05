@@ -154,6 +154,10 @@ const DirectionalLight = () =>
 const SpotLight = () => import("./objectSettingModule/light/SpotLight");
 const AmbientLight = () =>
   import("./objectSettingModule/light/AmbientLight.vue");
+const HemisphereLight = () =>
+  import("./objectSettingModule/light/HemisphereLight.vue");
+const RectAreaLight = () =>
+  import("./objectSettingModule/light/RectAreaLight.vue");
 
 const PerspectiveCamera = () =>
   import("./objectSettingModule/camera/PerspectiveCamera");
@@ -181,6 +185,8 @@ export default {
     DirectionalLight,
     SpotLight,
     AmbientLight,
+    HemisphereLight,
+    RectAreaLight,
 
     PerspectiveCamera,
   },

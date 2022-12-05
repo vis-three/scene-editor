@@ -14,6 +14,7 @@ import { v4 as getUuid } from "uuid";
 import { CONFIGTYPE, generateConfig, MODULETYPE } from "vis-three";
 import { AddLightAction } from "@/assets/js/action/AddLightAction.js";
 import objectCollapse from "@/templates/objectCollapse.vue";
+import Vue from "vue";
 
 export default {
   components: {
@@ -42,14 +43,30 @@ export default {
           label: "平行光",
           light: CONFIGTYPE.DIRECTIONALLIGHT,
         },
+        {
+          icon: "#icondengpao",
+          label: "半球光",
+          light: CONFIGTYPE.HEMISPHERELIGHT,
+        },
+        {
+          icon: "#icondengpao",
+          label: "平面光",
+          light: CONFIGTYPE.RECTAREALIGHT,
+        },
       ],
     };
   },
   methods: {
     addLight(item) {
-      const config = generateConfig(item.light, {
-        vid: getUuid(),
-      });
+      const config = generateConfig(
+        item.light,
+        {
+          vid: getUuid(),
+        },
+        {
+          handler: (c) => Vue.observable(c),
+        }
+      );
       config.icon = item.icon;
       config.name = `${item.label}-${config.vid.slice(-2)}`;
 

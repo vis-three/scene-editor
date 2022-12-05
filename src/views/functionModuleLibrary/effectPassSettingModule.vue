@@ -13,7 +13,7 @@
         ></de-controller-input>
         <de-controller-input
           label="类型"
-          v-model="config.label"
+          v-model="config.type"
           disabled
         ></de-controller-input>
       </template>
@@ -23,22 +23,23 @@
 </template>
 
 <script>
-import VisUnrealBloomPass from "./effectPassSettingModule/VisUnrealBloomPass";
-import VisSMAAPass from "./effectPassSettingModule/VisSMAAPass";
+import UnrealBloomPass from "./effectPassSettingModule/UnrealBloomPass";
+import SMAAPass from "./effectPassSettingModule/SMAAPass";
 
-import VisAfterimagePass from "./effectPassSettingModule/VisAfterimagePass.vue";
-import VisFXAAShaderPass from "./effectPassSettingModule/VisFXAAShaderPass";
+import AfterimagePass from "./effectPassSettingModule/AfterimagePass.vue";
+import FXAAShaderPass from "./effectPassSettingModule/FXAAShaderPass";
 
 export default {
   components: {
-    VisUnrealBloomPass,
-    VisFXAAShaderPass,
-    VisSMAAPass,
-    VisAfterimagePass
+    UnrealBloomPass,
+    FXAAShaderPass,
+    SMAAPass,
+    AfterimagePass,
   },
   computed: {
     config() {
-      return this.$store.getters["effectPass/active"];
+      console.log(this.$store.getters["active/pass"]);
+      return this.$store.getters["active/pass"];
     },
     type() {
       if (this.config) {
@@ -46,9 +47,9 @@ export default {
       } else {
         return false;
       }
-    }
+    },
   },
-  methods: {}
+  methods: {},
 };
 </script>
 
