@@ -23,31 +23,31 @@ export default {
   props: {
     icon: {
       type: String,
-      default: "#iconkucunfenxi"
+      default: "#iconkucunfenxi",
     },
     label: {
       type: String,
-      default: "参数几何"
+      default: "参数几何",
     },
     dataList: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     clickHanlder: {
       type: Function,
-      default: () => {}
-    }
+      default: () => {},
+    },
   },
   methods: {
     clickItem(item) {
       this.clickHanlder.call(this, item);
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="less" scoped>
-@boxWidth: 70px;
+@boxWidth: 80px;
 
 .collapseLayout-container {
   margin-bottom: 0;
@@ -57,14 +57,14 @@ export default {
   flex-wrap: wrap;
   width: 100%;
 
-  .basicELement-elem:nth-child(n + 4) {
+  .basicELement-elem:nth-child(n * 4) {
     margin-right: 0;
   }
   .basicELement-elem {
     margin: 0 @box-margin / 2 @box-margin 0;
     cursor: pointer;
     > .element-icon-box {
-      .boxSetting(@boxWidth, 50px);
+      .boxSetting(@boxWidth, 60px);
       background: @brighterTheme-backgroundColor;
       margin-bottom: @box-margin;
       .flexLayout(row, center, center);

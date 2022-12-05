@@ -295,9 +295,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@boxWidth: 75px;
+@boxWidth: 76px;
 .material-container {
-  .boxSetting();
+  .boxSetting(100%, 70vh);
   .box-header {
     .flexLayout(row, space-between, center);
     margin-bottom: @box-margin;
@@ -307,6 +307,9 @@ export default {
     }
   }
   .box-container {
+    height: calc(100% - 46px - @box-margin - 2 * @box-padding);
+    overflow: auto;
+    background-color: @theme-backgroundColor;
     .material-main {
       .flexLayout(row, space-around, center);
       flex-wrap: wrap;
@@ -317,6 +320,7 @@ export default {
         .boxSetting(@boxWidth, unset);
         margin-bottom: @box-margin;
         cursor: pointer;
+        .transitionSetting({background-color: @themeDarkHover-color});
         &:hover .operate-box {
           // display: block;
           opacity: 1;
@@ -327,7 +331,6 @@ export default {
           background: @brighterTheme-backgroundColor;
           margin-bottom: @box-margin;
           .flexLayout(row, center, center);
-          .transitionSetting({background: @themeHover-color;});
         }
         .operate-box {
           opacity: 0;

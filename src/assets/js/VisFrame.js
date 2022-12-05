@@ -28,14 +28,15 @@ import { object3DDataSupport } from "../../store/modules/object3D";
 import { ComponentManager } from "@/assets/js/plugins/ComponentMnanager";
 import { CopyObjectAction } from "./action/CopyObjectAction";
 import { ChangeComponentAction } from "./action/ChangeComponentAction";
+import { passDataSupport } from "../../store/modules/pass";
 
 window.VIS = {};
 
 export const materialDisplayer = new MaterialDisplayer();
-materialDisplayer.setSize(75, 55);
+materialDisplayer.setSize(76, 55);
 
 export const textureDisplayer = new TextureDisplayer();
-textureDisplayer.setSize(75, 55);
+textureDisplayer.setSize(76, 55);
 
 export const engine = new ModelingEngineSupport({
   textureDataSupport,
@@ -52,6 +53,7 @@ export const engine = new ModelingEngineSupport({
   spriteDataSupport,
   lineDataSupport,
   object3DDataSupport,
+  passDataSupport,
 })
   .install(ENGINEPLUGIN.CSS3DRENDERER)
   .install(ENGINEPLUGIN.CSS2DRENDERER);
