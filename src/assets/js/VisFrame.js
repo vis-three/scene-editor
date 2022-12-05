@@ -29,6 +29,7 @@ import { ComponentManager } from "@/assets/js/plugins/ComponentMnanager";
 import { CopyObjectAction } from "./action/CopyObjectAction";
 import { ChangeComponentAction } from "./action/ChangeComponentAction";
 import { passDataSupport } from "../../store/modules/pass";
+import { DeleteObjectAction } from "../../assets/js/action/DeleteObjectAction";
 
 window.VIS = {};
 
@@ -135,6 +136,27 @@ engine.keyboardManager
       event.stopPropagation();
 
       history.apply(new CopyObjectAction({ store, engine }), true);
+    },
+  })
+  .register({
+    shortcutKey: ["d"],
+    desp: "删除物体",
+    keyup: (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      const object = store.getters["active/object"];
+
+      if (object) {
+        history.apply(
+          new DeleteObjectAction({
+            store,
+            engine,
+            objectSymbol: object.vid,
+          }),
+          true
+        );
+      }
     },
   });
 

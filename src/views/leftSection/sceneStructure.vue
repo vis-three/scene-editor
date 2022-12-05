@@ -40,8 +40,14 @@
           </div>
           <div class="operate-box">
             <vis-icon
+              v-tooltip="'显示隐藏'"
               :code="data.visible ? '#iconkejian' : '#iconbukejian'"
               @click.native="triggleVisible(data)"
+            ></vis-icon>
+            <vis-icon
+              v-tooltip="'删除'"
+              code="#iconshanchu"
+              @click.native="deleteObject(data)"
             ></vis-icon>
           </div>
         </div>
@@ -54,6 +60,7 @@
 import { CONFIGTYPE } from "vis-three";
 import { engine, history } from "../../assets/js/VisFrame";
 import { SelectionAction } from "../../assets/js/action/SelectionAction";
+import { DeleteObjectAction } from "../../assets/js/action/DeleteObjectAction";
 export default {
   data() {
     return {
@@ -147,6 +154,24 @@ export default {
       engine.getConfigBySymbol(data.vid).visible = data.visible;
     },
 
+    deleteObject(data) {
+      this.$confirm(`是否删除物体：${data.name}`, "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      }).then(() => {
+        new DeleteObjectAction({
+          store: this.store,
+          engine,
+          objectSymbol: data.vid,
+        }).next();
+        this.$message({
+          type: "success",
+          message: "删除成功!",
+        });
+      });
+    },
+
     handleDrop(draggingNode, dropNode, dropType, ev) {
       const draggingData = draggingNode.data;
       const dropData = dropNode.data;
@@ -232,6 +257,9 @@ export default {
   }
 
   .operate-box {
+    > * {
+      margin-left: @box-margin / 2;
+    }
   }
 }
 

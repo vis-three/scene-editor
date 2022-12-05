@@ -339,7 +339,7 @@ export default {
     }
   }
   .box-container {
-    height: calc(100% - 46px - @box-margin);
+    height: calc(100% - 46px - @box-margin - 2 * @box-padding);
     .texture-main {
       .flexLayout(row, space-around, center);
       flex-wrap: wrap;

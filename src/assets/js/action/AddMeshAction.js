@@ -19,6 +19,7 @@ export class AddMeshAction extends Action {
 
   prev() {
     const currentScene = this.$store.getters["scene/currentScene"];
+    console.log(currentScene);
     currentScene.children.splice(
       currentScene.children.indexOf(this.meshConfig.vid),
       1
