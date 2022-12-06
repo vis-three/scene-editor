@@ -94,6 +94,11 @@ export default {
     // 可以上传的标识
     canUpload() {
       const floderChildren = this.currentFloder.children;
+
+      if (!this.currentFloder.parent) {
+        return false;
+      }
+
       if (floderChildren.length && !floderChildren[0].dir) {
         return true;
       } else if (!floderChildren.length && this.currentFloder.url !== "/") {
