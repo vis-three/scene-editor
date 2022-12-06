@@ -11,10 +11,6 @@
 
 > 本项目使用中遇到的 bug 或者交互问题，欢迎提 issue。
 
-## 最新版本说明
-
-[version0.3.2](/readme/version/0-3-2.md)
-
 ## 项目相关
 
 相关技术栈，项目命令详情可查看：package.json
