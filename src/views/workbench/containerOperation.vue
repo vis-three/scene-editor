@@ -118,7 +118,7 @@ export default {
         });
       } else {
         this.$confirm(
-          `是否删除此模型: ${item.name}, 删除此模型相关的编辑项目会受到影响，是否继续?`,
+          `是否删除此应用: ${item.name}, 删除此应用相关的编辑项目会受到影响，是否继续?`,
           "提示",
           {
             confirmButtonText: "确定",
