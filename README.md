@@ -43,8 +43,6 @@ QQ 群：1025827206
 
 ## 备注
 
-- 如果 package.json 的依赖为本地，请手动安装：`npm i vis-three@latest`
-
 - vis-three 依赖更新看群公告
 
 ## 贡献者
@@ -75,6 +73,9 @@ QQ 群：1025827206
 </a>
 <a href="https://space.bilibili.com/7311750">
   <img src="https://i0.hdslb.com/bfs/face/94ad232ecb3b09b4c39ccad1fe5d1d7c613035e8.jpg@100w_100h_1c_1s.webp" />
+</a>
+<a href="https://space.bilibili.com/281443965/">
+  <img src="https://i0.hdslb.com/bfs/face/member/noface.jpg@100w_100h_1c_1s.webp" />
 </a>
 
 > 排名不分先后，本栏记录 2022/11/22 号之后的充电支持记录，感谢各位。
