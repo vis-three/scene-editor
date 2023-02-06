@@ -1,4 +1,5 @@
-import { Template, Action, generateConfig, OBJECTMODULE } from "vis-three";
+import { Action } from "@vis-three/convenient";
+import { Template, generateConfig, OBJECTMODULE } from "@vis-three/middleware";
 import Vue from "vue";
 
 export class AddTemplateAction extends Action {

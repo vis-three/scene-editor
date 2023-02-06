@@ -1,4 +1,4 @@
-import { Action } from "vis-three";
+import { Action } from "@vis-three/convenient";
 
 // 物体拾取动作
 export class SelectionAction extends Action {

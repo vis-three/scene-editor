@@ -1,6 +1,6 @@
 import Vue from "vue";
 // 扩展vue
-import { GeometryDataSupport, MODULETYPE } from "vis-three";
+import { GeometryDataSupport, MODULETYPE } from "@vis-three/middleware";
 
 export const geometryDataSupport = new GeometryDataSupport();
 

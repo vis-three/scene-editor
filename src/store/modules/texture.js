@@ -1,6 +1,6 @@
 import Vue from "vue";
 
-import { TextureDataSupport, MODULETYPE } from "vis-three";
+import { TextureDataSupport, MODULETYPE } from "@vis-three/middleware";
 
 export const textureDataSupport = new TextureDataSupport();
 
@@ -9,7 +9,7 @@ export const module = {
   state: {
     map: textureDataSupport.getData(),
     module: MODULETYPE.TEXTURE,
-    currentTexture: ""
+    currentTexture: "",
   },
   getters: {
     get(state) {
@@ -20,7 +20,7 @@ export const module = {
     },
     currentTexture(state) {
       return state.currentTexture;
-    }
+    },
   },
   mutations: {
     add(state, config) {
@@ -40,7 +40,7 @@ export const module = {
 
     remove(state, vid) {
       Vue.delete(state.map, vid);
-    }
+    },
   },
-  actions: {}
+  actions: {},
 };

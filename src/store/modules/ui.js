@@ -7,7 +7,7 @@ export const getAdsorbentPoint = (position, size) => {
     xEnd: position.x + size.width,
     yStart: position.y,
     yCenter: position.y + Math.ceil(size.height / 2),
-    yEnd: position.y + size.height
+    yEnd: position.y + size.height,
   };
 };
 
@@ -17,7 +17,7 @@ export const module = {
     // UI层尺寸
     size: {
       width: 1920,
-      height: 1080
+      height: 1080,
     },
     zoom: 1, // UI层缩放
     adsorbent: true, // 是否开启吸附
@@ -30,15 +30,15 @@ export const module = {
         name: "3D组件",
         position: {
           x: 0,
-          y: 0
+          y: 0,
         },
         size: {
           width: 1920,
-          height: 1080
+          height: 1080,
         },
         cid: "three",
-        zIndex: 0
-      }
+        zIndex: 0,
+      },
       // uid: {
       //   name:
       //   uid:
@@ -70,7 +70,7 @@ export const module = {
     distanceHelpers: [
       // {start: {x: 0, y: 0}, end: {x: 0, y: 0}, distance: 0}
     ],
-    editing: false // 是否处于组件编辑状态
+    editing: false, // 是否处于组件编辑状态
   },
   getters: {
     size(state) {
@@ -154,10 +154,10 @@ export const module = {
 
         return {
           x: offsetX || 0,
-          y: offsetY || 0
+          y: offsetY || 0,
         };
       };
-    }
+    },
   },
   mutations: {
     zoom(state, value) {
@@ -206,7 +206,7 @@ export const module = {
           const list = cacheMap[map[key]];
           const elem = { uid, key, position };
           if (list) {
-            if (!list.find(elem => elem.uid === uid)) {
+            if (!list.find((elem) => elem.uid === uid)) {
               cacheMap[map[key]].push(elem);
             }
           } else {
@@ -280,18 +280,18 @@ export const module = {
 
       // 获取最小距离对象
       const minDistanceObject = (list, sign) => {
-        list = list.map(elem => {
+        list = list.map((elem) => {
           return {
             ...elem,
-            distance: structure.position[sign] - elem.position[sign]
+            distance: structure.position[sign] - elem.position[sign],
           };
         });
 
         const minDistance = Math.min(
-          ...list.map(elem => Math.abs(elem.distance))
+          ...list.map((elem) => Math.abs(elem.distance))
         );
 
-        return list.find(elem => Math.abs(elem.distance) === minDistance);
+        return list.find((elem) => Math.abs(elem.distance) === minDistance);
       };
 
       const distanceBox = {};
@@ -316,13 +316,13 @@ export const module = {
               y:
                 targetElem.distance > 0
                   ? targetAbsorbMap.yEnd
-                  : targetAbsorbMap.yStart
+                  : targetAbsorbMap.yStart,
             },
             end: {
               x: map[key],
-              y: targetElem.distance > 0 ? map.yStart : map.yEnd
+              y: targetElem.distance > 0 ? map.yStart : map.yEnd,
             },
-            distance: Math.abs(targetElem.distance)
+            distance: Math.abs(targetElem.distance),
           });
         } else {
           distanceHelpers.push({
@@ -331,13 +331,13 @@ export const module = {
                 targetElem.distance > 0
                   ? targetAbsorbMap.xEnd
                   : targetAbsorbMap.xStart,
-              y: targetAbsorbMap[targetElem.key]
+              y: targetAbsorbMap[targetElem.key],
             },
             end: {
               x: targetElem.distance > 0 ? map.xStart : map.xEnd,
-              y: map[key]
+              y: map[key],
             },
-            distance: Math.abs(targetElem.distance)
+            distance: Math.abs(targetElem.distance),
           });
         }
       }
@@ -346,7 +346,7 @@ export const module = {
     // 情况距离辅助线
     clearDistanceHelper(state) {
       state.distanceHelpers = [];
-    }
+    },
   },
-  modules: {}
+  modules: {},
 };

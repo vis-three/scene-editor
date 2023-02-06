@@ -36,7 +36,7 @@
           :options="textureList"
           :prop="{
             label: 'name',
-            value: 'vid'
+            value: 'vid',
           }"
           v-model="config.map"
         ></de-controller-select>
@@ -46,7 +46,7 @@
           :options="textureList"
           :prop="{
             label: 'name',
-            value: 'vid'
+            value: 'vid',
           }"
           v-model="config.alphaMap"
         ></de-controller-select>
@@ -60,27 +60,27 @@ export default {
   props: {
     config: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     textureList() {
       const list = [
         {
           name: "无",
-          vid: ""
-        }
+          vid: "",
+        },
       ];
       const textureMap = this.$store.getters["texture/get"];
-      Object.keys(textureMap).forEach(vid => {
+      Object.keys(textureMap).forEach((vid) => {
         list.push({
           vid,
-          name: textureMap[vid].name
+          name: textureMap[vid].name,
         });
       });
       return list;
-    }
-  }
+    },
+  },
 };
 </script>
 

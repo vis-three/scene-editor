@@ -1,5 +1,5 @@
-import { Action, generateConfig, JSONHandler } from "vis-three";
-
+import { Action } from "@vis-three/convenient";
+import { generateConfig, JSONHandler } from "@vis-three/middleware";
 export class DeleteObjectAction extends Action {
   constructor({ store, engine, objectSymbol }) {
     super();

@@ -3,7 +3,7 @@
     class="dragTransBox-contaner"
     :style="{
       width: leftDrag || rightDrag ? `${size}px` : width,
-      height: topDrag || bottomDrag ? `${size}px` : height
+      height: topDrag || bottomDrag ? `${size}px` : height,
     }"
   >
     <div
@@ -51,48 +51,48 @@ export default {
     width: {
       // 组件宽度
       type: String,
-      default: "100%"
+      default: "100%",
     },
     height: {
       // 组件高度
       type: String,
-      default: "100%"
+      default: "100%",
     },
     topDrag: {
       // 开启顶部拖拽
       type: Boolean,
-      default: false
+      default: false,
     },
     leftDrag: {
       // 开启左拖拽
       type: Boolean,
-      default: false
+      default: false,
     },
     rightDrag: {
       // 开启右拖拽
       type: Boolean,
-      default: false
+      default: false,
     },
     bottomDrag: {
       // 开启顶部拖拽
       type: Boolean,
-      default: false
+      default: false,
     },
     size: {
       // 拖拽尺寸
       type: Number,
-      default: 100
+      default: 100,
     },
     throttle: {
       // 节流
       type: Boolean,
-      default: true
+      default: true,
     },
     throttleTime: {
       // 节流时间
       type: Number, // ms
-      default: 1000 / 30
-    }
+      default: 1000 / 30,
+    },
   },
   components: {
     // 横向拖拽标记
@@ -103,7 +103,7 @@ export default {
         <div></div>
         <div></div>
       </div>
-      `
+      `,
     },
     // 纵向拖拽标记
     dragSignalColumn: {
@@ -113,19 +113,19 @@ export default {
         <div></div>
         <div></div>
       </div>
-      `
-    }
+      `,
+    },
   },
   data() {
     return {
       timer: "",
-      canMove: true
+      canMove: true,
     };
   },
   methods: {
     // 拖动开始
     dragStart($event, cursor) {
-      const dragFun = moveEvent => {
+      const dragFun = (moveEvent) => {
         // 设置鼠标指针
         document.body.style.cursor =
           this.topDrag || this.bottomDrag ? "ns-resize" : "ew-resize";
@@ -143,7 +143,7 @@ export default {
               left: initialMouseX - mouseX,
               right: -(initialMouseX - mouseX),
               top: initialMosuseY - mosuseY,
-              bottom: -(initialMosuseY - mosuseY)
+              bottom: -(initialMosuseY - mosuseY),
             };
 
             this.$emit("draging", calcResult[cursor]);
@@ -161,8 +161,8 @@ export default {
 
       document.addEventListener("mousemove", dragFun);
       document.addEventListener("mouseup", removeFun);
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -52,7 +52,7 @@ vabse
 import { engine } from "@/assets/js/VisFrame";
 import Vue from "vue";
 import { v4 } from "uuid";
-import { generateConfig, CONFIGTYPE } from "vis-three";
+import { generateConfig, CONFIGTYPE } from "@vis-three/middleware";
 
 export default {
   data() {

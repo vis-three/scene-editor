@@ -62,9 +62,10 @@ import {
   JSONHandler,
   MODULETYPE,
   Template,
-  Utils,
   uniqueSymbol,
-} from "vis-three";
+} from "@vis-three/middleware";
+
+import { Pipeline } from "@vis-three/utils";
 
 import { AddTemplateAction } from "@/assets/js/action/AddTemplateAction.js";
 import { history, engine } from "@/assets/js/VisFrame";
@@ -109,7 +110,7 @@ export default {
 
           console.log(detail);
 
-          const template = new Utils.Pipeline(config)
+          const template = new Pipeline(config)
             .pipe((c) => {
               delete c[MODULETYPE.SCENE];
               delete c[MODULETYPE.RENDERER];

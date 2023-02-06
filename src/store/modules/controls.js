@@ -5,7 +5,7 @@ import {
   generateConfig,
   MODULETYPE,
   uniqueSymbol,
-} from "vis-three";
+} from "@vis-three/middleware";
 
 const transformControls = generateConfig(CONFIGTYPE.TRNASFORMCONTROLS);
 const orbitControls = generateConfig(CONFIGTYPE.ORBITCONTROLS);

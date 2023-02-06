@@ -1,10 +1,18 @@
+import { ModelingEngineSupport } from "@vis-three/modeling-engine-support";
 import {
-  ModelingEngineSupport,
   History,
   MaterialDisplayer,
   TextureDisplayer,
-  ENGINEPLUGIN,
-} from "vis-three";
+} from "@vis-three/convenient";
+import * as AniScriptLibrary from "@vis-three/animate-script-library";
+import * as EventLibrary from "@vis-three/event-library";
+import * as ShaderLibrary from "@vis-three/shader-library";
+
+import {
+  AniScriptGeneratorManager,
+  EventGeneratorManager,
+  ShaderGeneratorManager,
+} from "@vis-three/middleware";
 import Cookies from "js-cookie";
 import { cameraDataSupport } from "../../store/modules/camera";
 import { controlsDataSupport } from "../../store/modules/controls";
@@ -31,6 +39,18 @@ import { ChangeComponentAction } from "./action/ChangeComponentAction";
 import { passDataSupport } from "../../store/modules/pass";
 import { DeleteObjectAction } from "../../assets/js/action/DeleteObjectAction";
 
+Object.values(AniScriptLibrary).forEach((config) => {
+  AniScriptGeneratorManager.register(config);
+});
+
+Object.values(EventLibrary).forEach((config) => {
+  EventGeneratorManager.register(config);
+});
+
+Object.values(ShaderLibrary).forEach((config) => {
+  ShaderGeneratorManager.register(config);
+});
+
 window.VIS = {};
 
 export const materialDisplayer = new MaterialDisplayer();
@@ -55,9 +75,7 @@ export const engine = new ModelingEngineSupport({
   lineDataSupport,
   object3DDataSupport,
   passDataSupport,
-})
-  .install(ENGINEPLUGIN.CSS3DRENDERER)
-  .install(ENGINEPLUGIN.CSS2DRENDERER);
+});
 
 engine.loaderManager
   .getLoader("glb")
@@ -71,7 +89,7 @@ engine.loaderManager.addEventListener("beforeLoad", () => {
 
 engine.eventManager.recursive = true;
 
-engine.setScene(defaultScene.vid);
+engine.setSceneBySymbol(defaultScene.vid);
 
 window.VIS.engine = engine;
 

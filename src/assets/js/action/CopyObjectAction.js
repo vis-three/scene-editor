@@ -1,5 +1,9 @@
-import { Action, generateConfig, JSONHandler } from "vis-three";
-import { v4 } from "uuid";
+import { Action } from "@vis-three/convenient";
+import {
+  createSymbol,
+  generateConfig,
+  JSONHandler,
+} from "@vis-three/middleware";
 import Vue from "vue";
 
 export class CopyObjectAction extends Action {
@@ -22,7 +26,7 @@ export class CopyObjectAction extends Action {
 
     this.newConfig = new JSONHandler.Pipeline(config)
       .pipe((c) => JSON.stringify(c, JSONHandler.stringify))
-      .pipe((c) => c.replace(new RegExp(config.vid, "g"), v4()))
+      .pipe((c) => c.replace(new RegExp(config.vid, "g"), createSymbol()))
       .pipe((c) => JSON.parse(c, JSONHandler.parse))
       .pipe((c) => {
         c.name = `${c.name}-复制`;

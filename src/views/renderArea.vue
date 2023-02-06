@@ -91,29 +91,29 @@ import renderWindow from "./renderWindow";
 
 export default {
   components: {
-    renderWindow
+    renderWindow,
   },
   props: {
     top: {
       // 顶部距离
       type: Number,
-      require: true
+      require: true,
     },
     left: {
       // 左侧距离
       type: Number,
-      require: true
+      require: true,
     },
     width: {
       // 宽度
       type: Number,
-      require: true
+      require: true,
     },
     height: {
       // 高度
       type: Number,
-      require: true
-    }
+      require: true,
+    },
   },
   data() {
     return {
@@ -125,7 +125,7 @@ export default {
       throttleTime: 1000 / 30,
       limitMin: 10,
       limitMax: 90,
-      areaNum: 1 // 窗口数量
+      areaNum: 1, // 窗口数量
     };
   },
   computed: {
@@ -137,14 +137,14 @@ export default {
     },
     rightTopAreaHeight() {
       return this.areaNum > 3 ? this.rightAreaHeight : 100; // %
-    }
+    },
   },
   methods: {
     // 拖动开始
     dragStart($event, cursor) {
       const offsetSize = cursor === "middle" ? this.left : this.top;
 
-      const dragFun = moveEvent => {
+      const dragFun = (moveEvent) => {
         // 设置鼠标指针
         document.body.style.cursor =
           cursor === "middle" ? "ew-resize" : "ns-resize";
@@ -176,7 +176,7 @@ export default {
               },
               bottomRight: () => {
                 this.rightAreaHeight = result;
-              }
+              },
             };
 
             doMap[cursor]();
@@ -193,9 +193,9 @@ export default {
 
       document.addEventListener("mousemove", dragFun);
       document.addEventListener("mouseup", removeFun);
-    }
+    },
   },
-  mounted() {}
+  mounted() {},
 };
 </script>
 

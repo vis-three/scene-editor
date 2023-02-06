@@ -76,8 +76,8 @@ export default {
   props: {
     config: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
 
   methods: {
@@ -85,14 +85,14 @@ export default {
       this.config.path.push({
         x: 0,
         y: 0,
-        z: 0
+        z: 0,
       });
     },
 
     deletePoint(index) {
       this.config.path.splice(index, 1);
-    }
-  }
+    },
+  },
 };
 </script>
 

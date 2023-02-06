@@ -12,18 +12,18 @@
 </template>
 
 <script>
-import { VIEWPOINT } from "vis-three";
+import { VIEWPOINT } from "@vis-three/modeling-engine-support";
 
 export default {
   props: {
     connector: {
       type: Object,
-      required: true
+      required: true,
     },
     viewpoint: {
       type: String,
-      default: VIEWPOINT.DEFAULT
-    }
+      default: VIEWPOINT.DEFAULT,
+    },
   },
   data() {
     return {
@@ -35,8 +35,8 @@ export default {
         { label: "正视图", value: VIEWPOINT.FRONT },
         { label: "仰视图", value: VIEWPOINT.BOTTOM },
         { label: "左视图", value: VIEWPOINT.LEFT },
-        { label: "后视图", value: VIEWPOINT.BACK }
-      ]
+        { label: "后视图", value: VIEWPOINT.BACK },
+      ],
     };
   },
   watch: {
@@ -44,16 +44,16 @@ export default {
       handler(newVal) {
         this.connector.setViewpoint(newVal);
         this.$emit("changeViewpoint", newVal);
-      }
+      },
     },
     viewpoint: {
       handler(newVal) {
         this.cameraView = newVal;
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
-  mounted() {}
+  mounted() {},
 };
 </script>
 

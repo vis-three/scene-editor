@@ -6,7 +6,7 @@
           label="颜色"
           :animation="{
             target: config.vid,
-            attribute: 'color'
+            attribute: 'color',
           }"
           v-model="config.color"
         ></de-controller-picker>
@@ -18,7 +18,7 @@
           :displayAccuracy="1"
           :animation="{
             target: config.vid,
-            attribute: 'intensity'
+            attribute: 'intensity',
           }"
           v-model="config.intensity"
         ></de-controller-number>
@@ -30,7 +30,7 @@
           :displayAccuracy="0"
           :animation="{
             target: config.vid,
-            attribute: 'distance'
+            attribute: 'distance',
           }"
           v-model="config.distance"
         ></de-controller-number>
@@ -42,7 +42,7 @@
           :displayAccuracy="1"
           :animation="{
             target: config.vid,
-            attribute: 'decay'
+            attribute: 'decay',
           }"
           v-model="config.decay"
         ></de-controller-number>
@@ -56,9 +56,9 @@ export default {
   props: {
     config: {
       type: Object,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 };
 </script>
 

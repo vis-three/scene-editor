@@ -38,7 +38,7 @@ export default {
       adsorptionDistance: 5, // 吸附距离
       adsorptionComponentColor: "rgb(230, 20, 240)", // 吸附组件线条颜色
       adsorptionLineColor: "rgb(40, 245, 227)", // 吸附的线条颜色
-      adsorptionTextColor: "rgb(230, 20, 240)" // 吸附文本颜色
+      adsorptionTextColor: "rgb(230, 20, 240)", // 吸附文本颜色
     };
   },
   computed: {
@@ -46,7 +46,7 @@ export default {
     maskSize() {
       return {
         width: this.$store.getters.getSizeWidth,
-        height: this.$store.getters.getSizeHeight
+        height: this.$store.getters.getSizeHeight,
       };
     },
     // 圆心位置
@@ -56,14 +56,14 @@ export default {
       );
       return {
         x: this.componentClientX + componentStructure.width / 2,
-        y: this.componentClientY + componentStructure.height / 2
+        y: this.componentClientY + componentStructure.height / 2,
       };
     },
     // 圆y坐标
     circleYPosition() {
       return {
         x: this.circleCenter.x,
-        y: this.circleCenter.y - 100
+        y: this.circleCenter.y - 100,
       };
     },
     // 当前组件的结构信息
@@ -83,7 +83,7 @@ export default {
     // 吸附状态
     adsorbentStatus() {
       return this.$store.getters.getAdsorbent;
-    }
+    },
   },
   methods: {
     // 计算旋转 移动时候的鼠标位置
@@ -116,26 +116,26 @@ export default {
       if (this.rotateStatus) {
         this.$store.commit("setComponentRotate", {
           id: this.id,
-          rotate: this.calcRotate(event.clientX, event.clientY)
+          rotate: this.calcRotate(event.clientX, event.clientY),
         });
       } else if (this.transStatus) {
         if (this.transDirection === "right") {
           this.$store.commit("setComponentSize", {
             id: this.id,
             width: this.bufferWidth + this.moveLeft,
-            height: this.bufferHeight
+            height: this.bufferHeight,
           });
         } else if (this.transDirection === "bottom") {
           this.$store.commit("setComponentSize", {
             id: this.id,
             width: this.bufferWidth,
-            height: this.bufferHeight + this.moveTop
+            height: this.bufferHeight + this.moveTop,
           });
         } else if (this.transDirection === "bottom-right") {
           this.$store.commit("setComponentSize", {
             id: this.id,
             width: this.bufferWidth + this.moveLeft,
-            height: this.bufferHeight + this.moveTop
+            height: this.bufferHeight + this.moveTop,
           });
         }
         if (this.adsorbentStatus) {
@@ -147,7 +147,7 @@ export default {
         this.$store.commit("setComponentPosition", {
           id: this.id,
           top: this.bufferTop + this.moveTop,
-          left: this.bufferLeft + this.moveLeft
+          left: this.bufferLeft + this.moveLeft,
         });
         if (this.adsorbentStatus) {
           // 吸附功能
@@ -184,29 +184,29 @@ export default {
         xEnd: maskSize.width,
         yStart: 0,
         yCenter: parseInt(this.maskSize.height / 2),
-        yEnd: maskSize.height
+        yEnd: maskSize.height,
       };
       // 初始辅助线点集
       const colGuideList = this.$store.getters.getColGuideList;
       const rowGuideList = this.$store.getters.getRowGuideList;
-      colGuideList.forEach(elem => {
+      colGuideList.forEach((elem) => {
         componentListMap[`guide${elem.text}`] = {
           xStart: elem.text,
           xCenter: 0,
           xEnd: 0,
           yStart: 0,
           yCenter: 0,
-          yEnd: 0
+          yEnd: 0,
         };
       });
-      rowGuideList.forEach(elem => {
+      rowGuideList.forEach((elem) => {
         componentListMap[`guide${elem.text}`] = {
           xStart: 0,
           xCenter: 0,
           xEnd: 0,
           yStart: elem.text,
           yCenter: 0,
-          yEnd: 0
+          yEnd: 0,
         };
       });
       // 初始各个组件的点集
@@ -223,7 +223,7 @@ export default {
           xEnd: elem.left + elem.width,
           yStart: elem.top,
           yCenter: parseInt(elem.top + elem.height / 2),
-          yEnd: elem.top + elem.height
+          yEnd: elem.top + elem.height,
         };
       }
 
@@ -233,28 +233,28 @@ export default {
           if (xMap[num]) {
             xMap[num].push({
               id,
-              position
+              position,
             });
           } else {
             xMap[num] = [
               {
                 id,
-                position
-              }
+                position,
+              },
             ];
           }
         } else if (position[0] === "y") {
           if (yMap[num]) {
             yMap[num].push({
               id,
-              position
+              position,
             });
           } else {
             yMap[num] = [
               {
                 id,
-                position
-              }
+                position,
+              },
             ];
           }
         }
@@ -287,16 +287,16 @@ export default {
 
       // 吸附函数
       const adsorbent = (position, num) => {
-        this.adsorptionRange.forEach(range => {
+        this.adsorptionRange.forEach((range) => {
           if (position[0] === "x" && xMap[num + range]) {
             adsorbentComponentData[position] = {
               range,
-              map: xMap[num + range]
+              map: xMap[num + range],
             };
           } else if (position[0] === "y" && yMap[num + range]) {
             adsorbentComponentData[position] = {
               range,
-              map: yMap[num + range]
+              map: yMap[num + range],
             };
           }
         });
@@ -315,7 +315,7 @@ export default {
     useAdsorbent(data) {
       const drawData = {
         x: {},
-        y: {}
+        y: {},
       };
       const structure = this.componentStructure;
       const top = structure.top;
@@ -389,15 +389,13 @@ export default {
       };
 
       if (this.transStatus) {
-        const {
-          x: farRangeWidth,
-          y: farRangeHeight
-        } = getTransAdsorbentRange();
+        const { x: farRangeWidth, y: farRangeHeight } =
+          getTransAdsorbentRange();
         // 应用吸附
         this.$store.commit("setComponentSize", {
           id: this.id,
           width: width + farRangeWidth,
-          height: height + farRangeHeight
+          height: height + farRangeHeight,
         });
       } else {
         const { x: smallRangeLeft, y: smallRangeTop } = getMoveAdsorbentRange();
@@ -405,7 +403,7 @@ export default {
         this.$store.commit("setComponentPosition", {
           id: this.id,
           top: top + smallRangeTop,
-          left: left + smallRangeLeft
+          left: left + smallRangeLeft,
         });
       }
       // 绘制吸附线条
@@ -420,7 +418,7 @@ export default {
         xEnd: structure.left + structure.width,
         yStart: structure.top,
         yCenter: parseInt(structure.top + structure.height / 2),
-        yEnd: structure.top + structure.height
+        yEnd: structure.top + structure.height,
       };
       const componentListMap = this.componentListMap;
       const maskSize = this.maskSize;
@@ -437,7 +435,7 @@ export default {
         xEnd: false,
         yStart: false,
         yCenter: false,
-        yEnd: false
+        yEnd: false,
       };
       // 画组件吸附线条
       const drawAdsorbentLine = () => {
@@ -447,7 +445,7 @@ export default {
         ctx.font = "14px Arial";
         ctx.textBaseline = "middle";
         ctx.textAlign = "center";
-        adsorbentLine.forEach(elem => {
+        adsorbentLine.forEach((elem) => {
           const originPoint = elem.originPoint;
           const targetPoint = elem.targetPoint;
           // 当坐标都存在的时候才需要画线
@@ -484,27 +482,27 @@ export default {
       const drawComponentLine = () => {
         ctx.strokeStyle = this.adsorptionComponentColor;
         ctx.setLineDash([4, 4]);
-        adsorbentComponent.forEach(elem => {
+        adsorbentComponent.forEach((elem) => {
           const componentMap = componentListMap[elem.id];
           let originPoint = {};
           let targetPoint = {};
           if (elem.position[0] === "x") {
             originPoint = {
               x: componentMap[elem.position],
-              y: componentMap.yStart
+              y: componentMap.yStart,
             };
             targetPoint = {
               x: componentMap[elem.position],
-              y: componentMap.yEnd
+              y: componentMap.yEnd,
             };
           } else {
             originPoint = {
               x: componentMap.xStart,
-              y: componentMap[elem.position]
+              y: componentMap[elem.position],
             };
             targetPoint = {
               x: componentMap.xEnd,
-              y: componentMap[elem.position]
+              y: componentMap[elem.position],
             };
           }
           ctx.beginPath();
@@ -579,7 +577,7 @@ export default {
                 ),
                 Math.abs(currentComponentMap.yEnd - targetComponentMap.yEnd),
                 Math.abs(currentComponentMap.yStart - targetComponentMap.yEnd),
-                Math.abs(currentComponentMap.yEnd - targetComponentMap.yStart)
+                Math.abs(currentComponentMap.yEnd - targetComponentMap.yStart),
               ];
               const nearDistance = [
                 Math.abs(
@@ -593,7 +591,7 @@ export default {
                 ),
                 Math.abs(
                   currentComponentMap.yEnd - nearTargetComponentMap.yStart
-                )
+                ),
               ];
               if (
                 Math.min.apply(Math, nearDistance) >
@@ -616,29 +614,29 @@ export default {
           if (currentComponentMap.yStart > nearTargetComponentMap.yEnd) {
             originPoint = {
               x: currentComponentMap[originPosition],
-              y: currentComponentMap.yStart
+              y: currentComponentMap.yStart,
             };
             targetPoint = {
               x: originPoint.x,
-              y: nearTargetComponentMap.yEnd
+              y: nearTargetComponentMap.yEnd,
             };
           } else if (currentComponentMap.yEnd < nearTargetComponentMap.yStart) {
             originPoint = {
               x: currentComponentMap[originPosition],
-              y: currentComponentMap.yEnd
+              y: currentComponentMap.yEnd,
             };
             targetPoint = {
               x: originPoint.x,
-              y: nearTargetComponentMap.yStart
+              y: nearTargetComponentMap.yStart,
             };
           }
           adsorbentLine.push({
             originPoint,
-            targetPoint
+            targetPoint,
           });
           adsorbentComponent.push({
             id: nearTargetId,
-            position: nearTargetPosition
+            position: nearTargetPosition,
           });
         }
       }
@@ -668,7 +666,7 @@ export default {
                 ),
                 Math.abs(currentComponentMap.xEnd - targetComponentMap.xEnd),
                 Math.abs(currentComponentMap.xStart - targetComponentMap.xEnd),
-                Math.abs(currentComponentMap.xEnd - targetComponentMap.xStart)
+                Math.abs(currentComponentMap.xEnd - targetComponentMap.xStart),
               ];
               const nearDistance = [
                 Math.abs(
@@ -682,7 +680,7 @@ export default {
                 ),
                 Math.abs(
                   currentComponentMap.xEnd - nearTargetComponentMap.xStart
-                )
+                ),
               ];
               if (
                 Math.min.apply(Math, nearDistance) >
@@ -705,29 +703,29 @@ export default {
           if (currentComponentMap.xStart > nearTargetComponentMap.xEnd) {
             originPoint = {
               x: currentComponentMap.xStart,
-              y: currentComponentMap[originPosition]
+              y: currentComponentMap[originPosition],
             };
             targetPoint = {
               x: nearTargetComponentMap.xEnd,
-              y: originPoint.y
+              y: originPoint.y,
             };
           } else if (currentComponentMap.xEnd < nearTargetComponentMap.xStart) {
             originPoint = {
               x: currentComponentMap.xEnd,
-              y: currentComponentMap[originPosition]
+              y: currentComponentMap[originPosition],
             };
             targetPoint = {
               x: nearTargetComponentMap.xStart,
-              y: originPoint.y
+              y: originPoint.y,
             };
           }
           adsorbentLine.push({
             originPoint,
-            targetPoint
+            targetPoint,
           });
           adsorbentComponent.push({
             id: nearTargetId,
-            position: nearTargetPosition
+            position: nearTargetPosition,
           });
         }
       }
@@ -736,7 +734,7 @@ export default {
       drawComponentLine();
       drawGuideLine();
       drawRootLine();
-    }
+    },
   },
   watch: {
     // 拖动激活的时候载入一次map
@@ -744,8 +742,8 @@ export default {
       if (newValue) {
         this.generateMap();
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

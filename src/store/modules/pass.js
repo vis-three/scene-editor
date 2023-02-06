@@ -1,5 +1,6 @@
 import Vue from "vue";
-import { MODULETYPE, PassDataSupport } from "vis-three";
+import { MODULETYPE } from "@vis-three/middleware";
+import { PassDataSupport } from "@vis-three/composer-support-strategy";
 
 export const passDataSupport = new PassDataSupport();
 
@@ -7,12 +8,12 @@ export const module = {
   namespaced: true,
   state: {
     map: passDataSupport.getData(),
-    module: MODULETYPE.PASS
+    module: MODULETYPE.PASS,
   },
   getters: {
     get(state) {
       return state.map;
-    }
+    },
   },
   mutations: {
     add(state, config) {
@@ -27,7 +28,7 @@ export const module = {
 
     notify(state) {
       state.map.__ob__.dep.notify();
-    }
+    },
   },
-  actions: {}
+  actions: {},
 };

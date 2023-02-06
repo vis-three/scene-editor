@@ -22,19 +22,19 @@
 import componentTransBox from "@/components/componentTransBox";
 export default {
   components: {
-    componentTransBox // 组件形变盒子
+    componentTransBox, // 组件形变盒子
   },
   props: {
     width: null, // 宽度
-    height: null
+    height: null,
   },
   computed: {
     // 组件构造列表
     componentStructureList() {
       return this.$store.getters.getComponentStructureList;
-    }
+    },
   },
-  mounted() {}
+  mounted() {},
 };
 </script>
 

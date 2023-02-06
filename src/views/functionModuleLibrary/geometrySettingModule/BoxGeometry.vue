@@ -37,9 +37,9 @@ export default {
   props: {
     config: {
       type: Object,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 };
 </script>
 

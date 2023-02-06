@@ -30,7 +30,7 @@ module.exports = (config) => {
           "vis-three": {
             chunks: "all",
             name: `vis-three`,
-            test: /[\\/]vis-three[\\/]/,
+            test: /[\\/]@vis-three[\\/]/,
             priority: 0,
           },
           vue: {

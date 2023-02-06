@@ -54,8 +54,8 @@ export default {
   props: {
     config: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     arc: {
@@ -64,9 +64,9 @@ export default {
       },
       set(value) {
         this.config.arc = (value * Math.PI) / 180;
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>
 

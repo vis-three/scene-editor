@@ -70,7 +70,7 @@ import {
   LinearEncoding,
   LinearFilter,
 } from "three";
-import { CONFIGTYPE, generateConfig } from "vis-three";
+import { CONFIGTYPE, generateConfig } from "@vis-three/middleware";
 import { v4 as getUuid } from "uuid";
 
 const fileSystem = () => import("./textureLibrary/fileSystem.vue");

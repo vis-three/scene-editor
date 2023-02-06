@@ -3,7 +3,7 @@
     class="icon-container"
     :style="{
       'font-size': size,
-      color: color
+      color: color,
     }"
   >
     <svg class="icon" aria-hidden="true">
@@ -18,22 +18,22 @@ export default {
   props: {
     // 图标code
     code: {
-      type: String
+      type: String,
     },
     // 图标大小
     size: {
-      type: String
+      type: String,
     },
     // 图标颜色
     color: {
-      type: String
-    }
+      type: String,
+    },
   },
   data() {
     return {};
   },
   mounted() {},
-  beforeDestroy() {}
+  beforeDestroy() {},
 };
 </script>
 

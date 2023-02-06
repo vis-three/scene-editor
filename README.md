@@ -4,18 +4,24 @@
 
 <p>
   <img alt="NPM" src="https://img.shields.io/badge/license-MIT-blue">
-  <img alt="verison" src="https://img.shields.io/badge/version-0.3.2-light">
+  <img alt="verison" src="https://img.shields.io/badge/version-0.5.0-light">
 </p>
 
-> 本项目仅为产品 DEMO，并不是完整产品，作者主要提供产品思路与实现思路，所以会存在许多 bug 或者交互方面的问题，本项目也为开源项目，欢迎大家动手完善，持续更新。
+### 项目说明
 
-> 本项目使用中遇到的 bug 或者交互问题，欢迎提 issue。
+1. 本项目需要搭配后台使用：[display-service 编辑器后台服务](https://github.com/Shiotsukikaedesari/display-service)
 
-## 项目相关
+2. 由于资金人手有限，本项目仅可以作为产品 DEMO，并不可以作为完整产品，作者主要提供产品思路与实现思路，所以会存在许多 bug 或者交互方面的问题。
 
-相关技术栈，项目命令详情可查看：package.json
+3. 本项目为`MIT`开源项目，如果大家有能力或者有时间，欢迎动手完善当中遇到的 bug 或者疏漏提交 pr。
 
-## 环境说明
+4. 如果你是使用者，本项目使用中遇到的 bug 或者交互问题，欢迎提 issue 作者会根据情况取舍修复。
+
+## 交流合作与项目功能更新
+
+QQ 群：1025827206
+
+## 你需要准备的环境说明
 
 - node: 14.20.0
 - npm: 6.14.17
@@ -33,9 +39,7 @@
 
 ## 版权与支持
 
-本项目的 license 为`MIT`，这个 license 对于目前的环境也只是一个提示作用，大家都不容易，如果你觉得本项目对你有所帮助，或者能对你产生收益，那么在你获益之余，可以来这里支持我：[https://space.bilibili.com/3048588](https://space.bilibili.com/3048588)，支持形式可以采取充电或者你的一键三连，大家根据能力进行就行。
-
-你的支持是这个项目与[vis-three 框架](https://github.com/Shiotsukikaedesari/vis-three)乃至其他产品的发展动力，如果作者的收入能够平衡生存生活，后面会开源更多的项目源码。
+本项目的 license 为`MIT`，如果你觉得本项目对你有所帮助，或者能对你产生收益，那么在你获益之余，可以来这里支持我：[https://space.bilibili.com/3048588](https://space.bilibili.com/3048588)，支持形式可以采取充电或者你的一键三连，大家根据能力进行就行。
 
 ## 交流合作
 

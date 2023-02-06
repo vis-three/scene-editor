@@ -45,7 +45,7 @@
       :isRight="true"
     >
       <template #main>
-        <render-mode :connector="connector"></render-mode>
+        <!-- <render-mode :connector="connector"></render-mode> -->
       </template>
     </position-layout-box>
 
@@ -84,13 +84,13 @@ import {
   JSONHandler,
   Template,
   uniqueSymbol,
-} from "vis-three";
+} from "@vis-three/middleware";
 
 const renderViewpoint = () => import("./renderWindow/renderViewpoint");
 const cameraViewpoint = () => import("./renderWindow/cameraViewpoint");
 const auxiliaryDisplay = () => import("./renderWindow/auxiliaryDisplay");
 // const renderScene = () => import('./renderWindow/renderScene')
-const renderMode = () => import("./renderWindow/renderMode");
+// const renderMode = () => import("./renderWindow/renderMode");
 const performanceMonitor = () => import("./renderWindow/performanceMonitor");
 
 export default {
@@ -102,7 +102,7 @@ export default {
     cameraViewpoint,
     auxiliaryDisplay,
     // // renderScene,
-    renderMode,
+    // renderMode,
     performanceMonitor,
   },
   props: {

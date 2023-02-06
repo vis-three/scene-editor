@@ -4,20 +4,20 @@ export default {
     // 翻转
     flip: {
       type: Boolean,
-      default: false
+      default: false,
     },
     // 是否缓存
     cache: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     const control = new Array(this.$slots.default.length).fill(false);
     control[0] = true;
     return {
       control,
-      activePlane: 0
+      activePlane: 0,
     };
   },
 
@@ -34,7 +34,7 @@ export default {
             {
               class: {
                 "tab-icon-item": true,
-                "active-tab-icon-item": this.control[i]
+                "active-tab-icon-item": this.control[i],
               },
               directives: [
                 {
@@ -42,9 +42,9 @@ export default {
                   value: `${vnode.componentOptions.propsData.title}`,
                   modifiers: {
                     left: !this.flip,
-                    right: this.flip
-                  }
-                }
+                    right: this.flip,
+                  },
+                },
               ],
               on: {
                 click: () => {
@@ -52,8 +52,8 @@ export default {
                   this.control[i] = true;
                   this.activePlane = i;
                   this.$forceUpdate();
-                }
-              }
+                },
+              },
             },
             [<vis-icon code={vnode.componentOptions.propsData.icon}></vis-icon>]
           )
@@ -85,7 +85,7 @@ export default {
         <div class="tab-container-box">{planeListDom}</div>
       </div>
     );
-  }
+  },
 };
 </script>
 

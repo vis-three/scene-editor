@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { GroupDataSupport, MODULETYPE } from "vis-three";
+import { GroupDataSupport, MODULETYPE } from "@vis-three/middleware";
 
 export const groupDataSupport = new GroupDataSupport();
 
@@ -7,12 +7,12 @@ export const module = {
   namespaced: true,
   state: {
     map: groupDataSupport.getData(),
-    module: MODULETYPE.SPRITE
+    module: MODULETYPE.SPRITE,
   },
   getters: {
     get(state) {
       return state.map;
-    }
+    },
   },
   mutations: {
     add(state, config) {
@@ -27,7 +27,7 @@ export const module = {
 
     notify(state) {
       state.map.__ob__.dep.notify();
-    }
+    },
   },
-  actions: {}
+  actions: {},
 };

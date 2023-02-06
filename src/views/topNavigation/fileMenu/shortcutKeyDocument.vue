@@ -22,9 +22,9 @@ export default {
   data() {
     return {
       visible: false,
-      tableData: engine.keyboardManager.getDocs()
+      tableData: engine.keyboardManager.getDocs(),
     };
-  }
+  },
 };
 </script>
 

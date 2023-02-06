@@ -4,7 +4,7 @@
     :src="auth ? authSrc : src"
     :style="{
       width,
-      height
+      height,
     }"
   >
     <div slot="placeholder">
@@ -23,28 +23,28 @@ export default {
   props: {
     // 图标code
     src: {
-      type: String
+      type: String,
     },
     fit: {
       type: String,
-      default: "cover"
+      default: "cover",
     },
     width: {
       type: String,
-      default: "100%"
+      default: "100%",
     },
     height: {
       type: String,
-      default: "100%"
+      default: "100%",
     },
     auth: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
-      authSrc: ""
+      authSrc: "",
     };
   },
   watch: {
@@ -58,9 +58,9 @@ export default {
 
           this.axios
             .get(this.src, {
-              responseType: "blob"
+              responseType: "blob",
             })
-            .then(res => {
+            .then((res) => {
               if (res.status === 500) {
                 this.$message.error(res.message);
               } else {
@@ -70,12 +70,12 @@ export default {
             });
         }
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   created() {},
   mounted() {},
-  beforeDestroy() {}
+  beforeDestroy() {},
 };
 </script>
 

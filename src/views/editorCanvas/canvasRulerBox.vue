@@ -6,7 +6,7 @@
       :style="{
         width: `${width}px`,
         height: `${rulerSize}px`,
-        left: `${rulerLeft}px`
+        left: `${rulerLeft}px`,
       }"
       @mouseenter="
         () => {
@@ -31,7 +31,7 @@
           height: `${rulerSize}px`,
           '--rulerMousePositionX': `'${getRulerDataByLeft(
             rulerMousePositionX
-          )}'`
+          )}'`,
         }"
         v-show="showMousePosition"
       ></div>
@@ -42,7 +42,7 @@
         :style="{
           height: `${height}px`,
           left: `${item.position}px`,
-          '--positionText': `'${item.text}'`
+          '--positionText': `'${item.text}'`,
         }"
         v-for="(item, index) in colGuideList"
         :key="index"
@@ -51,7 +51,7 @@
         class="ruler-guide ruler-col-guide ruler-col-guide-temp"
         :style="{
           height: `${height}px`,
-          left: `${tempColGuidePosition}px`
+          left: `${tempColGuidePosition}px`,
         }"
         v-show="showTempColGuide"
       ></div>
@@ -62,7 +62,7 @@
       :style="{
         top: `${rulerTop}px`,
         width: `${rulerSize}px`,
-        height: `${height}px`
+        height: `${height}px`,
       }"
       @mouseenter="
         () => {
@@ -84,7 +84,9 @@
           top: `${rulerMousePositionY}px`,
           width: `${rulerSize}px`,
           height: '1px',
-          '--rulerMousePositionY': `'${getRulerDataByTop(rulerMousePositionY)}'`
+          '--rulerMousePositionY': `'${getRulerDataByTop(
+            rulerMousePositionY
+          )}'`,
         }"
         v-show="showMousePosition"
       ></div>
@@ -93,7 +95,7 @@
         :style="{
           width: `${width}px`,
           top: `${item.position}px`,
-          '--positionText': `'${item.text}'`
+          '--positionText': `'${item.text}'`,
         }"
         v-for="(item, index) in rowGuideList"
         :key="index"
@@ -102,7 +104,7 @@
         class="ruler-guide ruler-row-guide ruler-col-guide-temp"
         :style="{
           width: `${height}px`,
-          top: `${tempRowGuidePosition}px`
+          top: `${tempRowGuidePosition}px`,
         }"
         v-show="showTempRowGuide"
       ></div>
@@ -115,40 +117,40 @@ export default {
   props: {
     height: {
       // 标尺高度
-      type: Number
+      type: Number,
     },
     width: {
       // 保持宽度
-      type: Number
+      type: Number,
     },
     rulerTop: {
       // 标尺的顶部距离
-      type: Number
+      type: Number,
     },
     rulerLeft: {
       // 标尺的左部距离
-      type: Number
+      type: Number,
     },
     originLeft: {
       // 画布起始的左部距离
-      type: Number
+      type: Number,
     },
     originTop: {
       // 画布起始的顶部距离
-      type: Number
+      type: Number,
     },
     showMousePosition: {
       // 展示鼠标位置
-      type: Boolean
+      type: Boolean,
     },
     mousePositionX: {
       // 鼠标的x位置
-      type: Number
+      type: Number,
     },
     mousePositionY: {
       // 鼠标的y位置
-      type: Number
-    }
+      type: Number,
+    },
   },
   data() {
     return {
@@ -158,7 +160,7 @@ export default {
       showTempColGuide: false, // 展示纵向辅助线
       showTempRowGuide: false, // 展示横向辅助线
       tempColGuidePosition: 0, // 临时纵向辅助线的位置
-      tempRowGuidePosition: 0 // 临时横向辅助线的位置
+      tempRowGuidePosition: 0, // 临时横向辅助线的位置
     };
   },
   computed: {
@@ -177,7 +179,7 @@ export default {
     // 横向辅助线列表
     rowGuideList() {
       return this.$store.getters["guide/getRowGuideList"];
-    }
+    },
   },
   methods: {
     // 画标尺
@@ -254,7 +256,7 @@ export default {
     addColGuide() {
       this.$store.commit("guide/addColGuide", {
         position: this.tempColGuidePosition,
-        text: this.getRulerDataByLeft(this.tempColGuidePosition)
+        text: this.getRulerDataByLeft(this.tempColGuidePosition),
       });
       this.colGuideList.push();
     },
@@ -262,9 +264,9 @@ export default {
     addRowGuide() {
       this.$store.commit("guide/addRowGuide", {
         position: this.tempRowGuidePosition,
-        text: this.getRulerDataByTop(this.tempRowGuidePosition)
+        text: this.getRulerDataByTop(this.tempRowGuidePosition),
       });
-    }
+    },
   },
   created() {
     // 缓存一份初始的滚动顶部与底部数据
@@ -274,7 +276,7 @@ export default {
   mounted() {
     this.drawRuler();
     // canvas初始的移动距离
-  }
+  },
 };
 </script>
 

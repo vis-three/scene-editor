@@ -50,7 +50,7 @@
 
 <script>
 import Vue from "vue";
-import { EventLibrary } from "vis-three";
+import { EventGeneratorManager } from "@vis-three/middleware";
 import { configures } from "@/assets/js/eventLibrary";
 import eventControllers from "./eventControllers.vue";
 export default {
@@ -90,8 +90,9 @@ export default {
         return;
       }
 
-      window.EventLibrary = EventLibrary;
-      const config = Vue.observable(EventLibrary.generateConfig(value[1]));
+      const config = Vue.observable(
+        EventGeneratorManager.generateConfig(value[1])
+      );
       console.log(config);
       console.log(this.activeObject[this.eventName]);
       this.activeObject[this.eventName].push(config);

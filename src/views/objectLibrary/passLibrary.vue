@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import { CONFIGTYPE, generateConfig } from "vis-three";
+import { CONFIGTYPE, generateConfig } from "@vis-three/middleware";
 import Vue from "vue";
 
 export default {

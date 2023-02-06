@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { LineDataSupport, MODULETYPE } from "vis-three";
+import { LineDataSupport, MODULETYPE } from "@vis-three/middleware";
 
 export const lineDataSupport = new LineDataSupport();
 
@@ -7,12 +7,12 @@ export const module = {
   namespaced: true,
   state: {
     map: lineDataSupport.getData(),
-    module: MODULETYPE.LINE
+    module: MODULETYPE.LINE,
   },
   getters: {
     get(state) {
       return state.map;
-    }
+    },
   },
   mutations: {
     add(state, config) {
@@ -27,7 +27,7 @@ export const module = {
 
     notify(state) {
       state.map.__ob__.dep.notify();
-    }
+    },
   },
-  actions: {}
+  actions: {},
 };

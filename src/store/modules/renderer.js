@@ -4,7 +4,7 @@ import {
   MODULETYPE,
   CONFIGTYPE,
   generateConfig,
-} from "vis-three";
+} from "@vis-three/middleware";
 
 const webGLRenderer = generateConfig(CONFIGTYPE.WEBGLRENDERER, {
   clearColor: "rgba(15, 15, 15, 1)",

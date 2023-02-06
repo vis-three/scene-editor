@@ -7,7 +7,7 @@
       <el-image
         :style="{
           maxWidth: iconSize,
-          maxHeight: iconSize
+          maxHeight: iconSize,
         }"
         v-if="['jpg', 'jpeg', 'png'].includes(file.ext.toLocaleLowerCase())"
         :src="file.url"
@@ -32,20 +32,20 @@ export default {
           dir: true,
           url: "",
           name: "文件夹",
-          ext: ""
+          ext: "",
         };
-      }
-    }
+      },
+    },
   },
   data() {
     return {
       iconSize: "45px",
       timer: "",
       fileIcon: {
-        mtl: "#iconmtl"
-      }
+        mtl: "#iconmtl",
+      },
     };
-  }
+  },
 };
 </script>
 

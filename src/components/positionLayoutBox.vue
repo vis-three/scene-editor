@@ -5,7 +5,7 @@
       top: top,
       left: left,
       right: right,
-      bottom: bottom
+      bottom: bottom,
     }"
   >
     <slot name="main">布局盒子</slot>
@@ -17,20 +17,20 @@ export default {
   props: {
     offsetX: {
       type: Number,
-      default: 0
+      default: 0,
     },
     offsetY: {
       type: Number,
-      default: 0
+      default: 0,
     },
     isBottom: {
       type: Boolean,
-      default: false
+      default: false,
     },
     isRight: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   computed: {
     top() {
@@ -44,8 +44,8 @@ export default {
     },
     right() {
       return !this.isRight ? "unset" : `${this.offsetX}px`;
-    }
-  }
+    },
+  },
 };
 </script>
 

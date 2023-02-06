@@ -75,8 +75,8 @@ export default {
   props: {
     config: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     thetaStart: {
@@ -85,7 +85,7 @@ export default {
       },
       set(value) {
         this.config.thetaStart = (value * Math.PI) / 180;
-      }
+      },
     },
     thetaLength: {
       get() {
@@ -93,9 +93,9 @@ export default {
       },
       set(value) {
         this.config.thetaLength = (value * Math.PI) / 180;
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>
 

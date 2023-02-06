@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { MeshDataSupport, MODULETYPE } from "vis-three";
+import { MeshDataSupport, MODULETYPE } from "@vis-three/middleware";
 
 export const meshDataSupport = new MeshDataSupport();
 

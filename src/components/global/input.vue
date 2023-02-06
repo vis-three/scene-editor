@@ -17,24 +17,24 @@ import controlLayout from "./controlLayout";
 export default {
   name: "de-controller-input",
   components: {
-    controlLayout
+    controlLayout,
   },
   props: {
     keyframe: {
       // 是否展示k帧
       type: Boolean,
-      default: false
+      default: false,
     },
     label: {
       // 标题
       type: String,
-      default: "标签"
+      default: "标签",
     },
     disabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
-    value: null
+    value: null,
   },
   computed: {
     inputValue: {
@@ -43,9 +43,9 @@ export default {
       },
       set(value) {
         this.$emit("input", value);
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>
 

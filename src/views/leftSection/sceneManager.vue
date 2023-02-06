@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { CONFIGTYPE, generateConfig } from "vis-three";
+import { CONFIGTYPE, generateConfig } from "@vis-three/middleware";
 import { engine } from "../../assets/js/VisFrame";
 import { v4 } from "uuid";
 import Vue from "vue";
@@ -51,7 +51,7 @@ import Vue from "vue";
 export default {
   data() {
     return {
-      filterText: ""
+      filterText: "",
     };
   },
   computed: {
@@ -60,10 +60,10 @@ export default {
       return this.$store.getters["scene/currentScene"];
     },
     sceneList() {
-      return this.$store.getters["scene/list"].filter(elem =>
+      return this.$store.getters["scene/list"].filter((elem) =>
         this.filterText ? elem.name.includes(this.filterText) : true
       );
-    }
+    },
   },
 
   methods: {
@@ -71,29 +71,29 @@ export default {
     addScene() {
       const newScene = Vue.observable(
         generateConfig(CONFIGTYPE.SCENE, {
-          vid: v4()
+          vid: v4(),
         })
       );
       newScene.name = `场景-${newScene.vid.slice(-2)}`;
-      engine.applyConfig(newScene).setScene(newScene.vid);
+      engine.applyConfig(newScene).setSceneBySymbol(newScene.vid);
       this.$store.commit("scene/notify");
       this.triggleScene(newScene.vid);
     },
     // 切换场景
     triggleScene(vid) {
       this.$store.commit("scene/currentScene", vid);
-      engine.setScene(vid);
+      engine.setSceneBySymbol(vid);
     },
     // 删除场景
     deleteScene(item) {
       this.$confirm(`是否删除场景：${item.name}`, "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       }).then(() => {
         // 递归移除场景中的所有物体
         const vids = [];
-        const traverse = object => {
+        const traverse = (object) => {
           if (object.children && object.children.length) {
             vids.push(...object.children);
             for (const vid of object.children) {
@@ -119,11 +119,11 @@ export default {
         this.triggleScene(this.sceneList[0].vid);
         this.$message({
           type: "success",
-          message: "删除成功!"
+          message: "删除成功!",
         });
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

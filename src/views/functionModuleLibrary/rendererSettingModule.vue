@@ -207,7 +207,6 @@ import {
   BasicDepthPacking,
   RGBADepthPacking,
 } from "three";
-import { CONFIGTYPE } from "vis-three";
 export default {
   data() {
     return {

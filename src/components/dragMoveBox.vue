@@ -5,7 +5,7 @@
       top: top,
       left: left,
       bottom: bottom,
-      right: right
+      right: right,
     }"
     @mousedown.stop="dragStart"
   >
@@ -18,25 +18,25 @@ export default {
   props: {
     offsetX: {
       type: Number,
-      default: 0
+      default: 0,
     },
     offsetY: {
       type: Number,
-      default: 0
+      default: 0,
     },
     throttleTime: {
       // 节流时间
       type: Number, // ms
-      default: 1000 / 30
+      default: 1000 / 30,
     },
     isBottom: {
       type: Boolean,
-      default: false
+      default: false,
     },
     isRight: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
@@ -45,7 +45,7 @@ export default {
       bufferOffsetX: "",
       bufferOffsetY: "",
       timer: "",
-      canMove: true
+      canMove: true,
     };
   },
   computed: {
@@ -60,7 +60,7 @@ export default {
     },
     right() {
       return !this.isRight ? "unset" : `${this.useOffsetX}px`;
-    }
+    },
   },
   watch: {
     offsetX: {
@@ -68,20 +68,20 @@ export default {
         this.useOffsetX = newVal;
         this.bufferOffsetX = newVal;
       },
-      immediate: true
+      immediate: true,
     },
     offsetY: {
       handler(newVal) {
         this.useOffsetY = newVal;
         this.bufferOffsetY = newVal;
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   methods: {
     // 拖动开始
     dragStart($event) {
-      const dragFun = moveEvent => {
+      const dragFun = (moveEvent) => {
         // 设置鼠标指针
         document.body.style.cursor = "move";
 
@@ -113,11 +113,11 @@ export default {
 
       document.addEventListener("mousemove", dragFun);
       document.addEventListener("mouseup", removeFun);
-    }
+    },
   },
   mounted() {
     // TODO: 遮罩， 递归寻找父级absolute确定拖拽范围
-  }
+  },
 };
 </script>
 

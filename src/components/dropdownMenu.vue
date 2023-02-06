@@ -21,21 +21,21 @@ export default {
   props: {
     trigger: {
       type: String,
-      default: "click"
+      default: "click",
     },
     icon: {
-      type: String
+      type: String,
     },
     label: {
       type: String,
-      default: "菜单"
-    }
+      default: "菜单",
+    },
   },
   methods: {
     handleCommand(event) {
       this.$emit("select", event);
-    }
-  }
+    },
+  },
 };
 </script>
 

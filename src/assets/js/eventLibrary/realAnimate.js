@@ -11,8 +11,8 @@ export default {
           key: "target",
           component: "de-controller-select",
           props: {
-            options: "objects"
-          }
+            options: "objects",
+          },
         },
         {
           label: "距离",
@@ -20,8 +20,8 @@ export default {
           component: "de-controller-vector3",
           props: {
             step: 1,
-            displayAccuracy: 2
-          }
+            displayAccuracy: 2,
+          },
         },
         {
           label: "动画时长",
@@ -30,8 +30,8 @@ export default {
           props: {
             step: 1,
             displayAccuracy: 0,
-            min: 0
-          }
+            min: 0,
+          },
         },
         {
           label: "延迟时长",
@@ -40,18 +40,18 @@ export default {
           props: {
             step: 1,
             displayAccuracy: 0,
-            min: 0
-          }
+            min: 0,
+          },
         },
         {
           label: "动画曲线",
           key: "timingFunction",
           component: "de-controller-select",
           props: {
-            options: "timingFunction"
-          }
-        }
-      ]
+            options: "timingFunction",
+          },
+        },
+      ],
     },
     {
       name: "moveTo",
@@ -62,8 +62,8 @@ export default {
           key: "target",
           component: "de-controller-select",
           props: {
-            options: "objects"
-          }
+            options: "objects",
+          },
         },
         {
           label: "位置",
@@ -71,8 +71,8 @@ export default {
           component: "de-controller-vector3",
           props: {
             step: 1,
-            displayAccuracy: 2
-          }
+            displayAccuracy: 2,
+          },
         },
         {
           label: "动画时长",
@@ -81,8 +81,8 @@ export default {
           props: {
             step: 1,
             displayAccuracy: 0,
-            min: 0
-          }
+            min: 0,
+          },
         },
         {
           label: "延迟时长",
@@ -91,18 +91,18 @@ export default {
           props: {
             step: 1,
             displayAccuracy: 0,
-            min: 0
-          }
+            min: 0,
+          },
         },
         {
           label: "动画曲线",
           key: "timingFunction",
           component: "de-controller-select",
           props: {
-            options: "timingFunction"
-          }
-        }
-      ]
+            options: "timingFunction",
+          },
+        },
+      ],
     },
     {
       name: "rotationTo",
@@ -113,8 +113,8 @@ export default {
           key: "target",
           component: "de-controller-select",
           props: {
-            options: "objects"
-          }
+            options: "objects",
+          },
         },
         {
           label: "旋转",
@@ -123,8 +123,8 @@ export default {
           props: {
             step: 1,
             displayAccuracy: 2,
-            unit: "°"
-          }
+            unit: "°",
+          },
         },
         {
           label: "动画时长",
@@ -133,8 +133,8 @@ export default {
           props: {
             step: 1,
             displayAccuracy: 0,
-            min: 0
-          }
+            min: 0,
+          },
         },
         {
           label: "延迟时长",
@@ -143,18 +143,18 @@ export default {
           props: {
             step: 1,
             displayAccuracy: 0,
-            min: 0
-          }
+            min: 0,
+          },
         },
         {
           label: "动画曲线",
           key: "timingFunction",
           component: "de-controller-select",
           props: {
-            options: "timingFunction"
-          }
-        }
-      ]
+            options: "timingFunction",
+          },
+        },
+      ],
     },
     {
       name: "upTo",
@@ -165,8 +165,8 @@ export default {
           key: "target",
           component: "de-controller-select",
           props: {
-            options: "objects"
-          }
+            options: "objects",
+          },
         },
         {
           label: "正向",
@@ -174,8 +174,8 @@ export default {
           component: "de-controller-vector3",
           props: {
             step: 1,
-            displayAccuracy: 2
-          }
+            displayAccuracy: 2,
+          },
         },
         {
           label: "动画时长",
@@ -184,8 +184,8 @@ export default {
           props: {
             step: 1,
             displayAccuracy: 0,
-            min: 0
-          }
+            min: 0,
+          },
         },
         {
           label: "延迟时长",
@@ -194,18 +194,18 @@ export default {
           props: {
             step: 1,
             displayAccuracy: 0,
-            min: 0
-          }
+            min: 0,
+          },
         },
         {
           label: "动画曲线",
           key: "timingFunction",
           component: "de-controller-select",
           props: {
-            options: "timingFunction"
-          }
-        }
-      ]
+            options: "timingFunction",
+          },
+        },
+      ],
     },
     {
       name: "moveToObject",
@@ -216,16 +216,16 @@ export default {
           key: "target",
           component: "de-controller-select",
           props: {
-            options: "objects"
-          }
+            options: "objects",
+          },
         },
         {
           label: "目标物体",
           key: "to",
           component: "de-controller-select",
           props: {
-            options: "objects"
-          }
+            options: "objects",
+          },
         },
         {
           label: "偏移",
@@ -233,8 +233,8 @@ export default {
           component: "de-controller-vector3",
           props: {
             step: 1,
-            displayAccuracy: 2
-          }
+            displayAccuracy: 2,
+          },
         },
         {
           label: "动画时长",
@@ -243,8 +243,8 @@ export default {
           props: {
             step: 1,
             displayAccuracy: 0,
-            min: 0
-          }
+            min: 0,
+          },
         },
         {
           label: "延迟时长",
@@ -253,18 +253,18 @@ export default {
           props: {
             step: 1,
             displayAccuracy: 0,
-            min: 0
-          }
+            min: 0,
+          },
         },
         {
           label: "动画曲线",
           key: "timingFunction",
           component: "de-controller-select",
           props: {
-            options: "timingFunction"
-          }
-        }
-      ]
+            options: "timingFunction",
+          },
+        },
+      ],
     },
     {
       name: "moveFromTo",
@@ -275,8 +275,8 @@ export default {
           key: "target",
           component: "de-controller-select",
           props: {
-            options: "objects"
-          }
+            options: "objects",
+          },
         },
         {
           label: "起始",
@@ -284,8 +284,8 @@ export default {
           component: "de-controller-vector3",
           props: {
             step: 1,
-            displayAccuracy: 2
-          }
+            displayAccuracy: 2,
+          },
         },
         {
           label: "结束",
@@ -293,8 +293,8 @@ export default {
           component: "de-controller-vector3",
           props: {
             step: 1,
-            displayAccuracy: 2
-          }
+            displayAccuracy: 2,
+          },
         },
         {
           label: "动画时长",
@@ -303,8 +303,8 @@ export default {
           props: {
             step: 1,
             displayAccuracy: 0,
-            min: 0
-          }
+            min: 0,
+          },
         },
         {
           label: "延迟时长",
@@ -313,18 +313,18 @@ export default {
           props: {
             step: 1,
             displayAccuracy: 0,
-            min: 0
-          }
+            min: 0,
+          },
         },
         {
           label: "动画曲线",
           key: "timingFunction",
           component: "de-controller-select",
           props: {
-            options: "timingFunction"
-          }
-        }
-      ]
+            options: "timingFunction",
+          },
+        },
+      ],
     },
     {
       name: "focusObject",
@@ -335,16 +335,16 @@ export default {
           key: "target",
           component: "de-controller-select",
           props: {
-            options: "objects"
-          }
+            options: "objects",
+          },
         },
         {
           label: "指定相机（可选）",
           key: "camera",
           component: "de-controller-select",
           props: {
-            options: "cameras"
-          }
+            options: "cameras",
+          },
         },
         {
           label: "坐标空间",
@@ -354,14 +354,14 @@ export default {
             options: [
               {
                 label: "本地",
-                value: "local"
+                value: "local",
               },
               {
                 label: "世界",
-                value: "world"
-              }
-            ]
-          }
+                value: "world",
+              },
+            ],
+          },
         },
         {
           label: "偏移量",
@@ -369,14 +369,14 @@ export default {
           component: "de-controller-vector3",
           props: {
             step: 1,
-            displayAccuracy: 2
-          }
+            displayAccuracy: 2,
+          },
         },
         {
           label: "是否返回",
           key: "back",
           component: "de-controller-switch",
-          props: {}
+          props: {},
         },
         {
           label: "动画时长",
@@ -385,8 +385,8 @@ export default {
           props: {
             step: 1,
             displayAccuracy: 0,
-            min: 0
-          }
+            min: 0,
+          },
         },
         {
           label: "延迟时长",
@@ -395,18 +395,18 @@ export default {
           props: {
             step: 1,
             displayAccuracy: 0,
-            min: 0
-          }
+            min: 0,
+          },
         },
         {
           label: "动画曲线",
           key: "timingFunction",
           component: "de-controller-select",
           props: {
-            options: "timingFunction"
-          }
-        }
-      ]
+            options: "timingFunction",
+          },
+        },
+      ],
     },
     {
       name: "showToCamera",
@@ -417,8 +417,8 @@ export default {
           key: "target",
           component: "de-controller-select",
           props: {
-            options: "objects"
-          }
+            options: "objects",
+          },
         },
         {
           label: "偏移量",
@@ -426,8 +426,8 @@ export default {
           component: "de-controller-vector3",
           props: {
             step: 1,
-            displayAccuracy: 2
-          }
+            displayAccuracy: 2,
+          },
         },
         {
           label: "动画时长",
@@ -436,8 +436,8 @@ export default {
           props: {
             step: 1,
             displayAccuracy: 0,
-            min: 0
-          }
+            min: 0,
+          },
         },
         {
           label: "延迟时长",
@@ -446,18 +446,18 @@ export default {
           props: {
             step: 1,
             displayAccuracy: 0,
-            min: 0
-          }
+            min: 0,
+          },
         },
         {
           label: "动画曲线",
           key: "timingFunction",
           component: "de-controller-select",
           props: {
-            options: "timingFunction"
-          }
-        }
-      ]
+            options: "timingFunction",
+          },
+        },
+      ],
     },
     {
       name: "fadeObject",
@@ -468,8 +468,8 @@ export default {
           key: "target",
           component: "de-controller-select",
           props: {
-            options: "objects"
-          }
+            options: "objects",
+          },
         },
         {
           label: "方向",
@@ -478,9 +478,9 @@ export default {
           props: {
             options: [
               { label: "淡入", value: "in" },
-              { label: "淡出", value: "out" }
-            ]
-          }
+              { label: "淡出", value: "out" },
+            ],
+          },
         },
         {
           label: "动画时长",
@@ -489,8 +489,8 @@ export default {
           props: {
             step: 1,
             displayAccuracy: 0,
-            min: 0
-          }
+            min: 0,
+          },
         },
         {
           label: "延迟时长",
@@ -499,24 +499,24 @@ export default {
           props: {
             step: 1,
             displayAccuracy: 0,
-            min: 0
-          }
+            min: 0,
+          },
         },
         {
           label: "动画曲线",
           key: "timingFunction",
           component: "de-controller-select",
           props: {
-            options: "timingFunction"
-          }
+            options: "timingFunction",
+          },
         },
         {
           label: "影响显示",
           key: "visible",
           component: "de-controller-switch",
-          props: {}
-        }
-      ]
+          props: {},
+        },
+      ],
     },
     {
       name: "colorChange",
@@ -527,8 +527,8 @@ export default {
           key: "target",
           component: "de-controller-select",
           props: {
-            options: "materials"
-          }
+            options: "materials",
+          },
         },
         {
           label: "属性",
@@ -537,15 +537,15 @@ export default {
           props: {
             options: [
               { label: "颜色", value: "color" },
-              { label: "发光", value: "emssive" }
-            ]
-          }
+              { label: "发光", value: "emssive" },
+            ],
+          },
         },
         {
           label: "目标颜色",
           key: "color",
           component: "de-controller-picker",
-          props: {}
+          props: {},
         },
         {
           label: "动画时长",
@@ -554,8 +554,8 @@ export default {
           props: {
             step: 1,
             displayAccuracy: 0,
-            min: 0
-          }
+            min: 0,
+          },
         },
         {
           label: "延迟时长",
@@ -564,18 +564,18 @@ export default {
           props: {
             step: 1,
             displayAccuracy: 0,
-            min: 0
-          }
+            min: 0,
+          },
         },
         {
           label: "动画曲线",
           key: "timingFunction",
           component: "de-controller-select",
           props: {
-            options: "timingFunction"
-          }
-        }
-      ]
+            options: "timingFunction",
+          },
+        },
+      ],
     },
     {
       name: "orbitTargetMove",
@@ -586,8 +586,8 @@ export default {
           key: "target",
           component: "de-controller-select",
           props: {
-            options: "objects"
-          }
+            options: "objects",
+          },
         },
         {
           label: "偏移量",
@@ -595,8 +595,8 @@ export default {
           component: "de-controller-vector3",
           props: {
             step: 1,
-            displayAccuracy: 2
-          }
+            displayAccuracy: 2,
+          },
         },
         {
           label: "动画时长",
@@ -605,8 +605,8 @@ export default {
           props: {
             step: 1,
             displayAccuracy: 0,
-            min: 0
-          }
+            min: 0,
+          },
         },
         {
           label: "延迟时长",
@@ -615,18 +615,18 @@ export default {
           props: {
             step: 1,
             displayAccuracy: 0,
-            min: 0
-          }
+            min: 0,
+          },
         },
         {
           label: "动画曲线",
           key: "timingFunction",
           component: "de-controller-select",
           props: {
-            options: "timingFunction"
-          }
-        }
-      ]
-    }
-  ]
+            options: "timingFunction",
+          },
+        },
+      ],
+    },
+  ],
 };

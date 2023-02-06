@@ -19,22 +19,22 @@ export default {
   props: {
     icon: {
       type: String,
-      default: "#iconxzhou"
+      default: "#iconxzhou",
     },
     tooltip: {
       type: String,
-      default: "提示"
+      default: "提示",
     },
     active: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
-      size: "20px"
+      size: "20px",
     };
-  }
+  },
 };
 </script>
 

@@ -23,7 +23,7 @@
 
 <script>
 import { controllers } from "@/assets/js/eventLibrary";
-import { TIMINGFUNCTION } from "vis-three";
+import { Easing } from "@tweenjs/tween.js";
 
 export default {
   props: {
@@ -110,8 +110,8 @@ export default {
     },
     timingFunction() {
       return [
-        { label: "线性运动", value: TIMINGFUNCTION.EASING_LINEAR_NONE },
-        { label: "二次缓进缓出", value: TIMINGFUNCTION.EASING_QUADRATIC_INOUT },
+        { label: "线性运动", value: Easing.Linear.None },
+        { label: "二次缓进缓出", value: Easing.Quartic.InOut },
       ];
     },
   },

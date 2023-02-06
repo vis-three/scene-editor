@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { CSS3DDataSupport, MODULETYPE } from "vis-three";
+import { CSS3DDataSupport, MODULETYPE } from "@vis-three/middleware";
 
 export const css3DDataSupport = new CSS3DDataSupport();
 

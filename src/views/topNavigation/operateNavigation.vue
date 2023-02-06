@@ -77,7 +77,7 @@
 
 <script>
 import { engine } from "@/assets/js/VisFrame";
-import { JSONHandler } from "vis-three";
+import { JSONHandler } from "@vis-three/middleware";
 
 export default {
   data() {

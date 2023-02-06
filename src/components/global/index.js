@@ -5,7 +5,7 @@ import Switch from "./switch.vue";
 import Select from "./select.vue";
 import Vector3 from "./vector3.vue";
 import CollapseLayout from "./collapseLayout.vue";
-export default Vue => {
+export default (Vue) => {
   Vue.component(Color.name, Color);
   Vue.component(NumberComponent.name, NumberComponent);
   Vue.component(Input.name, Input);

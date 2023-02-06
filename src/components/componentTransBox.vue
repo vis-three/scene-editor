@@ -15,7 +15,7 @@
       opacity: opacity,
       width: `${width}px`,
       height: `${height}px`,
-      transform: `rotate(${rotate}deg)`
+      transform: `rotate(${rotate}deg)`,
     }"
   >
     <!-- 状态控件 STR -->
@@ -23,56 +23,58 @@
       class="status-box"
       :class="{
         'edit-status-box': editStatus,
-        'hover-status-box': hoverStatus
+        'hover-status-box': hoverStatus,
       }"
     ></div>
     <!-- 状态控件 END -->
     <!-- 变换可视化 STR -->
     <div class="trans-box" v-show="showTrans">
-      <div class="trans-line top-line" style="top: 0;left: 0;">
+      <div class="trans-line top-line" style="top: 0; left: 0">
         <div class="drag-box"></div>
         <div class="trans-rotate-box" @mousedown.stop="rotateComponent">
           <mmd-icon code="#icon-xuanzhuan" color="rgb(230, 20, 240)"></mmd-icon>
         </div>
       </div>
-      <div class="trans-line right-line" style="left: unset;top: 0;right: 0;">
+      <div class="trans-line right-line" style="left: unset; top: 0; right: 0">
         <div
           class="drag-box"
-          @mousedown.stop="event => dragTrans(event, 'right', 'ew-resize')"
+          @mousedown.stop="(event) => dragTrans(event, 'right', 'ew-resize')"
         ></div>
       </div>
       <div
         class="trans-line bottom-line"
-        style="top: unset; bottom: 0;left: 0;"
+        style="top: unset; bottom: 0; left: 0"
       >
         <div
           class="drag-box"
-          @mousedown.stop="event => dragTrans(event, 'bottom', 'ns-resize')"
+          @mousedown.stop="(event) => dragTrans(event, 'bottom', 'ns-resize')"
         ></div>
       </div>
-      <div class="trans-line left-line" style="top: 0;left: 0;">
+      <div class="trans-line left-line" style="top: 0; left: 0">
         <div class="drag-box"></div>
       </div>
       <div
         class="drag-box corner-drag-box top-left"
-        style="cursor: nw-resize;"
+        style="cursor: nw-resize"
         :style="{ top: cornerOffest, left: cornerOffest }"
       ></div>
       <div
         class="drag-box corner-drag-box top-right"
-        style="left: unset;cursor: ne-resize;"
+        style="left: unset; cursor: ne-resize"
         :style="{ top: cornerOffest, right: cornerOffest }"
       ></div>
       <div
         class="drag-box corner-drag-box bottom-left"
-        style="top: unset;cursor: ne-resize;"
+        style="top: unset; cursor: ne-resize"
         :style="{ bottom: cornerOffest, left: cornerOffest }"
       ></div>
       <div
         class="drag-box corner-drag-box bottom-right"
-        style="left: unset;top: unset;cursor: nw-resize;"
+        style="left: unset; top: unset; cursor: nw-resize"
         :style="{ bottom: cornerOffest, right: cornerOffest }"
-        @mousedown.stop="event => dragTrans(event, 'bottom-right', 'nw-resize')"
+        @mousedown.stop="
+          (event) => dragTrans(event, 'bottom-right', 'nw-resize')
+        "
       ></div>
     </div>
     <!-- 变换可视化 END -->
@@ -90,54 +92,54 @@ export default {
   props: {
     newStatus: {
       // 是否为新增状态
-      type: Boolean
+      type: Boolean,
     },
     top: {
       // 变换盒子的顶部距离
-      type: Number
+      type: Number,
     },
     left: {
       // 变换盒子的左部距离
-      type: Number
+      type: Number,
     },
     width: {
       // 组件宽度
-      type: Number
+      type: Number,
     },
     height: {
       // 组件高度
-      type: Number
+      type: Number,
     },
     zIndex: {
       // 图层顺序
-      type: Number
+      type: Number,
     },
     opacity: {
       // 透明度
-      type: Number
+      type: Number,
     },
     rotate: {
       // 旋转
-      type: Number
+      type: Number,
     },
     id: {
       // 唯一domid标识
-      type: Number
+      type: Number,
     },
     componentType: {
       // 组件类型
-      type: String
+      type: String,
     },
     config: {
       // 具体组件内部配置
-      type: Array
-    }
+      type: Array,
+    },
   },
   computed: {
     // 当前的组件结构
     componentStructure() {
       return this.$store.getters["ui/getComponentStructureById"](this.id);
-    }
+    },
   },
   data() {
     return {
@@ -152,7 +154,7 @@ export default {
       mouseStatus: false, // 鼠标双击时是否在组件内部
       mousedownTimer: "", // mouseDown的定时器
       component: "", // 此盒子中渲染的组件
-      mask: "" // 盒子中的辅助盒子
+      mask: "", // 盒子中的辅助盒子
     };
   },
   methods: {
@@ -164,7 +166,7 @@ export default {
         this.setKeyboard(); // 快捷键
         this.$store.commit("ui/setCurrentComponent", {
           component: this.component,
-          id: this.id
+          id: this.id,
         });
       }
     },
@@ -187,10 +189,10 @@ export default {
       // 所以在双击的时候给组件绑定鼠标事件，
       // 如果鼠标在组件外触发了失焦事件，就运行相关操作，在内部触发就跳过操作
       this.mouseStatus = true;
-      this.$refs.componentTransBox.onmouseenter = event => {
+      this.$refs.componentTransBox.onmouseenter = (event) => {
         this.mouseStatus = true;
       };
-      this.$refs.componentTransBox.onmouseleave = event => {
+      this.$refs.componentTransBox.onmouseleave = (event) => {
         this.mouseStatus = false;
       };
       this.showTrans = false;
@@ -234,8 +236,10 @@ export default {
       this.mask.dargStartMouseX = event.clientX;
       this.mask.dargStartMouseY = event.clientY;
       // 这里的圆心可以优化
-      this.mask.componentClientX = this.component.$el.getBoundingClientRect().left;
-      this.mask.componentClientY = this.component.$el.getBoundingClientRect().top;
+      this.mask.componentClientX =
+        this.component.$el.getBoundingClientRect().left;
+      this.mask.componentClientY =
+        this.component.$el.getBoundingClientRect().top;
     },
     // 设置快捷键
     setKeyboard() {
@@ -260,13 +264,12 @@ export default {
       //       });
       //     });
       // });
-    }
+    },
   },
   mounted() {
     // 通过extend的方式加入具体组件
-    const defaultComponentList = this.$store.getters[
-      "ui/getDefautComponentList"
-    ];
+    const defaultComponentList =
+      this.$store.getters["ui/getDefautComponentList"];
     const Component = Vue.extend(defaultComponentList[this.componentType]);
     this.component = new Component();
     this.component.$mount(`#${this.idSign}${this.id}`);
@@ -281,17 +284,17 @@ export default {
           bufferWidth: component.width,
           bufferHeight: component.height,
           bufferTop: component.top,
-          bufferLeft: component.left
+          bufferLeft: component.left,
         };
       },
-      store
+      store,
     }).$mount();
     const editorCanvasIframe = document.getElementById("editorCanvas-iframe");
     editorCanvasIframe.appendChild(this.mask.$el);
     // 加入store组件数据
     this.$store.commit("ui/addComponent", {
       id: this.id,
-      component: this.component
+      component: this.component,
     });
     // 判断是否为新增状态
     if (this.newStatus) {
@@ -304,22 +307,22 @@ export default {
         this.component[key] = configList[key];
       }
       const eventList = this.componentStructure.eventList;
-      eventList.forEach(eventElem => {
-        eventElem.methodList.forEach(elem => {
+      eventList.forEach((eventElem) => {
+        eventElem.methodList.forEach((elem) => {
           const saveParams = {};
           // 按顺序注册
-          elem.params.forEach(paramElem => {
+          elem.params.forEach((paramElem) => {
             saveParams[paramElem.name] = paramElem.value || paramElem.default;
           });
           this.component.applyEvent({
             eventName: eventElem.event,
             method: elem.name,
-            params: saveParams
+            params: saveParams,
           });
         });
       });
     }
-  }
+  },
 };
 </script>
 

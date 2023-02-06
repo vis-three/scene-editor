@@ -1,6 +1,7 @@
-import { Action } from "vis-three";
+import { Action } from "@vis-three/convenient";
+import { createSymbol } from "@vis-three/middleware";
 import { Message } from "element-ui";
-import { v4 } from "uuid";
+
 import axios from "@/assets/js/plugins/axios";
 
 export class ChangeComponentAction extends Action {
@@ -31,7 +32,7 @@ export class ChangeComponentAction extends Action {
       url,
       packageJSON,
       {
-        $cid: v4(),
+        $cid: createSymbol(),
         $url: url,
         $pkg: pkg,
       }

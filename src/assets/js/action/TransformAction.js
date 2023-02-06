@@ -1,4 +1,4 @@
-import { Action } from "vis-three";
+import { Action } from "@vis-three/convenient";
 
 // 物体变换动作
 export class TransformAction extends Action {
@@ -10,13 +10,13 @@ export class TransformAction extends Action {
       mode: "translate",
       space: "world",
       tranform: "",
-      objectMap: new Map()
+      objectMap: new Map(),
     };
     this.prevState = {
       mode: "translate",
       space: "world",
       tranform: "",
-      objectMap: new Map()
+      objectMap: new Map(),
     };
   }
 
@@ -37,20 +37,20 @@ export class TransformAction extends Action {
 
     // 缓存物体位置
     const cacheMap = state.objectMap;
-    objectSet.forEach(object => {
+    objectSet.forEach((object) => {
       const vid = compilerManager.getObjectSymbol(object);
       if (vid) {
         cacheMap.set(vid, {
           x: object[tranform].x,
           y: object[tranform].y,
-          z: object[tranform].z
+          z: object[tranform].z,
         });
       } else {
         console.warn(`transform action can not found vid`, object);
       }
     });
 
-    this[status] = function() {
+    this[status] = function () {
       const transformControls = this.transformControls;
       const state = this[`${status}State`];
       transformControls.mode = state.mode;

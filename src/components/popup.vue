@@ -14,7 +14,7 @@
           minHeight: minHeight,
           marginLeft: `${-marginLeft}px`,
           marginTop: `${-marginTop}px`,
-          padding: padding ? '10px' : ''
+          padding: padding ? '10px' : '',
         }"
       >
         <div class="close-button" v-if="showClose" @click="close">
@@ -52,55 +52,55 @@ export default {
     // 标题
     title: {
       type: String,
-      default: "vis-popup弹窗"
+      default: "vis-popup弹窗",
     },
     // 标题字体大小
     fontSize: {
-      type: String
+      type: String,
     },
     // 图标大小
     size: {
-      type: String
+      type: String,
     },
     // 图标颜色
     color: {
-      type: String
+      type: String,
     },
     // 宽
     width: {
       type: String,
-      default: "30%"
+      default: "30%",
     },
     // 高
     height: {
       type: String,
-      default: "30%"
+      default: "30%",
     },
     // 宽
     minWidth: {
-      type: String
+      type: String,
     },
     // 高
     minHeight: {
-      type: String
+      type: String,
     },
     showClose: {
       type: Boolean,
-      default: true
+      default: true,
     },
     value: {
       type: Boolean,
-      default: false
+      default: false,
     },
     padding: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   data() {
     return {
       marginLeft: 0,
-      marginTop: 0
+      marginTop: 0,
     };
   },
   methods: {
@@ -113,7 +113,7 @@ export default {
     close() {
       this.$emit("close");
       this.$emit("input", false);
-    }
+    },
   },
   watch: {
     value: {
@@ -124,8 +124,8 @@ export default {
           });
         }
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   mounted() {
     document.addEventListener("onresize", this.cacleCenter);
@@ -133,7 +133,7 @@ export default {
 
   beforeDestroy() {
     document.removeEventListener("onresize", this.cacleCenter);
-  }
+  },
 };
 </script>
 

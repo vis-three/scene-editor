@@ -89,8 +89,8 @@ export default {
   props: {
     config: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     phiStart: {
@@ -99,7 +99,7 @@ export default {
       },
       set(value) {
         this.config.phiStart = (value * Math.PI) / 180;
-      }
+      },
     },
     phiLength: {
       get() {
@@ -107,7 +107,7 @@ export default {
       },
       set(value) {
         this.config.phiLength = (value * Math.PI) / 180;
-      }
+      },
     },
     thetaStart: {
       get() {
@@ -115,7 +115,7 @@ export default {
       },
       set(value) {
         this.config.thetaStart = (value * Math.PI) / 180;
-      }
+      },
     },
     thetaLength: {
       get() {
@@ -123,9 +123,9 @@ export default {
       },
       set(value) {
         this.config.thetaLength = (value * Math.PI) / 180;
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>
 

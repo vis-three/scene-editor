@@ -1,4 +1,4 @@
-import { JSONHandler, Action } from "vis-three";
+import { Action } from "@vis-three/convenient";
 
 export class AddMeshAction extends Action {
   constructor({ geometryConfig, meshConfig, store, engine }) {

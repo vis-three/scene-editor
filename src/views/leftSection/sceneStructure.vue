@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { CONFIGTYPE } from "vis-three";
+import { CONFIGTYPE } from "@vis-three/middleware";
 import { engine, history } from "../../assets/js/VisFrame";
 import { SelectionAction } from "../../assets/js/action/SelectionAction";
 import { DeleteObjectAction } from "../../assets/js/action/DeleteObjectAction";

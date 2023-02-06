@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { SpriteDataSupport, MODULETYPE } from "vis-three";
+import { SpriteDataSupport, MODULETYPE } from "@vis-three/middleware";
 
 export const spriteDataSupport = new SpriteDataSupport();
 
@@ -7,12 +7,12 @@ export const module = {
   namespaced: true,
   state: {
     map: spriteDataSupport.getData(),
-    module: MODULETYPE.SPRITE
+    module: MODULETYPE.SPRITE,
   },
   getters: {
     get(state) {
       return state.map;
-    }
+    },
   },
   mutations: {
     add(state, config) {
@@ -27,7 +27,7 @@ export const module = {
 
     notify(state) {
       state.map.__ob__.dep.notify();
-    }
+    },
   },
-  actions: {}
+  actions: {},
 };

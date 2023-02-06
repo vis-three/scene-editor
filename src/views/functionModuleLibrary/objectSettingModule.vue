@@ -142,7 +142,13 @@
 </template>
 
 <script>
-import { CONFIGTYPE, MODULETYPE, CONFIGMODULE, getModule } from "vis-three";
+import {
+  CONFIGTYPE,
+  MODULETYPE,
+  CONFIGMODULE,
+  getModule,
+} from "@vis-three/middleware";
+
 const geometrySettingModule = () => import("./geometrySettingModule.vue");
 const componentSettingModule = () => import("./componentSettingModule.vue");
 

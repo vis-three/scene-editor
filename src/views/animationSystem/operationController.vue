@@ -139,7 +139,11 @@
 </template>
 
 <script>
-import { AniScriptLibrary, CONFIGTYPE, generateConfig } from "vis-three";
+import {
+  CONFIGTYPE,
+  generateConfig,
+  AniScriptGeneratorManager,
+} from "@vis-three/middleware";
 import { engine } from "../../assets/js/VisFrame";
 import aniScrpit from "@/assets/js/aniScriptLibrary";
 import Vue from "vue";
@@ -201,7 +205,7 @@ export default {
           generateConfig(CONFIGTYPE.SCRIPTANIMATION, {
             target: vid,
             attribute: `.${attribute}`,
-            script: AniScriptLibrary.generateConfig(scirpt),
+            script: AniScriptGeneratorManager.generateConfig(scirpt),
           })
         );
 

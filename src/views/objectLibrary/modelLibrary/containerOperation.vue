@@ -48,7 +48,7 @@ vabse
 
 <script>
 import { engine } from "@/assets/js/VisFrame";
-import { generateConfig, Template } from "vis-three";
+import { generateConfig, Template } from "@vis-three/middleware";
 import Vue from "vue";
 
 export default {

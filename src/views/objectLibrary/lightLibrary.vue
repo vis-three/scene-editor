@@ -11,7 +11,7 @@
 
 <script>
 import { v4 as getUuid } from "uuid";
-import { CONFIGTYPE, generateConfig, MODULETYPE } from "vis-three";
+import { CONFIGTYPE, generateConfig, MODULETYPE } from "@vis-three/middleware";
 import { AddLightAction } from "@/assets/js/action/AddLightAction.js";
 import objectCollapse from "@/templates/objectCollapse.vue";
 import Vue from "vue";

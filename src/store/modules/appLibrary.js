@@ -3,6 +3,7 @@ import axios from "@/assets/js/plugins/axios";
 const fileTree = {
   dir: true,
   name: "/",
+  url: "/",
   parent: null,
   children: [],
 };

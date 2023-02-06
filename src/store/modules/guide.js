@@ -11,7 +11,7 @@ export const module = {
     currentComponent: "", // 当前选中的组件
     adsorbent: true, // 是否吸附
     colGuideList: [],
-    rowGuideList: []
+    rowGuideList: [],
   },
   getters: {
     // 获取整个组件列表结构
@@ -32,7 +32,7 @@ export const module = {
     },
     // 通过id获取组件的结构
     getComponentStructureById(state) {
-      return id => state.componentStructureList[id];
+      return (id) => state.componentStructureList[id];
     },
     // 获取保存的组件结构数据
     getSaveComponentStructureList(state) {
@@ -59,7 +59,7 @@ export const module = {
     // 获取横向辅辅助线助列
     getRowGuideList(state) {
       return state.rowGuideList;
-    }
+    },
   },
   mutations: {
     // 添加组件
@@ -85,7 +85,7 @@ export const module = {
         configList: {}, // 配置列表
         config: data.config, // 具体组件内部配置
         event: data.event, // 事件
-        method: data.method // 方法
+        method: data.method, // 方法
       });
       state.id += 1;
       state.zIndex += 1;
@@ -93,19 +93,19 @@ export const module = {
     // 加载组件结构
     loadComponentStructure(state, list) {
       // 先将组件的信息转为对象形式
-      const defaultComponentMessageList = this.getters
-        .getDefautComponentMessageList;
+      const defaultComponentMessageList =
+        this.getters.getDefautComponentMessageList;
       const objComponentMessageList = {};
       for (const key in defaultComponentMessageList) {
         if (defaultComponentMessageList[key].children[0]) {
-          defaultComponentMessageList[key].children.forEach(elem => {
+          defaultComponentMessageList[key].children.forEach((elem) => {
             objComponentMessageList[elem.name] = elem;
           });
         }
       }
       // 添加config，event，method并转为对象形式
       const structure = {};
-      list.forEach(elem => {
+      list.forEach((elem) => {
         elem.newStatus = false;
         elem.config = objComponentMessageList[elem.componentType].config;
         elem.event = objComponentMessageList[elem.componentType].event;
@@ -156,14 +156,14 @@ export const module = {
     currentComponentAddEvent(state, id) {
       state.componentStructureList[id].eventList.push({
         event: "",
-        methodList: []
+        methodList: [],
       });
     },
     // 当前组件添加方法
     currentComponentAddMethod(state, { id, eventIndex, method }) {
       const newMethod = JSON.parse(JSON.stringify(method));
       if (method.params[0]) {
-        newMethod.params.forEach(elem => {
+        newMethod.params.forEach((elem) => {
           elem.value = elem.default || "";
         });
       }
@@ -178,16 +178,16 @@ export const module = {
       const event = state.componentStructureList[id].eventList[eventIndex];
       // 由于是组件是匿名函数注册，所以在注册前清空此事件下的列表
       state.currentComponent.clearEventList(event.event);
-      event.methodList.forEach(elem => {
+      event.methodList.forEach((elem) => {
         const saveParams = {};
         // 按顺序注册
-        elem.params.forEach(paramElem => {
+        elem.params.forEach((paramElem) => {
           saveParams[paramElem.name] = paramElem.value || paramElem.default;
         });
         state.currentComponent.applyEvent({
           eventName: event.event,
           method: elem.name,
-          params: saveParams
+          params: saveParams,
         });
       });
     },
@@ -202,8 +202,8 @@ export const module = {
     // 添加横向辅助线
     addRowGuide(state, object) {
       state.rowGuideList.push(object);
-    }
+    },
   },
   actions: {},
-  modules: {}
+  modules: {},
 };

@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { Object3DDataSupport, MODULETYPE } from "vis-three";
+import { Object3DDataSupport, MODULETYPE } from "@vis-three/middleware";
 
 export const object3DDataSupport = new Object3DDataSupport();
 
@@ -8,7 +8,7 @@ export const module = {
   state: {
     map: object3DDataSupport.getData(),
     module: MODULETYPE.OBJECT3D,
-    currentModel: ""
+    currentModel: "",
   },
   getters: {
     get(state) {
@@ -16,7 +16,7 @@ export const module = {
     },
     currentModel(state) {
       return state.currentModel;
-    }
+    },
   },
   mutations: {
     add(state, config) {
@@ -31,7 +31,7 @@ export const module = {
 
     remove(state, vid) {
       Vue.delete(state.map, vid);
-    }
+    },
   },
-  actions: {}
+  actions: {},
 };

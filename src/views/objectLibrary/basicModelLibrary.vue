@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { CONFIGTYPE, generateConfig } from "vis-three";
+import { CONFIGTYPE, generateConfig } from "@vis-three/middleware";
 import objectCollapse from "@/templates/objectCollapse.vue";
 import { engine, history } from "@/assets/js/VisFrame";
 import Vue from "vue";

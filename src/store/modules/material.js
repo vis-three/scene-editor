@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { MaterialDataSupport, MODULETYPE } from "vis-three";
+import { MaterialDataSupport, MODULETYPE } from "@vis-three/middleware";
 
 export const materialDataSupport = new MaterialDataSupport();
 
@@ -9,7 +9,7 @@ export const module = {
     map: materialDataSupport.getData(),
     module: MODULETYPE.MATERIAL,
     draggedMaterial: "",
-    dragging: false
+    dragging: false,
   },
   getters: {
     get(state) {
@@ -23,7 +23,7 @@ export const module = {
     },
     draggedMaterial(state) {
       return state.draggedMaterial;
-    }
+    },
   },
   mutations: {
     dragging(state, status) {
@@ -45,7 +45,7 @@ export const module = {
 
     remove(state, vid) {
       Vue.delete(state.map, vid);
-    }
+    },
   },
-  actions: {}
+  actions: {},
 };

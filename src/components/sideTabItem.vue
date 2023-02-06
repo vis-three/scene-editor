@@ -9,13 +9,13 @@ export default {
   name: "sideTabItem",
   props: {
     icon: {
-      type: String
+      type: String,
     },
     title: {
       type: String,
-      default: "默认"
-    }
-  }
+      default: "默认",
+    },
+  },
 };
 </script>
 

@@ -37,8 +37,8 @@ export default {
       config.name = `${item.label}${config.vid.slice(-2)}`;
 
       this.$store.commit("action/helperModelAdd", config);
-    }
-  }
+    },
+  },
 };
 </script>
 

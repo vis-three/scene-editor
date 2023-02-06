@@ -9,14 +9,14 @@ export default {
   props: {
     role: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       fileSystem: "",
       fileTree: [], // 当前的文件树
-      files: [] // 需要渲染的文件
+      files: [], // 需要渲染的文件
     };
   },
   methods: {
@@ -24,19 +24,19 @@ export default {
     enter(item) {
       console.log(item);
     },
-    updateFile() {}
+    updateFile() {},
   },
   created() {
     this.axios
       .post("api/file/structure", {
         role: this.role,
-        type: "models"
+        type: "models",
       })
-      .then(res => {
+      .then((res) => {
         console.log(res);
-        this.files = res.data.map(data => {
+        this.files = res.data.map((data) => {
           return {
-            ...data
+            ...data,
           };
         });
         this.fileTree = res.data;
@@ -45,7 +45,7 @@ export default {
   mounted() {
     this.fileSystem = fileSystemFactory();
     this.$refs.container.appendChild(this.fileSystem.$el);
-  }
+  },
 };
 </script>
 

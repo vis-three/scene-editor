@@ -60,7 +60,7 @@
 <script>
 import eventGroup from "./interactSettingModule/eventGroup.vue";
 import { configures } from "@/assets/js/eventLibrary";
-import { EventLibrary } from "vis-three";
+import { EventGeneratorManager } from "@vis-three/middleware";
 import Vue from "vue";
 
 export default {
@@ -149,8 +149,10 @@ export default {
 
       const eventName = this.currentEvent.name;
 
-      window.EventLibrary = EventLibrary;
-      const config = Vue.observable(EventLibrary.generateConfig(value[1]));
+      window.EventGeneratorManager = EventGeneratorManager;
+      const config = Vue.observable(
+        EventGeneratorManager.generateConfig(value[1])
+      );
       debugger;
       console.log(config);
       console.log(this.activeObject[eventName]);

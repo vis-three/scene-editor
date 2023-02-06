@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { CameraDataSupport, MODULETYPE } from "vis-three";
+import { CameraDataSupport, MODULETYPE } from "@vis-three/middleware";
 
 export const cameraDataSupport = new CameraDataSupport();
 

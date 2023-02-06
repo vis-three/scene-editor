@@ -1,4 +1,4 @@
-import { Action } from "vis-three";
+import { Action } from "@vis-three/convenient";
 export class ChangeMaterialAction extends Action {
   constructor({ engine, objectSymbol, materialSymbol }) {
     super();

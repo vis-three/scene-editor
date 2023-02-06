@@ -3,7 +3,7 @@ import {
   generateConfig,
   SceneDataSupport,
   DataContainer,
-} from "vis-three";
+} from "@vis-three/middleware";
 import Vue from "vue";
 
 DataContainer.generator = () => Vue.observable({});
