@@ -81,6 +81,9 @@ QQ 群：1025827206
 <a href="https://space.bilibili.com/281443965/">
   <img src="https://i0.hdslb.com/bfs/face/member/noface.jpg@100w_100h_1c_1s.webp" />
 </a>
+<a href="https://space.bilibili.com/17754951/">
+  <img src="https://i0.hdslb.com/bfs/face/17b0b31276688459ca282b9715fd9e14a1106dc5.jpg@100w_100h_1c_1s.webp" />
+</a>
 
 > 排名不分先后，本栏记录 2022/11/22 号之后的充电支持记录，感谢各位。
 
