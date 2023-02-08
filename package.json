@@ -18,7 +18,7 @@
     "@vis-three/event-manager-plugin": "^0.5.3",
     "@vis-three/grid-helper-plugin": "^0.5.1",
     "@vis-three/middleware": "^0.5.10",
-    "@vis-three/modeling-engine-support": "^0.5.3",
+    "@vis-three/modeling-engine-support": "^0.5.4",
     "@vis-three/orbit-controls-plugin": "^0.5.11",
     "@vis-three/shader-library": "^0.5.5",
     "@vis-three/utils": "^0.5.0",
