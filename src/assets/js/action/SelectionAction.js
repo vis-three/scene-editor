@@ -18,17 +18,8 @@ export class SelectionAction extends Action {
 
   next() {
     SelectionAction.touch = true;
-    const compilerManager = this.engine.compilerManager;
-    const objects = [];
-    this.newSymbolBox.forEach((symbol) => {
-      const object = compilerManager.getObjectBySymbol(symbol);
-      if (object) {
-        objects.push(object);
-      } else {
-        console.warn(`selection action can not font object: ${symbol}`);
-      }
-    });
-    this.engine.setSelectionBox({ objects });
+
+    this.engine.setSelectionBoxBySymbol(this.newSymbolBox);
 
     if (this.newSymbolBox.length === 1) {
       this.$store.commit(
@@ -42,17 +33,8 @@ export class SelectionAction extends Action {
 
   prev() {
     SelectionAction.touch = true;
-    const compilerManager = this.engine.compilerManager;
-    const objects = [];
-    this.oldSymbolBox.forEach((symbol) => {
-      const object = compilerManager.getObjectBySymbol(symbol);
-      if (object) {
-        objects.push(object);
-      } else {
-        console.warn(`selection action can not font object: ${symbol}`);
-      }
-    });
-    this.engine.setSelectionBox({ objects });
+
+    this.engine.setSelectionBoxBySymbol(this.oldSymbolBox);
 
     if (this.oldSymbolBox.length === 1) {
       this.$store.commit(
