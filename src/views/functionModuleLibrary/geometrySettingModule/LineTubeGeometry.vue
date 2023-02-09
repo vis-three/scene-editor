@@ -22,6 +22,7 @@
           :key="index"
         >
           <de-controller-vector3
+            :keyframe="false"
             :label="'锚点' + index"
             :step="1"
             :displayAccuracy="2"
@@ -43,24 +44,28 @@
     >
       <template #container>
         <de-controller-number
+          :keyframe="false"
           label="半径"
           :step="1"
           :min="0"
           v-model="config.radius"
         ></de-controller-number>
         <de-controller-number
+          :keyframe="false"
           label="半径分段"
           :step="1"
           :min="1"
           v-model="config.radialSegments"
         ></de-controller-number>
         <de-controller-number
+          :keyframe="false"
           label="管道分段"
           :step="1"
           :min="0"
           v-model="config.tubularSegments"
         ></de-controller-number>
         <de-controller-switch
+          :keyframe="false"
           label="闭合两端"
           :step="1"
           :min="0"

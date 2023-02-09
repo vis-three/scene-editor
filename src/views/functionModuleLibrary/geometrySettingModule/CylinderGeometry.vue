@@ -7,6 +7,7 @@
     >
       <template #container>
         <de-controller-number
+          :keyframe="false"
           label="顶部半径"
           :step="1"
           :dragMultply="2"
@@ -14,6 +15,7 @@
           v-model="config.radiusTop"
         ></de-controller-number>
         <de-controller-number
+          :keyframe="false"
           label="底部半径"
           :step="1"
           :dragMultply="2"
@@ -21,6 +23,7 @@
           v-model="config.radiusBottom"
         ></de-controller-number>
         <de-controller-number
+          :keyframe="false"
           label="柱体高度"
           :step="1"
           :dragMultply="2"
@@ -28,6 +31,7 @@
           v-model="config.height"
         ></de-controller-number>
         <de-controller-number
+          :keyframe="false"
           label="半径分段"
           :step="1"
           :dragMultply="2"
@@ -35,6 +39,7 @@
           v-model="config.radialSegments"
         ></de-controller-number>
         <de-controller-number
+          :keyframe="false"
           label="垂直分段"
           :step="1"
           :dragMultply="2"
@@ -42,10 +47,12 @@
           v-model="config.heightSegments"
         ></de-controller-number>
         <de-controller-switch
+          :keyframe="false"
           label="开放底面"
           v-model="config.openEnded"
         ></de-controller-switch>
         <de-controller-number
+          :keyframe="false"
           label="起始角度"
           :step="1"
           :dragMultply="5"
@@ -56,6 +63,7 @@
           v-model="thetaStart"
         ></de-controller-number>
         <de-controller-number
+          :keyframe="false"
           label="扇区范围"
           :step="1"
           :dragMultply="5"

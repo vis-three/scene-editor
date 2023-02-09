@@ -135,9 +135,19 @@ export default {
             },
           ],
           click: function (item) {
-            const geometryConfig = generateConfig(item.geometry, undefined, {
-              handler: (c) => Vue.observable(c),
-            });
+            const geometryConfig = generateConfig(
+              item.geometry,
+              {
+                path: [
+                  { x: 0, y: 0 },
+                  { x: 10, y: 0 },
+                  { x: 0, y: 10 },
+                ],
+              },
+              {
+                handler: (c) => Vue.observable(c),
+              }
+            );
             const meshConfig = generateConfig(CONFIGTYPE.MESH, undefined, {
               handler: (c) => Vue.observable(c),
             });

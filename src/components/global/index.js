@@ -4,6 +4,7 @@ import Input from "./input.vue";
 import Switch from "./switch.vue";
 import Select from "./select.vue";
 import Vector3 from "./vector3.vue";
+import Vector2 from "./vector2.vue";
 import CollapseLayout from "./collapseLayout.vue";
 export default (Vue) => {
   Vue.component(Color.name, Color);
@@ -12,5 +13,6 @@ export default (Vue) => {
   Vue.component(Switch.name, Switch);
   Vue.component(Select.name, Select);
   Vue.component(Vector3.name, Vector3);
+  Vue.component(Vector2.name, Vector2);
   Vue.component(CollapseLayout.name, CollapseLayout);
 };

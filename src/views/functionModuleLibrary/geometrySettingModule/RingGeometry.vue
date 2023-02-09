@@ -7,6 +7,7 @@
     >
       <template #container>
         <de-controller-number
+          :keyframe="false"
           label="内环半径"
           :step="1"
           :dragMultply="2"
@@ -14,6 +15,7 @@
           v-model="config.innerRadius"
         ></de-controller-number>
         <de-controller-number
+          :keyframe="false"
           label="外环半径"
           :step="1"
           :dragMultply="2"
@@ -21,6 +23,7 @@
           v-model="config.outerRadius"
         ></de-controller-number>
         <de-controller-number
+          :keyframe="false"
           label="圆环分段"
           :step="1"
           :dragMultply="2"
@@ -28,6 +31,7 @@
           v-model="config.thetaSegments"
         ></de-controller-number>
         <de-controller-number
+          :keyframe="false"
           label="环面分段"
           :step="1"
           :dragMultply="2"
@@ -35,6 +39,7 @@
           v-model="config.phiSegments"
         ></de-controller-number>
         <de-controller-number
+          :keyframe="false"
           label="起始角度"
           :step="1"
           :dragMultply="5"
@@ -45,6 +50,7 @@
           v-model="thetaStart"
         ></de-controller-number>
         <de-controller-number
+          :keyframe="false"
           label="环面范围"
           :step="1"
           :dragMultply="5"

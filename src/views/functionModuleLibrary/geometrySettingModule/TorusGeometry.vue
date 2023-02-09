@@ -7,6 +7,7 @@
     >
       <template #container>
         <de-controller-number
+          :keyframe="false"
           label="环面半径"
           :step="1"
           :dragMultply="2"
@@ -14,6 +15,7 @@
           v-model="config.radius"
         ></de-controller-number>
         <de-controller-number
+          :keyframe="false"
           label="管道半径"
           :step="1"
           :dragMultply="2"
@@ -21,6 +23,7 @@
           v-model="config.tube"
         ></de-controller-number>
         <de-controller-number
+          :keyframe="false"
           label="半径分段"
           :step="1"
           :dragMultply="2"
@@ -28,6 +31,7 @@
           v-model="config.radialSegments"
         ></de-controller-number>
         <de-controller-number
+          :keyframe="false"
           label="管道分段"
           :step="1"
           :dragMultply="2"
@@ -35,6 +39,7 @@
           v-model="config.tubularSegments"
         ></de-controller-number>
         <de-controller-number
+          :keyframe="false"
           label="圆心角"
           :step="1"
           :dragMultply="5"
