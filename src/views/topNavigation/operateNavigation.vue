@@ -10,7 +10,14 @@
     <!-- <el-button size="mini" type="primary" @click="buildDialogVisible = true">
       导出
     </el-button> -->
-    <el-button size="mini" type="primary" @click="save">保存</el-button>
+    <el-dropdown size="mini" split-button type="primary" @click="save">
+      保存
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item>在线保存</el-dropdown-item>
+        <el-dropdown-item>本地保存</el-dropdown-item>
+        <el-dropdown-item>模板保存</el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
     <el-button size="mini" type="success" @click="buildDialogVisible = true">
       构建
     </el-button>
@@ -226,5 +233,12 @@ export default {
 .operateNavigation-container {
   .flexLayout(row, flex-end, center);
   padding-right: @box-padding;
+}
+
+/deep/ .el-dropdown {
+  .el-button-group {
+    width: 82px;
+    margin: 0 @box-margin;
+  }
 }
 </style>
