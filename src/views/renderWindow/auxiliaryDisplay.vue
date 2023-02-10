@@ -70,19 +70,19 @@ export default {
   watch: {
     showAxes: {
       handler(newVal) {
-        this.connector.setAxesHelper({ show: newVal });
+        this.connector.setAxesHelper(newVal);
       },
       immediate: true,
     },
     showGrid: {
       handler(newVal) {
-        this.connector.setGridHelper({ show: newVal });
+        this.connector.setGridHelper(newVal);
       },
       immediate: true,
     },
     showHelper: {
       handler(newVal) {
-        this.connector.setObjectHelper({ show: newVal });
+        this.connector.setObjectHelper(newVal);
       },
       immediate: true,
     },

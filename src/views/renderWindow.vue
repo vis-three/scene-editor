@@ -37,18 +37,6 @@
       </template>
     </position-layout-box>
 
-    <position-layout-box
-      class="bottom-function-box"
-      :offsetX="5"
-      :offsetY="5"
-      :isBottom="true"
-      :isRight="true"
-    >
-      <template #main>
-        <!-- <render-mode :connector="connector"></render-mode> -->
-      </template>
-    </position-layout-box>
-
     <position-layout-box class="top-function-box" :offsetX="5" :offsetY="5">
       <template #main>
         <performance-monitor :connector="connector"></performance-monitor>
