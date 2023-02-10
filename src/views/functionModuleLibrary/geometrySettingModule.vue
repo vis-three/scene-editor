@@ -70,7 +70,7 @@
 
             <el-popconfirm
               title="确定删除当下几何组吗？"
-              @onConfirm="deleteGroup(index)"
+              @confirm="deleteGroup(index)"
             >
               <div class="group-operation" slot="reference">
                 <i class="el-icon-delete"></i>
@@ -165,6 +165,7 @@ export default {
 }
 
 .group-operation {
+  height: 100%;
   margin-left: @box-margin;
   padding: 0 @box-padding / 2;
   .flexLayout(row, center, center);
