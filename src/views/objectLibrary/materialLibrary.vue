@@ -314,6 +314,8 @@ export default {
       .flexLayout(row, space-around, center);
       flex-wrap: wrap;
       width: 100%;
+      height: calc(100% - 47px);
+      overflow: auto;
 
       .material-elem {
         position: relative;
