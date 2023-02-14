@@ -165,7 +165,7 @@ export default {
           type: "warning",
         }).then(() => {
           this.axios
-            .post("/app/removeClassify", {
+            .post("/template/removeClassify", {
               id: item.id,
             })
             .then((res) => {

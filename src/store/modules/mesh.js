@@ -22,7 +22,6 @@ export const module = {
     add(state, config) {
       state.map[config.vid] = config;
       state.map.__ob__.dep.notify();
-      console.log(state.map[config.vid]);
     },
 
     notify(state) {

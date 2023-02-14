@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { MODULETYPE } from "@vis-three/middleware";
+import { MODULETYPE, generateConfig, CONFIGTYPE } from "@vis-three/middleware";
 import { PassDataSupport } from "@vis-three/composer-support-strategy";
 
 export const passDataSupport = new PassDataSupport();
@@ -17,9 +17,9 @@ export const module = {
   },
   mutations: {
     add(state, config) {
-      const observeObject = Vue.observable(config);
-      state.map[observeObject.vid] = observeObject;
+      state.map[config.vid] = config;
       state.map.__ob__.dep.notify();
+      console.log(passDataSupport);
     },
 
     remove(state, vid) {

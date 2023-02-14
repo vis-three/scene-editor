@@ -45,7 +45,7 @@ export const module = {
       state.loading = true;
       axios({
         method: "post",
-        url: "/app/structure",
+        url: "/template/structure",
         data: {
           classifyId,
         },
