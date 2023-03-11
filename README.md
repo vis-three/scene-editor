@@ -105,6 +105,7 @@
 | <a href="https://space.bilibili.com/281443965/"><img src="https://i0.hdslb.com/bfs/face/member/noface.jpg@60w_60h_1c_1s.webp" /></a>                           | 开源  |
 | <a href="https://space.bilibili.com/17754951/"><img src="https://i0.hdslb.com/bfs/face/17b0b31276688459ca282b9715fd9e14a1106dc5.jpg@60w_60h_1c_1s.webp" /></a> | 开源  |
 | <a href="https://space.bilibili.com/74065255/"><img src="https://i1.hdslb.com/bfs/face/68f94c9679b4c493f9299969b7ea96026791ca1d.jpg@60w_60h_1c_1s.webp" /></a> | 开源  |
+| <a href="https://space.bilibili.com/18049804/"><img src="https://i0.hdslb.com/bfs/face/2b61badc68badf0d6fcad87302be14c33e762937.jpg@60w_60h_1c_1s.webp" /></a> | 开源  |
 
 ## 赞助商
 
