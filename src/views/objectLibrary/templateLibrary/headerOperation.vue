@@ -60,6 +60,31 @@
         ></vis-icon>
       </el-popover>
 
+      <el-popover
+        placement="bottom"
+        width="200"
+        trigger="click"
+        v-model="templateVisible"
+      >
+        <el-input
+          class="popover-input"
+          size="mini"
+          v-model="templateName"
+          placeholder="输入模板名称"
+        ></el-input>
+        <div class="popover-operation">
+          <el-button size="mini" type="text" @click="addTemplate">
+            确定
+          </el-button>
+        </div>
+        <vis-icon
+          code="#iconbaocun_mian"
+          slot="reference"
+          v-show="canUpload"
+          v-tooltip.top="'保存新模板'"
+        ></vis-icon>
+      </el-popover>
+
       <vis-icon
         code="#iconshangchuan-fill"
         v-tooltip.top="'上传'"
@@ -79,11 +104,17 @@
 </template>
 
 <script>
+import { engine } from "@/assets/js/VisFrame";
+import { CONFIGTYPE, JSONHandler, MODULETYPE } from "@vis-three/middleware";
+
 export default {
   data() {
     return {
       classifyName: "", // 分类名
       classifyVisible: false,
+
+      templateName: "",
+      templateVisible: false,
     };
   },
   computed: {
@@ -93,9 +124,10 @@ export default {
     // 可以上传的标识
     canUpload() {
       const floderChildren = this.currentFloder.children;
+      console.log(this.currentFloder);
       if (floderChildren.length && !floderChildren[0].dir) {
         return true;
-      } else if (!floderChildren.length && this.currentFloder.url !== "/") {
+      } else if (!floderChildren.length && this.currentFloder.name !== "/") {
         return true;
       } else {
         return false;
@@ -151,7 +183,7 @@ export default {
     addClassify() {
       if (this.classifyName.trim()) {
         this.axios
-          .post("/app/addClassify", {
+          .post("/template/addClassify", {
             name: this.classifyName.trim(),
             parentId: this.currentFloder.id,
           })
@@ -169,6 +201,52 @@ export default {
         this.classifyName = "";
         this.classifyVisible = false;
       }
+    },
+
+    async addTemplate() {
+      const loading = this.$message.loading("正在保存为模板...");
+      const config = engine.exportConfig();
+      // config.component = this.$store.getters["component/get"];
+      // 模板去除全局灯光, 控制器, 渲染器, 多场景
+      config[MODULETYPE.CONTROLS] && delete config[MODULETYPE.CONTROLS];
+      config[MODULETYPE.RENDERER] && delete config[MODULETYPE.RENDERER];
+      config[MODULETYPE.SCENE] && delete config[MODULETYPE.SCENE];
+      config[MODULETYPE.PASS] && delete config[MODULETYPE.PASS];
+
+      if (config[MODULETYPE.LIGHT]) {
+        config[MODULETYPE.LIGHT].forEach((cfg, i, arr) => {
+          if (
+            [
+              CONFIGTYPE.AMBIENTLIGHT,
+              CONFIGTYPE.DIRECTIONALLIGHT,
+              CONFIGTYPE.HEMISPHERELIGHT,
+            ].includes(cfg.type)
+          ) {
+            delete arr[i];
+          }
+        });
+      }
+
+      this.axios
+        .post("/template/create", {
+          templateName: this.templateName,
+          classifyId: this.currentFloder.id,
+          config: JSON.stringify(config, JSONHandler.stringify),
+          preview: await engine.getScreenshot({
+            width: 1920,
+            height: 1080,
+          }),
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            this.$message.success("保存成功！");
+            this.templateName = "";
+            this.templateVisible = false;
+          }
+        })
+        .finally(() => {
+          loading.close();
+        });
     },
   },
 };

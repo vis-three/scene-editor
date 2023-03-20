@@ -15,7 +15,6 @@ vabse
       v-for="(item, index) in floderChildren"
       :key="index"
       class="file-item-box"
-      @click="chouseFile(item)"
       v-tooltip.bottom="`${item.name}`"
     >
       <template v-if="item.dir">
@@ -37,13 +36,49 @@ vabse
       </template>
 
       <span class="item-title" v-text="item.name"></span>
-      <vis-icon
-        class="item-delete"
-        size="16px"
-        code="#iconshanchu"
-        v-tooltip.bottom="`删除`"
-        @click.native.stop="remove(item)"
-      ></vis-icon>
+
+      <span class="item-operate-box" v-if="item.dir">
+        <vis-icon
+          size="20px"
+          code="#iconpingyi"
+          v-tooltip.bottom="`移动`"
+        ></vis-icon>
+        <vis-icon
+          size="20px"
+          code="#iconyidong"
+          v-tooltip.bottom="`打开`"
+          @click.native.stop="chouseFile(item)"
+        ></vis-icon>
+        <vis-icon
+          class="item-delete"
+          size="16px"
+          code="#iconshanchu"
+          v-tooltip.bottom="`删除`"
+          @click.native.stop="remove(item)"
+        ></vis-icon>
+      </span>
+
+      <span v-else class="item-operate-box">
+        <vis-icon
+          size="16px"
+          code="#iconxuanzhuan"
+          v-tooltip.bottom="`更新`"
+          @click.native.stop="updateTempalte(item)"
+        ></vis-icon>
+        <vis-icon
+          size="20px"
+          code="#iconyingyong"
+          v-tooltip.bottom="`应用`"
+          @click.native.stop="useTemplate(item)"
+        ></vis-icon>
+        <vis-icon
+          class="item-delete"
+          size="16px"
+          code="#iconshanchu"
+          v-tooltip.bottom="`删除`"
+          @click.native.stop="remove(item)"
+        ></vis-icon>
+      </span>
     </div>
 
     <div
@@ -59,6 +94,8 @@ vabse
 <script>
 import {
   CONFIGTYPE,
+  generateConfig,
+  isObjectModule,
   JSONHandler,
   MODULETYPE,
   Template,
@@ -69,6 +106,7 @@ import { Pipeline } from "@vis-three/utils";
 
 import { AddTemplateAction } from "@/assets/js/action/AddTemplateAction.js";
 import { history, engine } from "@/assets/js/VisFrame";
+import Vue from "vue";
 
 export default {
   data() {
@@ -208,6 +246,93 @@ export default {
         });
       }
     },
+
+    useTemplate(item) {
+      console.log(item);
+      const message = this.$message.loading("正在应用模板...");
+
+      this.axios
+        .get(item.config)
+        .then((res) => {
+          const sceneChildren = [];
+
+          const template = new Pipeline(res)
+            .pipe((c) => Template.clone(c))
+            .pipe((c) => {
+              Object.keys(c).forEach((module) => {
+                if (isObjectModule(module)) {
+                  Object.values(c[module]).forEach((config) => {
+                    sceneChildren.push(config.vid);
+                  });
+                }
+              });
+              return c;
+            })
+            .pipe((c) =>
+              Template.handler(c, (c) =>
+                generateConfig(c.type, c, { handler: Vue.observable })
+              )
+            )
+            .get();
+
+          console.log(template);
+
+          engine.loadConfigAsync(template).then(() => {
+            this.currentScene.children.push(...sceneChildren);
+            this.$store.commit("notifyAll");
+          });
+        })
+        .finally(() => {
+          message.close();
+        });
+    },
+
+    async updateTempalte(item) {
+      console.log(item);
+      const loading = this.$message.loading("正在更新模板...");
+      const config = engine.exportConfig();
+      // config.component = this.$store.getters["component/get"];
+      // 模板去除全局灯光, 控制器, 渲染器, 多场景
+      config[MODULETYPE.CONTROLS] && delete config[MODULETYPE.CONTROLS];
+      config[MODULETYPE.RENDERER] && delete config[MODULETYPE.RENDERER];
+      config[MODULETYPE.SCENE] && delete config[MODULETYPE.SCENE];
+      config[MODULETYPE.PASS] && delete config[MODULETYPE.PASS];
+
+      if (config[MODULETYPE.LIGHT]) {
+        config[MODULETYPE.LIGHT].forEach((cfg, i, arr) => {
+          if (
+            [
+              CONFIGTYPE.AMBIENTLIGHT,
+              CONFIGTYPE.DIRECTIONALLIGHT,
+              CONFIGTYPE.HEMISPHERELIGHT,
+            ].includes(cfg.type)
+          ) {
+            delete arr[i];
+          }
+        });
+      }
+      this.axios
+        .post("/template/modify", {
+          id: item.id,
+          templateName: item.name,
+          classifyId: item.classifyId,
+          config: JSON.stringify(config, JSONHandler.stringify),
+          preview: await engine.getScreenshot({
+            width: 1920,
+            height: 1080,
+          }),
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            this.$message.success("保存成功！");
+            this.templateName = "";
+            this.templateVisible = false;
+          }
+        })
+        .finally(() => {
+          loading.close();
+        });
+    },
   },
 };
 </script>
@@ -229,8 +354,7 @@ export default {
     .boxSetting(170px, 110px);
     margin: 0 0 @box-margin 0;
     cursor: pointer;
-    .transitionSetting({background: @themeDarkHover-color;});
-    &:hover .item-delete {
+    &:hover .item-operate-box {
       opacity: 1;
     }
     position: relative;
@@ -247,11 +371,23 @@ export default {
       font-size: 12px;
     }
 
-    .item-delete {
+    .item-operate-box {
       .absolutePosition(0, 0, unset, unset);
-      height: unset !important;
-      color: @error-color;
+      .boxSetting();
+      .flexLayout(row, space-around, center);
       opacity: 0;
+
+      > div {
+        .boxSetting();
+        .flexLayout(row, center, center);
+        .transitionSetting({
+          background-color: @themeDarkHover-color;
+        });
+      }
+
+      .item-delete {
+        color: @error-color;
+      }
     }
     .item-selected-mask {
       .boxSetting();
