@@ -70,7 +70,7 @@
       <input
         type="file"
         style="display: none"
-        accept=".png, .jpg .mp4"
+        accept=".png, .jpg, .mp4"
         ref="uploadInput"
         @change="fileHandler"
       />

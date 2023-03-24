@@ -1,7 +1,7 @@
 import Vue from "vue";
-import { CameraDataSupport, MODULETYPE } from "@vis-three/middleware";
+import { DataSupportSelector, MODULETYPE } from "@vis-three/middleware";
 
-export const cameraDataSupport = new CameraDataSupport();
+export const cameraDataSupport = new DataSupportSelector("cameraDataSupport")();
 
 export const module = {
   namespaced: true,

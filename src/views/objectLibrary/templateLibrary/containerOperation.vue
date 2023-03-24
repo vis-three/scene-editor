@@ -307,7 +307,7 @@ export default {
               CONFIGTYPE.HEMISPHERELIGHT,
             ].includes(cfg.type)
           ) {
-            delete arr[i];
+            arr.splice(i, 1);
           }
         });
       }
