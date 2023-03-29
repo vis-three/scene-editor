@@ -1,12 +1,13 @@
 import Vue from "vue";
-import { Object3DDataSupport, MODULETYPE } from "@vis-three/middleware";
-
-export const object3DDataSupport = new Object3DDataSupport();
+import { MODULETYPE } from "@vis-three/middleware";
+import { engine } from "../../assets/js/VisFrame";
 
 export const module = {
   namespaced: true,
   state: {
-    map: object3DDataSupport.getData(),
+    map: engine.dataSupportManager
+      .getDataSupport(MODULETYPE.OBJECT3D)
+      .getData(),
     module: MODULETYPE.OBJECT3D,
     currentModel: "",
   },

@@ -1,12 +1,11 @@
 import Vue from "vue";
-import { DataSupportSelector, MODULETYPE } from "@vis-three/middleware";
-
-export const cameraDataSupport = new DataSupportSelector("cameraDataSupport")();
+import { MODULETYPE } from "@vis-three/middleware";
+import { engine } from "../../assets/js/VisFrame";
 
 export const module = {
   namespaced: true,
   state: {
-    map: cameraDataSupport.getData(),
+    map: engine.dataSupportManager.getDataSupport(MODULETYPE.CAMERA).getData(),
     module: MODULETYPE.CAMERA,
   },
   getters: {

@@ -1,12 +1,13 @@
 import Vue from "vue";
-import { MaterialDataSupport, MODULETYPE } from "@vis-three/middleware";
-
-export const materialDataSupport = new MaterialDataSupport();
+import { MODULETYPE } from "@vis-three/middleware";
+import { engine } from "../../assets/js/VisFrame";
 
 export const module = {
   namespaced: true,
   state: {
-    map: materialDataSupport.getData(),
+    map: engine.dataSupportManager
+      .getDataSupport(MODULETYPE.MATERIAL)
+      .getData(),
     module: MODULETYPE.MATERIAL,
     draggedMaterial: "",
     dragging: false,

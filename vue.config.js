@@ -12,10 +12,7 @@ module.exports = {
       patterns: [path.resolve(__dirname, "./src/assets/less/common.less")],
     },
   },
-  transpileDependencies: [
-    /[/\\]node_modules[/\\]vis-three[/\\]/,
-    /[/\\]node_modules[/\\]@vis-three[/\\]/,
-  ],
+  transpileDependencies: [/[/\\]node_modules[/\\]@vis-three[/\\]/],
   devServer,
   configureWebpack,
 };

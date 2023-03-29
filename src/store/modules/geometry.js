@@ -1,13 +1,13 @@
 import Vue from "vue";
-// 扩展vue
-import { GeometryDataSupport, MODULETYPE } from "@vis-three/middleware";
-
-export const geometryDataSupport = new GeometryDataSupport();
+import { MODULETYPE } from "@vis-three/middleware";
+import { engine } from "../../assets/js/VisFrame";
 
 export const module = {
   namespaced: true,
   state: {
-    map: geometryDataSupport.getData(),
+    map: engine.dataSupportManager
+      .getDataSupport(MODULETYPE.GEOMETRY)
+      .getData(),
     module: MODULETYPE.GEOMETRY,
   },
   getters: {

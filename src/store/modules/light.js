@@ -1,17 +1,11 @@
 import Vue from "vue";
-import {
-  CONFIGTYPE,
-  generateConfig,
-  LightDataSupport,
-  MODULETYPE,
-} from "@vis-three/middleware";
-
-export const lightDataSupport = new LightDataSupport();
+import { MODULETYPE } from "@vis-three/middleware";
+import { engine } from "../../assets/js/VisFrame";
 
 export const module = {
   namespaced: true,
   state: {
-    map: lightDataSupport.getData(),
+    map: engine.dataSupportManager.getDataSupport(MODULETYPE.LIGHT).getData(),
     module: MODULETYPE.LIGHT,
   },
   getters: {

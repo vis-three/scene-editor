@@ -1,24 +1,17 @@
-import {
-  CONFIGTYPE,
-  generateConfig,
-  SceneDataSupport,
-  DataContainer,
-} from "@vis-three/middleware";
-import Vue from "vue";
+import { CONFIGTYPE, generateConfig, MODULETYPE } from "@vis-three/middleware";
+import { engine } from "../../assets/js/VisFrame";
 
-DataContainer.generator = () => Vue.observable({});
+export const defaultScene = generateConfig(CONFIGTYPE.SCENE, {
+  name: "默认场景",
+});
 
-export const defaultScene = generateConfig(
-  CONFIGTYPE.SCENE,
-  {
-    name: "默认场景",
-  },
-  {
-    handler: (c) => Vue.observable(c),
-  }
+export const sceneDataSupport = engine.dataSupportManager.getDataSupport(
+  MODULETYPE.SCENE
 );
 
-export const sceneDataSupport = new SceneDataSupport([defaultScene]);
+sceneDataSupport.addConfig(defaultScene);
+
+engine.setSceneBySymbol(defaultScene.vid);
 
 export const module = {
   namespaced: true,

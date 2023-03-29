@@ -1,12 +1,11 @@
 import Vue from "vue";
-import { SpriteDataSupport, MODULETYPE } from "@vis-three/middleware";
-
-export const spriteDataSupport = new SpriteDataSupport();
+import { MODULETYPE } from "@vis-three/middleware";
+import { engine } from "../../assets/js/VisFrame";
 
 export const module = {
   namespaced: true,
   state: {
-    map: spriteDataSupport.getData(),
+    map: engine.dataSupportManager.getDataSupport(MODULETYPE.SPRITE).getData(),
     module: MODULETYPE.SPRITE,
   },
   getters: {

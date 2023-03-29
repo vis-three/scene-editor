@@ -1,12 +1,11 @@
 import Vue from "vue";
-import { LineDataSupport, MODULETYPE } from "@vis-three/middleware";
-
-export const lineDataSupport = new LineDataSupport();
+import { MODULETYPE } from "@vis-three/middleware";
+import { engine } from "../../assets/js/VisFrame";
 
 export const module = {
   namespaced: true,
   state: {
-    map: lineDataSupport.getData(),
+    map: engine.dataSupportManager.getDataSupport(MODULETYPE.LINE).getData(),
     module: MODULETYPE.LINE,
   },
   getters: {

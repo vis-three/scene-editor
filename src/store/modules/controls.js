@@ -1,19 +1,20 @@
 import Vue from "vue";
 import {
+  CONFIGFACTORY,
   CONFIGTYPE,
-  ControlsDataSupport,
   generateConfig,
   MODULETYPE,
-  uniqueSymbol,
 } from "@vis-three/middleware";
+import { engine } from "../../assets/js/VisFrame";
 
-const transformControls = generateConfig(CONFIGTYPE.TRNASFORMCONTROLS);
+const transformControls = generateConfig(CONFIGTYPE.TRANSFORMCONTROLS);
 const orbitControls = generateConfig(CONFIGTYPE.ORBITCONTROLS);
 
-export const controlsDataSupport = new ControlsDataSupport([
-  transformControls,
-  orbitControls,
-]);
+export const controlsDataSupport = engine.dataSupportManager.getDataSupport(
+  MODULETYPE.CONTROLS
+);
+
+controlsDataSupport.addConfig(transformControls).addConfig(orbitControls);
 
 export const module = {
   namespaced: true,

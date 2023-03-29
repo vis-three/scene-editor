@@ -1,12 +1,11 @@
 import Vue from "vue";
-import { MeshDataSupport, MODULETYPE } from "@vis-three/middleware";
-
-export const meshDataSupport = new MeshDataSupport();
+import { MODULETYPE } from "@vis-three/middleware";
+import { engine } from "../../assets/js/VisFrame";
 
 export const module = {
   namespaced: true,
   state: {
-    map: meshDataSupport.getData(),
+    map: engine.dataSupportManager.getDataSupport(MODULETYPE.MESH).getData(),
     module: MODULETYPE.MESH,
     currentModel: "",
   },

@@ -32,6 +32,7 @@ import VTooltip from "v-tooltip";
 import { Plugin } from "@/assets/js/plugins/axios";
 
 import "@/assets/js/optimize.js";
+import "@/assets/js/combination.js";
 
 import parse from "url-parse";
 

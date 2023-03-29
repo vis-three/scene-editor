@@ -1,13 +1,11 @@
 import Vue from "vue";
-
-import { TextureDataSupport, MODULETYPE } from "@vis-three/middleware";
-
-export const textureDataSupport = new TextureDataSupport();
+import { engine } from "../../assets/js/VisFrame";
+import { MODULETYPE } from "@vis-three/middleware";
 
 export const module = {
   namespaced: true,
   state: {
-    map: textureDataSupport.getData(),
+    map: engine.dataSupportManager.getDataSupport(MODULETYPE.TEXTURE).getData(),
     module: MODULETYPE.TEXTURE,
     currentTexture: "",
   },

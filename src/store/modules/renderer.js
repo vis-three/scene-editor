@@ -1,10 +1,6 @@
 import Vue from "vue";
-import {
-  RendererDataSupport,
-  MODULETYPE,
-  CONFIGTYPE,
-  generateConfig,
-} from "@vis-three/middleware";
+import { MODULETYPE, CONFIGTYPE, generateConfig } from "@vis-three/middleware";
+import { engine } from "../../assets/js/VisFrame";
 
 const webGLRenderer = generateConfig(CONFIGTYPE.WEBGLRENDERER, {
   clearColor: "rgba(15, 15, 15, 1)",
@@ -14,7 +10,11 @@ const webGLRenderer = generateConfig(CONFIGTYPE.WEBGLRENDERER, {
   },
 });
 
-export const rendererDataSupport = new RendererDataSupport([webGLRenderer]);
+export const rendererDataSupport = engine.dataSupportManager.getDataSupport(
+  MODULETYPE.RENDERER
+);
+
+rendererDataSupport.addConfig(webGLRenderer);
 
 export const module = {
   namespaced: true,

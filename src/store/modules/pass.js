@@ -1,13 +1,11 @@
 import Vue from "vue";
-import { MODULETYPE, generateConfig, CONFIGTYPE } from "@vis-three/middleware";
-import { PassDataSupport } from "@vis-three/composer-support-strategy";
-
-export const passDataSupport = new PassDataSupport();
+import { MODULETYPE } from "@vis-three/middleware";
+import { engine } from "../../assets/js/VisFrame";
 
 export const module = {
   namespaced: true,
   state: {
-    map: passDataSupport.getData(),
+    map: engine.dataSupportManager.getDataSupport(MODULETYPE.PASS).getData(),
     module: MODULETYPE.PASS,
   },
   getters: {
@@ -19,7 +17,6 @@ export const module = {
     add(state, config) {
       state.map[config.vid] = config;
       state.map.__ob__.dep.notify();
-      console.log(passDataSupport);
     },
 
     remove(state, vid) {

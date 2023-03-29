@@ -1,12 +1,11 @@
 import Vue from "vue";
-import { CSS3DDataSupport, MODULETYPE } from "@vis-three/middleware";
-
-export const css3DDataSupport = new CSS3DDataSupport();
+import { MODULETYPE } from "@vis-three/middleware";
+import { engine } from "../../assets/js/VisFrame";
 
 export const module = {
   namespaced: true,
   state: {
-    map: css3DDataSupport.getData(),
+    map: engine.dataSupportManager.getDataSupport(MODULETYPE.CSS3D).getData(),
     module: MODULETYPE.CSS3D,
   },
   getters: {

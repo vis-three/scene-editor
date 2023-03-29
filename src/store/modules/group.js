@@ -1,13 +1,12 @@
 import Vue from "vue";
-import { GroupDataSupport, MODULETYPE } from "@vis-three/middleware";
-
-export const groupDataSupport = new GroupDataSupport();
+import { MODULETYPE } from "@vis-three/middleware";
+import { engine } from "../../assets/js/VisFrame";
 
 export const module = {
   namespaced: true,
   state: {
-    map: groupDataSupport.getData(),
-    module: MODULETYPE.SPRITE,
+    map: engine.dataSupportManager.getDataSupport(MODULETYPE.GROUP).getData(),
+    module: MODULETYPE.GROUP,
   },
   getters: {
     get(state) {
