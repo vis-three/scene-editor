@@ -16,7 +16,7 @@
     "@vis-three/library-event": "^0.6.0",
     "@vis-three/library-shader": "^0.6.0",
     "@vis-three/middleware": "^0.6.2",
-    "@vis-three/modeling-engine-support": "^0.6.1",
+    "@vis-three/modeling-engine-support": "^0.6.2",
     "@vis-three/utils": "^0.6.0",
     "animate.css": "^4.1.1",
     "core-js": "^3.6.5",

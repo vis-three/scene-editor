@@ -59,12 +59,8 @@ export default {
             },
           ],
           click: function (item) {
-            const geometryConfig = generateConfig(item.geometry, undefined, {
-              handler: (c) => Vue.observable(c),
-            });
-            const meshConfig = generateConfig(CONFIGTYPE.MESH, undefined, {
-              handler: (c) => Vue.observable(c),
-            });
+            const geometryConfig = generateConfig(item.geometry);
+            const meshConfig = generateConfig(CONFIGTYPE.MESH);
 
             // meshConfig.icon = item.icon;
             meshConfig.name = `${item.label}${meshConfig.vid.slice(-2)}`;
@@ -102,12 +98,8 @@ export default {
             },
           ],
           click: function (item) {
-            const geometryConfig = generateConfig(item.geometry, undefined, {
-              handler: (c) => Vue.observable(c),
-            });
-            const meshConfig = generateConfig(CONFIGTYPE.MESH, undefined, {
-              handler: (c) => Vue.observable(c),
-            });
+            const geometryConfig = generateConfig(item.geometry);
+            const meshConfig = generateConfig(CONFIGTYPE.MESH);
 
             // meshConfig.icon = item.icon;
             meshConfig.name = `${item.label}${meshConfig.vid.slice(-2)}`;
@@ -143,16 +135,10 @@ export default {
                   { x: 10, y: 0 },
                   { x: 0, y: 10 },
                 ],
-              },
-              {
-                handler: (c) => Vue.observable(c),
               }
             );
-            const meshConfig = generateConfig(CONFIGTYPE.MESH, undefined, {
-              handler: (c) => Vue.observable(c),
-            });
+            const meshConfig = generateConfig(CONFIGTYPE.MESH);
 
-            // meshConfig.icon = item.icon;
             meshConfig.name = `${item.label}${meshConfig.vid.slice(-2)}`;
             meshConfig.geometry = geometryConfig.vid;
 
@@ -192,9 +178,6 @@ export default {
                   { x: 0, y: 0, z: -10 },
                   { x: 10, y: 0, z: 0 },
                 ],
-              },
-              {
-                handler: (c) => Vue.observable(c),
               }
             );
             geometry.name = `${item.label}几何-${geometry.vid.slice(-2)}`;
@@ -203,9 +186,6 @@ export default {
               CONFIGTYPE.MESH,
               {
                 geometry: geometry.vid,
-              },
-              {
-                handler: (c) => Vue.observable(c),
               }
             );
             mesh.name = `${item.label}-${mesh.vid.slice(-2)}`;
@@ -256,9 +236,6 @@ export default {
                   { x: 0, y: 0, z: -10 },
                   { x: 10, y: 0, z: 0 },
                 ],
-              },
-              {
-                handler: (c) => Vue.observable(c),
               }
             );
             geometry.name = `${item.label}几何-${geometry.vid.slice(-2)}`;
@@ -266,9 +243,6 @@ export default {
               CONFIGTYPE.LINE,
               {
                 geometry: geometry.vid,
-              },
-              {
-                handler: (c) => Vue.observable(c),
               }
             );
             line.name = `${item.label}-${line.vid.slice(-2)}`;
@@ -310,9 +284,6 @@ export default {
               {
                 width: 100,
                 height: 100,
-              },
-              {
-                handler: (c) => Vue.observable(c),
               }
             );
             config.name = `${item.label}-${config.vid.slice(-2)}`;
