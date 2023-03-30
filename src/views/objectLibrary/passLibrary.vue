@@ -87,15 +87,11 @@ export default {
   },
   methods: {
     addPass(command) {
-      const config = generateConfig(command.type, undefined, {
-        handler: (c) => Vue.observable(c),
-      });
+      const config = generateConfig(command.type);
       config.name = `${command.label}-${config.vid.slice(-2)}`;
-      console.log(config);
       this.$store.commit("pass/add", config);
     },
     removePass(data) {
-      console.log(data);
       this.$confirm(`是否删除后期：${data.name}。`, "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",

@@ -82,11 +82,6 @@ export default {
           icon: "#icontexture",
           component: "texture-library",
         },
-        {
-          label: "后期",
-          icon: "#iconhouqi",
-          component: "pass-library",
-        },
       ],
     };
   },
@@ -109,7 +104,7 @@ export default {
   .boxSetting();
 
   /deep/ .el-tabs {
-    .boxSetting(376px, unset);
+    .boxSetting(335px, unset);
     max-height: 70vh;
     .flexLayout(column);
     overflow: visible;

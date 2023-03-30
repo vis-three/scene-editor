@@ -127,16 +127,13 @@ export default {
             },
           ],
           click: function (item) {
-            const geometryConfig = generateConfig(
-              item.geometry,
-              {
-                path: [
-                  { x: 0, y: 0 },
-                  { x: 10, y: 0 },
-                  { x: 0, y: 10 },
-                ],
-              }
-            );
+            const geometryConfig = generateConfig(item.geometry, {
+              path: [
+                { x: 0, y: 0 },
+                { x: 10, y: 0 },
+                { x: 0, y: 10 },
+              ],
+            });
             const meshConfig = generateConfig(CONFIGTYPE.MESH);
 
             meshConfig.name = `${item.label}${meshConfig.vid.slice(-2)}`;
@@ -169,25 +166,19 @@ export default {
             },
           ],
           click: function (item) {
-            const geometry = generateConfig(
-              item.geometry,
-              {
-                path: [
-                  { x: -10, y: 10, z: 0 },
-                  { x: 0, y: 10, z: 10 },
-                  { x: 0, y: 0, z: -10 },
-                  { x: 10, y: 0, z: 0 },
-                ],
-              }
-            );
+            const geometry = generateConfig(item.geometry, {
+              path: [
+                { x: -10, y: 10, z: 0 },
+                { x: 0, y: 10, z: 10 },
+                { x: 0, y: 0, z: -10 },
+                { x: 10, y: 0, z: 0 },
+              ],
+            });
             geometry.name = `${item.label}几何-${geometry.vid.slice(-2)}`;
 
-            const mesh = generateConfig(
-              CONFIGTYPE.MESH,
-              {
-                geometry: geometry.vid,
-              }
-            );
+            const mesh = generateConfig(CONFIGTYPE.MESH, {
+              geometry: geometry.vid,
+            });
             mesh.name = `${item.label}-${mesh.vid.slice(-2)}`;
 
             history.apply(
@@ -227,24 +218,18 @@ export default {
             },
           ],
           click: function (item) {
-            const geometry = generateConfig(
-              item.geometry,
-              {
-                path: [
-                  { x: -10, y: 10, z: 0 },
-                  { x: 0, y: 10, z: 10 },
-                  { x: 0, y: 0, z: -10 },
-                  { x: 10, y: 0, z: 0 },
-                ],
-              }
-            );
+            const geometry = generateConfig(item.geometry, {
+              path: [
+                { x: -10, y: 10, z: 0 },
+                { x: 0, y: 10, z: 10 },
+                { x: 0, y: 0, z: -10 },
+                { x: 10, y: 0, z: 0 },
+              ],
+            });
             geometry.name = `${item.label}几何-${geometry.vid.slice(-2)}`;
-            const line = generateConfig(
-              CONFIGTYPE.LINE,
-              {
-                geometry: geometry.vid,
-              }
-            );
+            const line = generateConfig(CONFIGTYPE.LINE, {
+              geometry: geometry.vid,
+            });
             line.name = `${item.label}-${line.vid.slice(-2)}`;
 
             history.apply(
@@ -279,13 +264,10 @@ export default {
             },
           ],
           click: function (item) {
-            const config = generateConfig(
-              item.type,
-              {
-                width: 100,
-                height: 100,
-              }
-            );
+            const config = generateConfig(item.type, {
+              width: 100,
+              height: 100,
+            });
             config.name = `${item.label}-${config.vid.slice(-2)}`;
 
             history.apply(

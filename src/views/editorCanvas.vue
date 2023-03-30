@@ -38,7 +38,7 @@
             width: `${iframeWidth}px`,
             height: `${iframeHeight}px`,
             top: `${iframeTop}px`,
-            left: `${iframeLeft}px`
+            left: `${iframeLeft}px`,
           }"
         >
           <!-- <three-engine
@@ -74,17 +74,17 @@ export default {
     // 画布宽度
     iframeWidth: {
       type: Number,
-      required: true
+      required: true,
     },
     // 画布高度
     iframeHeight: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
   components: {
     componentCanvas, // 组件画板
-    canvasRulerBox // 编辑器标尺组件
+    canvasRulerBox, // 编辑器标尺组件
   },
   data() {
     return {
@@ -107,7 +107,7 @@ export default {
       moveStartY: 0, // 移动罩子起始点y
       showMousePosition: false, // 展示鼠标位置
       mousePositionX: 0, // 鼠标的x位置
-      mousePositionY: 0 // 鼠标的y位置
+      mousePositionY: 0, // 鼠标的y位置
     };
   },
   computed: {
@@ -124,7 +124,7 @@ export default {
         -(this.scrollTop - this.originScrollTop + this.boardHeight / 2) +
         this.originTop
       );
-    }
+    },
   },
   methods: {
     // 滚动方法
@@ -174,7 +174,7 @@ export default {
     // 编辑器鼠标移出
     editorCanvasMouseleave() {
       this.showMousePosition = false;
-    }
+    },
   },
   mounted() {
     const drawingBox = this.$refs.drawingBox;
@@ -189,7 +189,7 @@ export default {
     // 初始嵌页
     this.iframeTop = drawingBox.scrollTop + this.originTop;
     this.iframeLeft = drawingBox.scrollLeft + this.originLeft;
-  }
+  },
 };
 </script>
 
