@@ -1,15 +1,16 @@
 import { Action } from "@vis-three/convenient";
 
-export class AddLightAction extends Action {
-  constructor({ config, store, engine }) {
+export class AddObjectAction extends Action {
+  constructor({ config, store, engine, module }) {
     super();
     this.config = config;
     this.$store = store;
     this.engine = engine;
+    this.module = module;
   }
 
   next() {
-    this.$store.commit("light/add", this.config);
+    this.$store.commit(`${this.module}/add`, this.config);
     this.$store.getters["scene/currentScene"].children.push(this.config.vid);
   }
 
@@ -19,6 +20,6 @@ export class AddLightAction extends Action {
       currentScene.children.indexOf(this.config.vid),
       1
     );
-    this.$store.commit("light/remove", this.config.vid);
+    this.$store.commit(`${this.module}/remove`, this.config.vid);
   }
 }

@@ -163,7 +163,7 @@ export default {
 .group-operation {
   height: 100%;
   margin-left: @box-margin;
-  padding: 0 @box-padding / 2;
+  padding: 0 (@box-padding / 2);
   .flexLayout(row, center, center);
   background: @error-color;
   cursor: pointer;

@@ -133,7 +133,7 @@ export default {
 
   .operation-box {
     margin: @box-margin 0;
-    padding: @box-padding / 2;
+    padding: (@box-padding / 2);
     background-color: @error-color;
     cursor: pointer;
     .flexLayout(row, center, center);

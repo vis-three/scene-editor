@@ -135,7 +135,7 @@ export default {
       .flexLayout(row, space-between, center);
       padding-left: 24px;
       /deep/ .icon-container {
-        margin-right: @box-margin / 2;
+        margin-right: (@box-margin / 2);
       }
     }
 

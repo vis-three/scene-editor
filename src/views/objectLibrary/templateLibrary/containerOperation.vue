@@ -262,17 +262,15 @@ export default {
               Object.keys(c).forEach((module) => {
                 if (isObjectModule(module)) {
                   Object.values(c[module]).forEach((config) => {
-                    sceneChildren.push(config.vid);
+                    if (config.parent === uniqueSymbol(CONFIGTYPE.SCENE)) {
+                      sceneChildren.push(config.vid);
+                    }
                   });
                 }
               });
               return c;
             })
-            .pipe((c) =>
-              Template.handler(c, (c) =>
-                generateConfig(c.type, c, { handler: Vue.observable })
-              )
-            )
+            .pipe((c) => Template.handler(c, (c) => generateConfig(c.type, c)))
             .get();
 
           console.log(template);

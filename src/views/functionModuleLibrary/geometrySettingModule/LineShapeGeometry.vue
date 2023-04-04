@@ -75,13 +75,13 @@ export default {
 
 <style lang="less" scoped>
 .path-add {
-  margin-bottom: @box-margin / 2;
+  margin-bottom: (@box-margin / 2);
 }
 
 .path-point-item {
   .flexLayout(row, space-between, center);
   > i {
-    padding: @box-padding / 2;
+    padding: (@box-padding / 2);
     color: @error-color;
     cursor: pointer;
   }

@@ -147,7 +147,7 @@ export default {
     .flexLayout(row, space-between, center);
 
     > * {
-      margin-right: @box-margin / 2;
+      margin-right: (@box-margin / 2);
     }
 
     > i {
@@ -168,7 +168,7 @@ export default {
 
 .scene-tiem {
   font-size: 14px;
-  padding: @box-padding / 2 @box-padding;
+  padding: (@box-padding / 2) @box-padding;
   cursor: pointer;
   .transitionSetting({background-color: @themeDarkHover-color;});
   .flexLayout(row, space-between, center);

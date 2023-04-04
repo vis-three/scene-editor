@@ -51,7 +51,7 @@ export default {
   .flexLayout(row, flex-start, center);
   .app-tips {
     height: 100%;
-    padding: @box-padding / 2;
+    padding: (@box-padding / 2);
     .flexLayout(row, flex-start, center);
     > .el-image {
       .boxSetting(40px, 40px);

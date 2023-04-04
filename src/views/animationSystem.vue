@@ -97,7 +97,7 @@ export default {
   > .animationSystem-trackController {
     .boxSetting();
     background: @theme-backgroundColor;
-    border-top: @box-padding / 2 solid @theme-backgroundColor;
+    border-top: (@box-padding / 2) solid @theme-backgroundColor;
     border-right: @box-margin solid @theme-backgroundColor;
     overflow: hidden;
   }

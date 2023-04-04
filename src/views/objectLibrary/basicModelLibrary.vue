@@ -12,7 +12,11 @@
 </template>
 
 <script>
-import { CONFIGTYPE, generateConfig } from "@vis-three/middleware";
+import {
+  CONFIGMODULE,
+  CONFIGTYPE,
+  generateConfig,
+} from "@vis-three/middleware";
 import objectCollapse from "@/templates/objectCollapse.vue";
 import { engine, history } from "@/assets/js/VisFrame";
 import Vue from "vue";
@@ -20,6 +24,7 @@ import Vue from "vue";
 import { AddMeshAction } from "@/assets/js/action/AddMeshAction";
 import { AddLineAction } from "@/assets/js/action/AddLineAction";
 import { AddCSS3DAction } from "@/assets/js/action/AddCSS3DAction";
+import { AddObjectAction } from "@/assets/js/action/AddObjectAction";
 
 export default {
   components: {
@@ -275,6 +280,36 @@ export default {
                 engine,
                 store: this.$store,
                 config,
+              }),
+              true
+            );
+          },
+        },
+        {
+          icon: "#iconpingmianjihe",
+          label: "DOM",
+          list: [
+            {
+              icon: "#iconpingmianjihe",
+              label: "组",
+              type: CONFIGTYPE.GROUP,
+            },
+            {
+              icon: "#iconpingmianjihe",
+              label: "空对象",
+              type: CONFIGTYPE.OBJECT3D,
+            },
+          ],
+          click: function (item) {
+            const config = generateConfig(item.type);
+            config.name = `${item.label}-${config.vid.slice(-2)}`;
+
+            history.apply(
+              new AddObjectAction({
+                engine,
+                store: this.$store,
+                config,
+                module: CONFIGMODULE[item.type],
               }),
               true
             );

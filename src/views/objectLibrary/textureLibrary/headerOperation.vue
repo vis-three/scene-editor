@@ -56,7 +56,7 @@
           slot="reference"
           code="#iconjia1"
           v-tooltip.top="'新增分类'"
-          v-if="canAddClassify"
+          v-show="canAddClassify"
         ></vis-icon>
       </el-popover>
 
@@ -70,7 +70,7 @@
       <input
         type="file"
         style="display: none"
-        accept=".png, .jpg .mp4"
+        accept=".png, .jpg, .mp4"
         multiple="multiple"
         ref="uploadInput"
         @change="fileHandler"
@@ -212,7 +212,7 @@ export default {
     cursor: default;
     > .address-sign-box {
       cursor: pointer;
-      margin-right: @box-margin / 2;
+      margin-right: (@box-margin / 2);
       .transitionSetting({color: @themeDarkHover-color;});
       .icon-container {
         margin-right: 2px;
@@ -224,7 +224,7 @@ export default {
     cursor: pointer;
     .transitionSetting({color: @themeHover-color; transform: rotate(90deg) ;});
     .icon-container {
-      padding: @box-padding / 2;
+      padding: (@box-padding / 2);
     }
   }
 

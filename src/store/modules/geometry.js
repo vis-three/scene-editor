@@ -26,6 +26,10 @@ export const module = {
       state.map.__ob__.dep.notify();
       state.active = state.map[vid];
     },
+    
+    notify(state) {
+      state.map.__ob__.dep.notify();
+    },
 
     remove(state, vid) {
       Vue.delete(state.map, vid);

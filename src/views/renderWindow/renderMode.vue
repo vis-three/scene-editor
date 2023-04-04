@@ -58,13 +58,13 @@ export default {
   props: {
     connector: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       mode: DISPLAYMODE.ENV,
-      DISPLAYMODE
+      DISPLAYMODE,
     };
   },
   watch: {
@@ -72,9 +72,9 @@ export default {
       handler(newVal) {
         this.connector.setDisplayMode(newVal);
       },
-      immediate: true
-    }
-  }
+      immediate: true,
+    },
+  },
 };
 </script>
 
@@ -85,7 +85,7 @@ export default {
   height: 20px;
   > .renderObject-elem {
     .flexLayout(row, center, center);
-    padding: 0 @box-padding / 2;
+    padding: 0 (@box-padding / 2);
     .transitionSetting({background: @themeDarkHover-color;});
     border-left: 1px solid @darkestTheme-backgroundColor;
     cursor: pointer;

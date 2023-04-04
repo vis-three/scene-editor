@@ -58,7 +58,7 @@ export default {
     padding: 0 @box-padding;
     > .icon-container {
       color: @theme-color;
-      margin-right: @box-margin / 2;
+      margin-right: (@box-margin / 2);
       font-size: 12px;
     }
   }

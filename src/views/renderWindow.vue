@@ -294,7 +294,7 @@ export default {
   .bottom-function-box {
     .flexLayout(row, flex-start, center);
     > * {
-      margin-right: @box-margin / 2;
+      margin-right: (@box-margin / 2);
     }
   }
   .top-function-box {

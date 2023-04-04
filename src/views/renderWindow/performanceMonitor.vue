@@ -46,7 +46,7 @@ export default {
   height: 20px;
   > .operate-elem {
     .flexLayout(row, center, center);
-    padding: 0 @box-padding / 2;
+    padding: 0 (@box-padding / 2);
     .transitionSetting({
       background: @themeDarkHover-color;
     });

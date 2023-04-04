@@ -58,15 +58,9 @@ export default {
   },
   methods: {
     addLight(item) {
-      const config = generateConfig(
-        item.light,
-        {
-          vid: getUuid(),
-        },
-        {
-          handler: (c) => Vue.observable(c),
-        }
-      );
+      const config = generateConfig(item.light, {
+        vid: getUuid(),
+      });
       config.icon = item.icon;
       config.name = `${item.label}-${config.vid.slice(-2)}`;
 

@@ -303,7 +303,7 @@ export default {
       }
       > .operation-helper {
         > .icon-container {
-          margin: 0 @box-margin / 2;
+          margin: 0 (@box-margin / 2);
         }
         > .icon-container:first-child {
           margin-left: 0;
@@ -331,14 +331,14 @@ export default {
             background-color: @themeDarkHover-color;
           });
           > .item-helper {
-            padding-right: @box-padding / 2;
+            padding-right: (@box-padding / 2);
             .flexLayout(row, center, center);
             border-right: 1px solid @darkestTheme-backgroundColor;
             > .item-helper-checkBox {
               .boxSetting(14px, 14px);
               .flexLayout(row, center, center);
               background: @darkestTheme-backgroundColor;
-              margin: 0 @box-margin / 2;
+              margin: 0 (@box-margin / 2);
               cursor: pointer;
               > .icon-container {
                 font-size: 12px;
@@ -349,7 +349,7 @@ export default {
             }
           }
           > .item-open-sign {
-            padding-left: @box-padding / 2;
+            padding-left: (@box-padding / 2);
             .transitionSetting();
             .sign-active {
               transform: rotate(90deg) scale(0.7) !important;
@@ -358,7 +358,7 @@ export default {
 
           > .item-name {
             cursor: default;
-            padding-left: @box-padding / 2;
+            padding-left: (@box-padding / 2);
             > span {
               overflow: hidden;
               text-overflow: ellipsis;

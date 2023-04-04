@@ -227,7 +227,7 @@ export default {
     .flexLayout(row, space-between, center);
 
     > * {
-      margin-right: @box-margin / 2;
+      margin-right: (@box-margin / 2);
     }
 
     > i {
@@ -258,7 +258,7 @@ export default {
 
   .operate-box {
     > * {
-      margin-left: @box-margin / 2;
+      margin-left: (@box-margin / 2);
     }
   }
 }

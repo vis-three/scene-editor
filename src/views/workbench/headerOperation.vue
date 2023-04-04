@@ -205,7 +205,7 @@ export default {
     cursor: default;
     > .address-sign-box {
       cursor: pointer;
-      margin-right: @box-margin / 2;
+      margin-right: (@box-margin / 2);
       .transitionSetting({color: @themeDarkHover-color;});
       .icon-container {
         margin-right: 2px;
@@ -217,7 +217,7 @@ export default {
     cursor: pointer;
     .transitionSetting({color: @themeHover-color; transform: rotate(90deg) ;});
     .icon-container {
-      padding: @box-padding / 2;
+      padding: (@box-padding / 2);
     }
   }
 

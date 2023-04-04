@@ -177,7 +177,7 @@ export default {
   .flexLayout();
   .icon-container {
     color: @theme-color;
-    margin-right: @box-margin / 2;
+    margin-right: (@box-margin / 2);
   }
 }
 
@@ -199,7 +199,7 @@ export default {
   .event-item {
     .flexLayout(row,  center, center);
     width: 100%;
-    padding: @box-padding / 2 0;
+    padding: (@box-padding / 2) 0;
     cursor: pointer;
 
     .transitionSetting({

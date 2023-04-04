@@ -27,6 +27,11 @@
 
     <div class="modifier-item" v-for="item in modifierList" :key="item.vid">
       <components :is="item.type" :config="item"></components>
+      <div class="operation-box">
+        <vis-icon code="#iconsanjiaojiantoushang"></vis-icon>
+        <vis-icon code="#iconsanjiaojiantouxia"></vis-icon>
+        <vis-icon code="#iconshanchu"></vis-icon>
+      </div>
     </div>
   </div>
 </template>
@@ -108,7 +113,33 @@ export default {
   .flexLayout();
   .icon-container {
     color: @theme-color;
-    margin-right: @box-margin / 2;
+    margin-right: (@box-margin / 2);
+  }
+}
+
+.modifier-item {
+  .flexLayout(row, center, stretch);
+  margin: @box-margin 0;
+  background-color: @brighterTheme-backgroundColor;
+
+  > div:first-child {
+    height: 100%;
+    padding: @box-padding;
+  }
+}
+
+.operation-box {
+  .flexLayout(column);
+  .icon-container {
+    .flexLayout(row, center, center);
+    padding: (@box-padding / 2);
+    flex: 1;
+    background-color: @brightestTheme-backgroundColor;
+    cursor: pointer;
+  }
+
+  .icon-container:last-child {
+    background-color: @error-color;
   }
 }
 </style>

@@ -115,7 +115,7 @@ export default {
 .color-controller {
   .flexLayout(row, space-between, center);
   > .el-input {
-    margin-right: @box-margin / 2;
+    margin-right: (@box-margin / 2);
   }
 }
 </style>

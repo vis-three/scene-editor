@@ -47,7 +47,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@boxWidth: 80px;
+@boxWidth: 70px;
 
 .collapseLayout-container {
   margin-bottom: 0;
@@ -61,7 +61,7 @@ export default {
     margin-right: 0;
   }
   .basicELement-elem {
-    margin: 0 @box-margin / 2 @box-margin 0;
+    margin: 0 ((@box-margin / 2)) @box-margin 0;
     cursor: pointer;
     > .element-icon-box {
       .boxSetting(@boxWidth, 60px);
