@@ -16,23 +16,20 @@
 </template>
 
 <script>
-import sideTabs from "@/components/sideTabs";
-import sideTabItem from "@/components/sideTabItem";
+import sideTabs from "@/components/sideTabs.vue";
+import sideTabItem from "@/components/sideTabItem.vue";
 
-const context = require.context("../objectLibrary", true, /\.vue$/, "lazy");
+const context = import.meta.glob("../objectLibrary/*.vue");
 
-const components = {
-  sideTabs,
-  sideTabItem,
-};
+const components = { sideTabs, sideTabItem };
 
-context.keys().forEach((url) => {
+Object.keys(context).forEach((url) => {
   components[
     url
       .split("/")
       .pop()
       .replace(/.\/|\.vue$/g, "")
-  ] = () => context(url);
+  ] = context[url];
 });
 
 export default {

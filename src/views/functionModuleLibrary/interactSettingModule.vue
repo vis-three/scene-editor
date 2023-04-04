@@ -132,7 +132,6 @@ export default {
   methods: {
     // 添加事件
     addEvent(item) {
-      console.log(item);
       this.currentEvent = item;
       this.showEvent = false;
     },
@@ -153,9 +152,7 @@ export default {
       const config = Vue.observable(
         EventGeneratorManager.generateConfig(value[1])
       );
-      debugger;
-      console.log(config);
-      console.log(this.activeObject[eventName]);
+
       this.activeObject[eventName].push(config);
       this.cascaderValue = [];
       this.currentEvent = "";

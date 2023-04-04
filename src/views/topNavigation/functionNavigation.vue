@@ -140,7 +140,7 @@
 </template>
 
 <script>
-import topNavigationFunctionElem from "@/components/topNavigationFunctionElem";
+import topNavigationFunctionElem from "@/components/topNavigationFunctionElem.vue";
 export default {
   components: {
     topNavigationFunctionElem,

@@ -87,7 +87,7 @@
 </template>
 
 <script>
-import renderWindow from "./renderWindow";
+import renderWindow from "./renderWindow.vue";
 
 export default {
   components: {

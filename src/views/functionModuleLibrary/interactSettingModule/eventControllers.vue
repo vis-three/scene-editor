@@ -15,15 +15,13 @@
     <div class="operation-box" @click="deleteEvent(eventConfigure)">
       <i class="el-icon-delete"></i>
     </div>
-
-    <span style="display: none">{{ JSON.stringify(objects) }}</span>
-    <span style="display: none">{{ JSON.stringify(objects) }}</span>
   </div>
 </template>
 
 <script>
 import { controllers } from "@/assets/js/eventLibrary";
 import { Easing } from "@tweenjs/tween.js";
+import { OBJECTMODULE } from "@vis-three/middleware";
 
 export default {
   props: {
@@ -51,13 +49,9 @@ export default {
     },
 
     objects() {
-      const objectList = [
-        this.$store.getters["mesh/get"],
-        this.$store.getters["camera/get"],
-        this.$store.getters["sprite/get"],
-        this.$store.getters["group/get"],
-        this.$store.getters["css3D/get"],
-      ];
+      const objectList = Object.keys(OBJECTMODULE).map(
+        (module) => this.$store.getters[`${module}/get`]
+      );
 
       const list = [];
 
@@ -73,7 +67,6 @@ export default {
     },
 
     materials() {
-      console.log(1);
       return Object.values(this.$store.getters["material/get"]).map((elem) => {
         return {
           label: elem.name,

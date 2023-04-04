@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import componentTransBox from "@/components/componentTransBox";
+import componentTransBox from "@/components/componentTransBox.vue";
 export default {
   components: {
     componentTransBox, // 组件形变盒子

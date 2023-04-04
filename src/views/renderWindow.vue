@@ -63,7 +63,7 @@ import Connector from "@/assets/js/Connector";
 
 // import { v4 as getUuid } from 'uuid'
 
-import positionLayoutBox from "@/components/positionLayoutBox";
+import positionLayoutBox from "@/components/positionLayoutBox.vue";
 // import dragMoveBox from '@//components/dragMoveBox'
 import objectLibrary from "./renderWindow/objectLibrary.vue";
 import {
@@ -74,12 +74,13 @@ import {
   uniqueSymbol,
 } from "@vis-three/middleware";
 
-const renderViewpoint = () => import("./renderWindow/renderViewpoint");
-const cameraViewpoint = () => import("./renderWindow/cameraViewpoint");
-const auxiliaryDisplay = () => import("./renderWindow/auxiliaryDisplay");
+const renderViewpoint = () => import("./renderWindow/renderViewpoint.vue");
+const cameraViewpoint = () => import("./renderWindow/cameraViewpoint.vue");
+const auxiliaryDisplay = () => import("./renderWindow/auxiliaryDisplay.vue");
 // const renderScene = () => import('./renderWindow/renderScene')
 // const renderMode = () => import("./renderWindow/renderMode");
-const performanceMonitor = () => import("./renderWindow/performanceMonitor");
+const performanceMonitor = () =>
+  import("./renderWindow/performanceMonitor.vue");
 
 export default {
   components: {

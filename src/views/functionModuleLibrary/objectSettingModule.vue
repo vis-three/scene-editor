@@ -154,10 +154,10 @@ const componentSettingModule = () => import("./componentSettingModule.vue");
 
 const Mesh = () => import("./objectSettingModule/Mesh.vue");
 
-const PointLight = () => import("./objectSettingModule/light/PointLight");
+const PointLight = () => import("./objectSettingModule/light/PointLight.vue");
 const DirectionalLight = () =>
-  import("./objectSettingModule/light/DirectionalLight");
-const SpotLight = () => import("./objectSettingModule/light/SpotLight");
+  import("./objectSettingModule/light/DirectionalLight.vue");
+const SpotLight = () => import("./objectSettingModule/light/SpotLight.vue");
 const AmbientLight = () =>
   import("./objectSettingModule/light/AmbientLight.vue");
 const HemisphereLight = () =>
@@ -166,7 +166,7 @@ const RectAreaLight = () =>
   import("./objectSettingModule/light/RectAreaLight.vue");
 
 const PerspectiveCamera = () =>
-  import("./objectSettingModule/camera/PerspectiveCamera");
+  import("./objectSettingModule/camera/PerspectiveCamera.vue");
 
 const CSS3DPlane = () => import("./objectSettingModule/CSS3DPlane.vue");
 const CSS3DSprite = () => import("./objectSettingModule/CSS3DSprite.vue");

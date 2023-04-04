@@ -7,10 +7,10 @@
 </template>
 
 <script>
-import editorFrame from "./views/editorFrame";
+import editorFrame from "./views/editorFrame.vue";
 import workbench from "./views/workbench.vue";
 
-const loadingManager = () => import("./views/loadingManager");
+const loadingManager = () => import("./views/loadingManager.vue");
 export default {
   components: {
     editorFrame,

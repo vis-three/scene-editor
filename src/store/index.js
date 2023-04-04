@@ -3,19 +3,20 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
-const context = require.context("./", true, /\.js$/);
+const context = import.meta.glob("./modules/*.js", {
+  import: "module",
+  eager: true,
+});
 
 const modules = {};
 
-context.keys().forEach((url) => {
-  if (url !== "./index.js") {
-    modules[
-      url
-        .split("/")
-        .pop()
-        .replace(/.\/|\.js$/g, "")
-    ] = context(url).module;
-  }
+Object.keys(context).forEach((url) => {
+  modules[
+    url
+      .split("/")
+      .pop()
+      .replace(/.\/|\.js$/g, "")
+  ] = context[url];
 });
 
 export default new Vuex.Store({
@@ -62,6 +63,7 @@ export default new Vuex.Store({
       this.commit("object3D/notify");
       this.commit("scene/notify");
       this.commit("renderer/notify");
+      this.commit("modifier/notify");
     },
   },
   actions: {

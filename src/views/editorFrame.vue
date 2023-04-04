@@ -74,11 +74,11 @@
 </template>
 
 <script>
-import dragTransBox from "@/components/dragTransBox";
+import dragTransBox from "@/components/dragTransBox.vue";
 import renderArea from "@/views/renderArea.vue";
 import leftSection from "./leftSection.vue";
-import topNavigation from "./topNavigation";
-import functionModuleLibrary from "./functionModuleLibrary";
+import topNavigation from "./topNavigation.vue";
+import functionModuleLibrary from "./functionModuleLibrary.vue";
 import animtionSystem from "./animationSystem.vue";
 
 export default {

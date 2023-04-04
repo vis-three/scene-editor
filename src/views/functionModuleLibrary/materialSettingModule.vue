@@ -179,19 +179,15 @@ import {
 
 const components = {};
 
-const context = require.context(
-  "./materialSettingModule",
-  true,
-  /\.vue$/,
-  "lazy"
-);
-context.keys().forEach((url) => {
+const context = import.meta.glob("./materialSettingModule/*.vue");
+
+Object.keys(context).forEach((url) => {
   components[
     url
       .split("/")
       .pop()
       .replace(/.\/|\.vue$/g, "")
-  ] = () => context(url);
+  ] = context[url];
 });
 
 export default {

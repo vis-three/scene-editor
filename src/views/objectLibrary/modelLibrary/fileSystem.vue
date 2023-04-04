@@ -6,8 +6,8 @@
 </template>
 
 <script>
-const headerOperation = () => import("./headerOperation");
-const containerOperation = () => import("./containerOperation");
+const headerOperation = () => import("./headerOperation.vue");
+const containerOperation = () => import("./containerOperation.vue");
 
 export default {
   components: {

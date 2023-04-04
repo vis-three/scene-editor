@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import controlLayout from "./controlLayout";
+import controlLayout from "./controlLayout.vue";
 export default {
   name: "de-controller-input",
   components: {

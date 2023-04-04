@@ -1,4 +1,4 @@
-<script>
+<script lang="jsx">
 export default {
   props: {
     // 翻转

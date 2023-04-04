@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import controlLayout from "./controlLayout";
+import controlLayout from "./controlLayout.vue";
 import { InterpolateDiscrete } from "three";
 export default {
   name: "de-controller-select",

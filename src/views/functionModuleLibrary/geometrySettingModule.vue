@@ -88,19 +88,15 @@
 <script>
 const components = {};
 
-const context = require.context(
-  "./geometrySettingModule",
-  true,
-  /\.vue$/,
-  "lazy"
-);
-context.keys().forEach((url) => {
+const context = import.meta.glob("./geometrySettingModule/*.vue");
+
+Object.keys(context).forEach((url) => {
   components[
     url
       .split("/")
       .pop()
       .replace(/.\/|\.vue$/g, "")
-  ] = () => context(url);
+  ] = context[url];
 });
 
 export default {

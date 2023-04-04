@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import dragTransBox from "@/components/dragTransBox";
+import dragTransBox from "@/components/dragTransBox.vue";
 
 const operationController = () =>
   import("./animationSystem/operationController.vue");

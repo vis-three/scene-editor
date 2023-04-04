@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import controlLayout from "./controlLayout";
+import controlLayout from "./controlLayout.vue";
 import { InterpolateLinear } from "three";
 // import { Photoshop } from 'vue-color'
 export default {

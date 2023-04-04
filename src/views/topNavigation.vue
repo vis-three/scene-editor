@@ -7,8 +7,9 @@
 </template>
 
 <script>
-const fileMenu = () => import("./topNavigation/fileMenu");
-const functionNavigation = () => import("./topNavigation/functionNavigation");
+const fileMenu = () => import("./topNavigation/fileMenu.vue");
+const functionNavigation = () =>
+  import("./topNavigation/functionNavigation.vue");
 const operateNavigation = () => import("./topNavigation/operateNavigation.vue");
 
 export default {

@@ -29,11 +29,11 @@
 import dragPlane from "@/components/drag-plane.vue";
 import passLibrary from "../objectLibrary/passLibrary.vue";
 
-import UnrealBloomPass from "./effectPassSettingModule/UnrealBloomPass";
-import SMAAPass from "./effectPassSettingModule/SMAAPass";
+import UnrealBloomPass from "./effectPassSettingModule/UnrealBloomPass.vue";
+import SMAAPass from "./effectPassSettingModule/SMAAPass.vue";
 
 import AfterimagePass from "./effectPassSettingModule/AfterimagePass.vue";
-import FXAAShaderPass from "./effectPassSettingModule/FXAAShaderPass";
+import FXAAShaderPass from "./effectPassSettingModule/FXAAShaderPass.vue";
 
 export default {
   components: {

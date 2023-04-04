@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import dropdownMenu from "@/components/dropdownMenu";
+import dropdownMenu from "@/components/dropdownMenu.vue";
 
 const shortcutKeyDocument = () => import("./fileMenu/shortcutKeyDocument.vue");
 export default {
