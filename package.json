@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
+    "dev:force": "vite --host --force",
     "build": "vite build",
     "preview": "vite preview"
   },
@@ -26,8 +27,6 @@
     "@vis-three/library-shader": "^0.6.0",
     "@vis-three/middleware": "^0.6.3",
     "@vis-three/modeling-engine-support": "^0.6.3",
-    "@vis-three/module-modifier": "^0.6.2",
-    "@vis-three/module-object": "^0.6.1",
     "@vis-three/utils": "^0.6.0",
     "animate.css": "^4.1.1",
     "axios": "^1.3.4",

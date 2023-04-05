@@ -45,6 +45,7 @@ export const module = {
     remove(state, vid) {
       delete state.map[vid];
     },
+    notify(state) {},
   },
   actions: {},
 };

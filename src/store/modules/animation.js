@@ -144,6 +144,8 @@ const module = {
     nextFrame(state) {
       this.commit("animation/currentFrame", state.currentFrame + 1);
     },
+
+    notify(state) {},
   },
   actions: {},
 };
