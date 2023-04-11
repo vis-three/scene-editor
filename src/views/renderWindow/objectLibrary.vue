@@ -40,7 +40,7 @@ export default {
       cacheActive: "",
       list: [
         {
-          label: "参数化物体",
+          label: "几何物体",
           icon: "#iconjihetuxing",
           component: "basic-model-library",
         },

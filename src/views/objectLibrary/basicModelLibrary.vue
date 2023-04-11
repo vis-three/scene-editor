@@ -123,33 +123,36 @@ export default {
         },
         {
           icon: "#iconpingmianjihe",
-          label: "形状",
+          label: "路径",
           list: [
             {
               icon: "#iconpingmianjihe",
-              label: "折线形状",
-              geometry: CONFIGTYPE.LINESHAPEGEOMETRY,
+              label: "路径线",
+              geometry: CONFIGTYPE.PATHGEOMETRY,
             },
           ],
           click: function (item) {
-            const geometryConfig = generateConfig(item.geometry, {
-              path: [
-                { x: 0, y: 0 },
-                { x: 10, y: 0 },
-                { x: 0, y: 10 },
-              ],
-            });
-            const meshConfig = generateConfig(CONFIGTYPE.MESH);
+            const path = generateConfig(CONFIGTYPE.PATH);
 
-            meshConfig.name = `${item.label}${meshConfig.vid.slice(-2)}`;
-            meshConfig.geometry = geometryConfig.vid;
+            console.log(path);
+
+            path.name = `路径-${path.vid.slice(-2)}`;
+
+            const geometry = generateConfig(item.geometry, {
+              path: path.vid,
+            });
+            const line = generateConfig(CONFIGTYPE.LINE, {
+              geometry: geometry.vid,
+            });
+
+            line.name = `${item.label}${line.vid.slice(-2)}`;
 
             history.apply(
-              new AddMeshAction({
-                geometryConfig,
-                meshConfig,
+              new AddLineAction({
+                engine,
                 store: this.$store,
-                engine: VIS.engine,
+                geometry,
+                line,
               }),
               true
             );
