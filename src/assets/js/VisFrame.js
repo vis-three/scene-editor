@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { ModelingEngineSupport } from "@vis-three/modeling-engine-support";
+import { ModelingEngineSupport } from "@vis-three/engine-modeling-support";
 import {
   History,
   MaterialDisplayer,

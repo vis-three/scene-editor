@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { VIEWPOINT } from "@vis-three/modeling-engine-support";
+import { VIEWPOINT } from "@vis-three/engine-modeling-support";
 
 export default {
   props: {
