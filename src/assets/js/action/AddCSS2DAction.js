@@ -1,6 +1,6 @@
 import { Action } from "@vis-three/convenient";
 
-export class AddCSS3DAction extends Action {
+export class AddCSS2DAction extends Action {
   constructor({ config, store, engine }) {
     super();
     this.config = config;
@@ -9,7 +9,7 @@ export class AddCSS3DAction extends Action {
   }
 
   next() {
-    this.$store.commit("css3D/add", this.config);
+    this.$store.commit("css2D/add", this.config);
     this.$store.getters["scene/currentScene"].children.push(this.config.vid);
   }
 
@@ -19,6 +19,6 @@ export class AddCSS3DAction extends Action {
       currentScene.children.indexOf(this.config.vid),
       1
     );
-    this.$store.commit("css3D/remove", this.config.vid);
+    this.$store.commit("css2D/remove", this.config.vid);
   }
 }

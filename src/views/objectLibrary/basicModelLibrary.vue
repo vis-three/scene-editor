@@ -24,6 +24,7 @@ import Vue from "vue";
 import { AddMeshAction } from "@/assets/js/action/AddMeshAction";
 import { AddLineAction } from "@/assets/js/action/AddLineAction";
 import { AddCSS3DAction } from "@/assets/js/action/AddCSS3DAction";
+import { AddCSS2DAction } from "@/assets/js/action/AddCSS2DAction";
 import { AddObjectAction } from "@/assets/js/action/AddObjectAction";
 
 export default {
@@ -278,14 +279,25 @@ export default {
             });
             config.name = `${item.label}-${config.vid.slice(-2)}`;
 
-            history.apply(
-              new AddCSS3DAction({
-                engine,
-                store: this.$store,
-                config,
-              }),
-              true
-            );
+            if (item.type === CONFIGTYPE.CSS2DPLANE) {
+              history.apply(
+                new AddCSS2DAction({
+                  engine,
+                  store: this.$store,
+                  config,
+                }),
+                true
+              );
+            } else {
+              history.apply(
+                new AddCSS3DAction({
+                  engine,
+                  store: this.$store,
+                  config,
+                }),
+                true
+              );
+            }
           },
         },
         {
