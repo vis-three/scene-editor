@@ -6,7 +6,7 @@ import {
   TextureDisplayer,
 } from "@vis-three/convenient";
 import * as AniScriptLibrary from "@vis-three/library-animate-script";
-import * as EventLibrary from "@vis-three/library-event";
+import EventLibrary from "@vis-three/library-event";
 import * as ShaderLibrary from "@vis-three/library-shader";
 
 import {
@@ -21,7 +21,6 @@ import { ComponentManager } from "@/assets/js/plugins/ComponentMnanager";
 Object.values(AniScriptLibrary).forEach((config) => {
   AniScriptGeneratorManager.register(config);
 });
-
 Object.values(EventLibrary).forEach((config) => {
   EventGeneratorManager.register(config);
 });
