@@ -33,8 +33,15 @@
 
 ### 前端
 
-<!-- readme: collaborators,contributors -start -->
-<!-- readme: collaborators,contributors -end -->
+<a href="https://github.com/vis-three/scene-editor/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=vis-three/scene-editor" />
+</a>
+
+### 后端
+
+<a href="https://github.com/vis-three/scene-editor-service/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=vis-three/scene-editor-service" />
+</a>
 
 ## 赞助者
 
