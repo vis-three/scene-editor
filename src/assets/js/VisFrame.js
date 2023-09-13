@@ -7,7 +7,7 @@ import {
 } from "@vis-three/convenient";
 import * as AniScriptLibrary from "@vis-three/library-animate-script";
 import EventLibrary from "@vis-three/library-event";
-import * as ShaderLibrary from "@vis-three/library-shader";
+import * as ShaderLibrary from "@vis-three/library-shader"; 
 
 import {
   AniScriptGeneratorManager,
