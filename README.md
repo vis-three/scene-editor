@@ -33,15 +33,8 @@
 
 ### 前端
 
-<a href="https://github.com/Shiotsukikaedesari/three-vis-display-editor/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=Shiotsukikaedesari/three-vis-display-editor" />
-</a>
-
-### 后端
-
-<a href="https://github.com/Shiotsukikaedesari/display-service/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=Shiotsukikaedesari/display-service" />
-</a>
+<!-- readme: collaborators,contributors -start -->
+<!-- readme: collaborators,contributors -end -->
 
 ## 赞助者
 
