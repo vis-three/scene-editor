@@ -1,4 +1,4 @@
-# vis-three-display-editor
+# 【vis-three】scene-editor
 
 [vis-three 框架](https://github.com/Shiotsukikaedesari/vis-three)衍生出的自定义 3D 场景编辑器类应用。
 
@@ -34,13 +34,13 @@
 ### 前端
 
 <a href="https://github.com/vis-three/scene-editor/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=vis-three/scene-editor" />
+  <img src="https://stg.contrib.rocks/image?repo=vis-three/scene-editor" />
 </a>
 
 ### 后端
 
 <a href="https://github.com/vis-three/scene-editor-service/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=vis-three/scene-editor-service" />
+  <img src="https://stg.contrib.rocks/image?repo=vis-three/scene-editor-service" />
 </a>
 
 ## 赞助者
