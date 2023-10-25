@@ -7,7 +7,7 @@ import {
 } from "@vis-three/convenient";
 import * as AniScriptLibrary from "@vis-three/library-animate-script";
 import EventLibrary from "@vis-three/library-event";
-import * as ShaderLibrary from "@vis-three/library-shader"; 
+import * as ShaderLibrary from "@vis-three/library-shader";
 
 import {
   AniScriptGeneratorManager,
@@ -15,6 +15,11 @@ import {
   globalOption,
   ShaderGeneratorManager,
 } from "@vis-three/middleware";
+
+import { GLTFLoader } from "./loaders/GLTFLoader";
+import { MeshoptDecoder } from "three/examples/jsm/libs/meshopt_decoder.module.js";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
+import { KTX2Loader } from "three/examples/jsm/loaders/KTX2Loader.js";
 
 import { ComponentManager } from "@/assets/js/plugins/ComponentMnanager";
 
@@ -41,9 +46,14 @@ globalOption.proxyExpand = Vue.observable;
 
 export const engine = new ModelingEngineSupport();
 
-engine.loaderManager
-  .getLoader("glb")
-  .dracoLoader.setDecoderPath("plugins/draco/gltf/");
+const gltfLoader = new GLTFLoader();
+
+gltfLoader.setDRACOLoader(new DRACOLoader());
+gltfLoader.setKTX2Loader(new KTX2Loader());
+gltfLoader.setMeshoptDecoder(MeshoptDecoder);
+gltfLoader.dracoLoader.setDecoderPath("plugins/draco/gltf/");
+
+engine.loaderManager.register("gltf", gltfLoader).register("glb", gltfLoader);
 
 engine.eventManager.recursive = true;
 
