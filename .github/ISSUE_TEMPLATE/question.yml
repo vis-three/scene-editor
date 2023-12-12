@@ -1,0 +1,60 @@
+name: "question"
+description: "有些问题需要去解决。"
+body:
+  - type: textarea
+    id: question-description
+    attributes:
+      label: 问题描述
+      description: 提出你的问题点，包括你对问题的思考，而不要一句话直接问为什么。
+      value: |
+        1. 我做了什么...
+        2. 希望实现什么 ...
+        3. 但是实际上是什么 ...
+        4. 我认为问题可能出现在哪里...
+      render: bash
+    validations:
+      required: true
+  - type: textarea
+    id: error-screenshot
+    attributes:
+      label: 问题或报错截图
+      description: 如果有报错，包括浏览器报错，脚手架报错，IDE 报错，请提供报错的完整截图。
+      value: |
+        无
+    validations:
+      required: true
+  - type: textarea
+    id: system-info
+    attributes:
+      label: 运行环境
+      description: 包括操作系统环境，浏览器环境，使用的脚手架，还有node环境。
+      render: bash
+      value: |
+        系统: windows@10
+        浏览器： chrome@131
+        脚手架： vite@2.9.15
+        node: 14.20.0
+    validations:
+      required: true
+  - type: input
+    id: reproduction
+    attributes:
+      label: 可调试环境
+      description: 功能简化后形成可下载调试的开源仓库或者在线调试环境。提供相关的开源仓库连接或者在线调试连接。
+      placeholder: repository URL
+  - type: textarea
+    id: code-content
+    attributes:
+      label: 附加代码上下文
+      description: 请提供出错时代码的上文，还有与此功能关联的代码模块。
+      render: ts
+  - type: dropdown
+    id: return-mode
+    attributes:
+      label: 解决问题的回报选择
+      description: 为了避免形成白嫖习惯和依赖性习惯，对于非 bug，或者非新增，非特色等提问需要选择回报模式，比如一些信息可以从文档获取，或者是自己的技术水平和理解水平导致的问题，能够提供一定的警醒作用。具体详情请进入QQ 群：586362945 详谈。
+      options:
+        - 提供修复 pr 或者完善项目（文档完善，代码优化，示例优化等等）
+        - 一定的赞助资金
+    validations:
+      required: true

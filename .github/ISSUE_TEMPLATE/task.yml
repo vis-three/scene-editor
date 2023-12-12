@@ -1,0 +1,33 @@
+name: "task"
+description: "对于需求的开发任务拆解与发布。"
+body:
+  - type: textarea
+    id: task-description
+    attributes:
+      label: 任务描述
+      description: 任务的具体描述，需要实现哪些功能。
+      placeholder: |
+        文字描述与代码示例。
+    validations:
+      required: true
+  - type: textarea
+    id: task-step
+    attributes:
+      label: 任务步骤
+      description: 尽可能的实现提示。
+      value: |
+        github的pr工作流参考：https://zhuanlan.zhihu.com/p/584834288
+
+        1. 移动xxx。
+        2. 添加那些功能或文档。
+        3. git与pr提交格式，commit信息附带本issue连接，示例：feat：本issue标题—— https://github.com/vis-three/vis-three/issues/xxx
+  - type: dropdown
+    id: task-cycle
+    attributes:
+      label: 任务周期
+      description: 区分该任务issue的关闭时间点。
+      options:
+        - 完成时
+        - 长期开放
+    validations:
+      required: true

@@ -1,0 +1,27 @@
+name: "feature"
+description: "独特的idea和优化点。"
+body:
+  - type: textarea
+    id: feature-description
+    attributes:
+      label: 功能描述
+      description: 所提出的特色具有哪些功能。
+      placeholder: |
+        希望能够实现一个什么样的功能，或者说对什么东西进行优化追加功能。
+    validations:
+      required: true
+  - type: textarea
+    id: useage-scene
+    attributes:
+      label: 使用场景
+      description: 有哪些场景中会用到这些功能。
+      value: |
+        1.
+        2.
+        3.
+  - type: textarea
+    id: code-example
+    attributes:
+      label: 代码示例
+      description: 编码时候的使用示例，希望是什么样子。
+      render: ts
