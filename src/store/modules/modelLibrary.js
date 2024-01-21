@@ -1,4 +1,4 @@
-import axios from "@/assets/js/plugins/axios";
+import modelApi from "@/assets/js/api/model.js";
 
 const fileTree = {
   dir: true,
@@ -19,6 +19,7 @@ export const module = {
     multiple: false, // 是否多选
     currentSelect: "", // 当前选中
     cache: 10, // 缓存历史数量
+    cacheUrls: new Map(), // file -> url
   },
   getters: {
     fileTree(state) {
@@ -36,32 +37,26 @@ export const module = {
     loading(state) {
       return state.loading;
     },
+    urls(state) {
+      return state.cacheUrls;
+    },
   },
   mutations: {
     request(state, classifyId) {
       state.loading = true;
-      axios({
-        method: "post",
-        url: "/model/structure",
-        data: {
-          classifyId,
-        },
-      })
-        .then((res) => {
-          if (res.status === 200) {
-            const data = res.data;
+      modelApi
+        .getStructure(classifyId || 0)
+        .then((data) => {
+          data.forEach((file) => {
+            file.parent = state.currentFloder;
+            file.select = false;
+            if (file.dir) {
+              file.children = [];
+              file.loaded = false;
+            }
+          });
 
-            data.forEach((file) => {
-              file.parent = state.currentFloder;
-              file.select = false;
-              if (file.dir) {
-                file.children = [];
-                file.loaded = false;
-              }
-            });
-
-            state.currentFloder.children = data;
-          }
+          state.currentFloder.children = data;
         })
         .finally(() => {
           state.loading = false;
@@ -142,6 +137,9 @@ export const module = {
         state.currentFloder.children.indexOf(file),
         1
       );
+    },
+    cacheUrl(state, { file, url }) {
+      state.cacheUrls.set(file, url);
     },
   },
   actions: {},

@@ -1,4 +1,4 @@
-import { history } from "@/assets/js/VisFrame";
+import { history } from "@/assets/js/vis";
 
 export const module = {
   namespaced: true,

@@ -105,7 +105,7 @@ import {
 import { Pipeline } from "@vis-three/utils";
 
 import { AddTemplateAction } from "@/assets/js/action/AddTemplateAction.js";
-import { history, engine } from "@/assets/js/VisFrame";
+import { history, engine } from "@/assets/js/vis";
 import Vue from "vue";
 
 export default {

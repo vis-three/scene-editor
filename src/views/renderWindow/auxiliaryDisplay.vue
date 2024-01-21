@@ -24,7 +24,7 @@
     >
       <vis-icon size="16px" code="#iconwangge"></vis-icon>
     </div>
-    <div
+    <!-- <div
       v-tooltip.top="'辅助'"
       class="auxiliary-elem"
       :class="{ 'active-elem ': showHelper }"
@@ -35,7 +35,7 @@
       "
     >
       <vis-icon size="16px" code="#iconxiankuang"></vis-icon>
-    </div>
+    </div> -->
     <div
       v-tooltip.top="'控件'"
       class="auxiliary-elem"
@@ -52,58 +52,35 @@
 </template>
 
 <script>
+import { engine } from "@/assets/js/vis";
+
 export default {
-  props: {
-    connector: {
-      type: Object,
-      required: true,
-    },
-  },
   data() {
     return {
       showAxes: true,
       showGrid: true,
-      showHelper: true,
       showTransformControls: true,
     };
   },
   watch: {
     showAxes: {
       handler(newVal) {
-        this.connector.setAxesHelper(newVal);
+        engine.setAxesHelper(newVal);
       },
       immediate: true,
     },
     showGrid: {
       handler(newVal) {
-        this.connector.setGridHelper(newVal);
-      },
-      immediate: true,
-    },
-    showHelper: {
-      handler(newVal) {
-        this.connector.setObjectHelper(newVal);
+        engine.setGridHelper(newVal);
       },
       immediate: true,
     },
     showTransformControls: {
       handler(newVal) {
-        this.connector.setTransformControls(newVal);
+        engine.setTransformControls(newVal);
       },
-      // immediate: true,
+      immediate: true,
     },
-    // showHelper: {
-    //   handler (newVal) {
-    //     this.connector.setObjectHelper(newVal)
-    //   },
-    //   immediate: true
-    // }
-    // showTransformControls: {
-    //   handler (newVal) {
-    //     this.connector.setTransformControls(newVal)
-    //   },
-    //   immediate: true
-    // }
   },
 };
 </script>

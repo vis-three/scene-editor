@@ -34,15 +34,12 @@ import { Plugin } from "@/assets/js/plugins/axios";
 import "@/assets/js/optimize.js";
 import "@/assets/js/combination.js";
 
-import parse from "url-parse";
-
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
-// // 引入socket服务;
-import ClientSocketIO from "socket.io-client";
+import { db } from "./assets/js/db";
 
 Nprogress.start();
 
@@ -61,19 +58,12 @@ Vue.component(CollapseTransition.name, CollapseTransition);
 
 Vue.prototype.$tool = tool;
 
-Vue.prototype.$socket = ClientSocketIO(`http://localhost:3001`, {
-  transports: ["websocket"],
-});
-
 Vue.config.productionTip = false;
 
 const app = new Vue({
   // router,
   store,
   render: (h) => h(App),
-  created() {
-    const { query } = parse(window.location.href, true);
-  },
   mounted() {
     Nprogress.done();
   },

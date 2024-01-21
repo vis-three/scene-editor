@@ -57,8 +57,8 @@
 </template>
 
 <script>
-import { CONFIGTYPE } from "@vis-three/middleware";
-import { engine, history } from "../../assets/js/VisFrame";
+import { CONFIGTYPE, OBJECTMODULE } from "@vis-three/middleware";
+import { engine, history } from "../../assets/js/vis";
 import { SelectionAction } from "../../assets/js/action/SelectionAction";
 import { DeleteObjectAction } from "../../assets/js/action/DeleteObjectAction";
 export default {
@@ -72,7 +72,6 @@ export default {
   computed: {
     // 当前场景
     currentScene() {
-      console.log(this.$store.getters["scene/currentScene"]);
       return this.$store.getters["scene/currentScene"];
     },
 

@@ -47,9 +47,10 @@ vabse
 </template>
 
 <script>
-import { engine } from "@/assets/js/VisFrame";
+import { engine } from "@/assets/js/vis";
 import { generateConfig, Template } from "@vis-three/middleware";
 import Vue from "vue";
+import model from "@/assets/js/api/model.js";
 
 export default {
   data() {
@@ -76,6 +77,9 @@ export default {
     currentScene() {
       return this.$store.getters["scene/currentScene"];
     },
+    urls() {
+      return this.$store.getters["modelLibrary/urls"];
+    },
   },
   methods: {
     chouseFile(item) {
@@ -87,10 +91,20 @@ export default {
     },
     modelSelected(file) {
       console.log(file);
-      const url = file.model;
 
+      let url = this.urls.get(file);
+
+      if (!url) {
+        url = URL.createObjectURL(file.model);
+        this.$store.commit("modelLibrary/cacheUrl", {
+          file,
+          url,
+        });
+      }
+
+      console.log(url);
       if (!this.configTemplateCache[url]) {
-        engine.loadResourcesAsync([url]).then((res) => {
+        engine.loadResourcesAsync([{ url, ext: file.ext }]).then((res) => {
           this.configTemplateCache[url] = res.resourceConfig[url];
 
           const rootPathList = [url, url + ".scene"];

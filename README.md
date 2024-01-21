@@ -1,6 +1,6 @@
 # 【vis-three】scene-editor
 
-[vis-three 框架](https://github.com/Shiotsukikaedesari/vis-three)衍生出的自定义 3D 场景编辑器类应用。
+[vis-three 框架](https://github.com/Shiotsukikaedesari/vis-three)衍生出的纯静态自定义 3D 场景编辑器。
 
 <p>
   <img alt="NPM" src="https://img.shields.io/badge/license-AGPL3.0-blue">
@@ -23,24 +23,16 @@
 
 ### 项目说明
 
-1. 前端环境：`node: 14.20.0`， `npm: 6.14.17`，`@vue/cli: 4.5.12`
+1. 前端环境：`node: 14.20.0`， `npm: 6.14.17`，`@vue/cli: 4.5.12`。
 
-2. 本项目需要搭配后台使用：[display-service 编辑器后台服务](https://github.com/Shiotsukikaedesari/display-service)
+2. 本项目会根据反馈持续完善，目前正处于功能静态化阶段，对于用户数据目前**暂时不保证兼容**性。
 
 3. 本项目为`AGPL-3.0`社区版开源编辑器项目，如果您的需求与`LICENSE`冲突，欢迎进入社区进行协商。
 
 ## 贡献者
 
-### 前端
-
 <a href="https://github.com/vis-three/scene-editor/graphs/contributors">
   <img src="https://stg.contrib.rocks/image?repo=vis-three/scene-editor" />
-</a>
-
-### 后端
-
-<a href="https://github.com/vis-three/scene-editor-service/graphs/contributors">
-  <img src="https://stg.contrib.rocks/image?repo=vis-three/scene-editor-service" />
 </a>
 
 ## 赞助者
@@ -70,18 +62,6 @@
 | 赞助者                                                                                                           | issue |
 | ---------------------------------------------------------------------------------------------------------------- | :---- |
 | <a href="https://www.fanvfx.com.cn/#/"><img src="/readme/sponser/huanjie.png" width="60px" height="60px"  /></a> | 开源  |
-
-## 开源模式探索
-
-官方不再继续**主动**更新此编辑器的功能，包括 bug 修复，功能新增，文档与演示更新。
-
-此项目的推动模式不在是由官方主导的模式，而是变成由市场主导的模式，如何进行请详读下面的 issue 流程。
-
-### 需要解决的问题
-
-1、形成有效的社区与环境。
-
-2、做到贡献者，用户的生活与工作平衡。
 
 ## 关于 issue
 
@@ -160,13 +140,3 @@ issue 部分会进行相关的开发任务分类：
 - QQ 群： 1025827206
 
 > 只做技术交流，项目问题，需求问题参照 README.md 提 issue
-
-## 演示教程
-
-[https://space.bilibili.com/3048588](https://space.bilibili.com/3048588)
-
-## 项目关联
-
-- [vis-three 框架](https://github.com/Shiotsukikaedesari/vis-three)
-- [display-service 编辑器后台服务](https://github.com/Shiotsukikaedesari/display-service)
-- [项目展厅](https://github.com/Shiotsukikaedesari/vis-three-exhibition-hall)

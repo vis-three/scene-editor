@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <editor-frame v-if="inited"></editor-frame>
+    <editor-frame></editor-frame>
     <loading-manager></loading-manager>
-    <workbench ref="workbench"></workbench>
+    <!-- <workbench ref="workbench"></workbench> -->
   </div>
 </template>
 
@@ -18,13 +18,13 @@ export default {
     workbench,
   },
   computed: {
-    inited() {
-      return this.$store.getters.id;
-    },
+    // inited() {
+    //   return this.$store.getters.id;
+    // },
   },
   methods: {},
   mounted() {
-    this.$refs.workbench.visible = true;
+    // this.$refs.workbench.visible = true;
   },
 };
 </script>

@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import { engine } from "@/assets/js/VisFrame";
+import { engine } from "@/assets/js/vis";
 
 export default {
   data() {

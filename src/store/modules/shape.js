@@ -1,12 +1,12 @@
 import Vue from "vue";
 import { MODULETYPE } from "@vis-three/middleware";
-import { engine } from "../../assets/js/VisFrame";
+import { engine } from "../../assets/js/vis";
 
 export const module = {
   namespaced: true,
   state: {
     map: engine.dataSupportManager.getDataSupport(MODULETYPE.SHAPE).getData(),
-    module: MODULETYPE.SHAPE
+    module: MODULETYPE.SHAPE,
   },
   getters: {
     get(state) {

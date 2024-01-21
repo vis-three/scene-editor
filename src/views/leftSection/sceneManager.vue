@@ -44,7 +44,7 @@
 
 <script>
 import { CONFIGTYPE, generateConfig } from "@vis-three/middleware";
-import { engine } from "../../assets/js/VisFrame";
+import { engine } from "../../assets/js/vis";
 import { v4 } from "uuid";
 import Vue from "vue";
 

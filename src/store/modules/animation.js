@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { engine } from "@/assets/js/VisFrame";
+import { engine } from "@/assets/js/vis";
 
 const module = {
   namespaced: true,

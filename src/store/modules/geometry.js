@@ -1,6 +1,6 @@
 import Vue from "vue";
 import { MODULETYPE } from "@vis-three/middleware";
-import { engine } from "../../assets/js/VisFrame";
+import { engine } from "../../assets/js/vis";
 
 export const module = {
   namespaced: true,
@@ -26,7 +26,7 @@ export const module = {
       state.map.__ob__.dep.notify();
       state.active = state.map[vid];
     },
-    
+
     notify(state) {
       state.map.__ob__.dep.notify();
     },

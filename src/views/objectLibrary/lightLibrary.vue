@@ -24,7 +24,7 @@ export default {
     return {
       light: [
         {
-          icon: "#icondengpao",
+          icon: "#iconhuanjingguang",
           label: "环境光",
           light: CONFIGTYPE.AMBIENTLIGHT,
         },
@@ -34,22 +34,22 @@ export default {
           light: CONFIGTYPE.POINTLIGHT,
         },
         {
-          icon: "#icondengpao",
+          icon: "#iconjuguang",
           label: "聚光",
           light: CONFIGTYPE.SPOTLIGHT,
         },
         {
-          icon: "#icondengpao",
+          icon: "#iconpinghangguang",
           label: "平行光",
           light: CONFIGTYPE.DIRECTIONALLIGHT,
         },
         {
-          icon: "#icondengpao",
+          icon: "#iconbanqiuguang",
           label: "半球光",
           light: CONFIGTYPE.HEMISPHERELIGHT,
         },
         {
-          icon: "#icondengpao",
+          icon: "#iconpingmianguang",
           label: "平面光",
           light: CONFIGTYPE.RECTAREALIGHT,
         },
@@ -61,12 +61,17 @@ export default {
       const config = generateConfig(item.light, {
         vid: getUuid(),
       });
-      config.icon = item.icon;
       config.name = `${item.label}-${config.vid.slice(-2)}`;
+
+      const helper = generateConfig(CONFIGTYPE.OBJECTHELPER, {
+        target: config.vid,
+        shape: true,
+      });
 
       VIS.history.apply(
         new AddLightAction({
           config,
+          helper,
           store: this.$store,
           engine: VIS.engine,
         }),

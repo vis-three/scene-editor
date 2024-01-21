@@ -22,7 +22,7 @@ vabse
         <vis-icon :size="iconSize" code="#iconwenjianjia"></vis-icon>
       </template>
       <template v-else>
-        <img :src="item.preview" />
+        <img :src="getUrl(item)" />
         <div
           class="item-selected-mask"
           v-show="selected.find((elem) => elem.id === item.id)"
@@ -81,8 +81,23 @@ export default {
     currentScene() {
       return this.$store.getters["scene/currentScene"];
     },
+    urls() {
+      return this.$store.getters["textureLibrary/urls"];
+    },
   },
   methods: {
+    getUrl(file) {
+      let url = this.urls.get(file);
+      if (!url) {
+        url = URL.createObjectURL(file.texture);
+        this.$store.commit("textureLibrary/cacheUrl", {
+          file,
+          url,
+        });
+      }
+
+      return url;
+    },
     chouseFile(item) {
       if (item.dir) {
         this.$store.commit("textureLibrary/currentFloder", item);

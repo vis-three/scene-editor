@@ -6,10 +6,18 @@
   border: 1px solid @theme-color;
 }
 
+.vis-css3D,
+.vis-css2D {
+  background-color: rgba(0, 0, 0, 0);
+}
+
 .vis-css3d,
 .vis-css2d {
-  background: fade(@theme-color, 30%);
+  background: fade(@theme-color, 10%);
   &:hover {
-    background: fade(@theme-color, 60%);
+    box-shadow: 0 0 4px @theme-color;
+  }
+  &:focus {
+    box-shadow: 0 0 4px @theme-color;
   }
 }

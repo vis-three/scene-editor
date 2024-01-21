@@ -7,24 +7,9 @@
     >
       快照
     </el-button>
-    <!-- <el-button size="mini" type="primary" @click="buildDialogVisible = true">
-      导出
-    </el-button> -->
-    <!-- <el-dropdown size="mini" split-button type="primary" @click="save">
-      保存
-      <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item>在线保存</el-dropdown-item>
-        <el-dropdown-item>本地保存</el-dropdown-item>
-        <el-dropdown-item>模板保存</el-dropdown-item>
-      </el-dropdown-menu>
-    </el-dropdown> -->
-    <el-button size="mini" type="primary" @click="save">保存</el-button>
-
-    <el-button size="mini" type="success" @click="buildDialogVisible = true">
-      构建
-    </el-button>
-    <el-button size="mini" type="info" @click="preivew">在线</el-button>
-    <el-button size="mini" type="info" @click="download">下载</el-button>
+    <!-- <el-button size="mini" type="success" @click="save">保存</el-button>
+    <el-button size="mini" type="info" @click="display">展示</el-button>
+    <el-button size="mini" type="info" @click="download">导出</el-button> -->
     <el-dialog
       title="快照设置"
       :visible.sync="screenshotDialogVisible"
@@ -59,34 +44,11 @@
         </el-button>
       </span>
     </el-dialog>
-
-    <el-dialog
-      title="构建设置"
-      :visible.sync="buildDialogVisible"
-      width="30%"
-      center
-    >
-      <el-form label-position="left" label-width="90px">
-        <el-form-item label="文件名">
-          <el-input size="mini" v-model="buildForm.name"></el-input>
-        </el-form-item>
-        <el-form-item label="地址前缀">
-          <el-input size="mini" v-model="buildForm.publicPath"></el-input>
-        </el-form-item>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button size="mini" @click="buildDialogVisible = false">
-          取 消
-        </el-button>
-        <el-button size="mini" type="primary" @click="build">确 定</el-button>
-      </span>
-    </el-dialog>
   </div>
 </template>
 
 <script>
-import { engine } from "@/assets/js/VisFrame";
-import { JSONHandler } from "@vis-three/middleware";
+import { engine } from "@/assets/js/vis";
 
 export default {
   data() {
@@ -102,14 +64,6 @@ export default {
       exportSetting: {
         name: "vis-scene",
       },
-      saveStatus: false,
-
-      buildForm: {
-        name: "",
-        publicPath: "./",
-      },
-
-      watcher: "",
     };
   },
 
@@ -140,67 +94,10 @@ export default {
     async save() {
       const loading = this.$message.loading("正在保存...");
       const config = engine.exportConfig();
-      // config.component = this.$store.getters["component/get"];
-      this.axios
-        .post("/app/modify", {
-          id: this.$store.getters.id,
-          config: JSON.stringify(config, JSONHandler.stringify),
-          preview: await engine.getScreenshot({
-            width: 1920,
-            height: 1080,
-          }),
-        })
-        .then((res) => {
-          console.log(res);
-          if (res.status === 200) {
-            this.$message.success("保存成功！");
-          }
-        })
-        .finally(() => {
-          loading.close();
-        });
-    },
-    async build() {
-      this.buildDialogVisible = false;
-      const tips = this.$notify.loading("正在构建应用,请稍后...");
-
-      this.$socket.emit("buildApp", {
-        id: this.$store.getters.id,
-        name: this.buildForm.name,
-        publicPath: this.buildForm.publicPath || "./",
-      });
-
-      this.$socket.on("buildQueue", (res) => {
-        if (!res.data) {
-          tips.message = "正在构建应用,请稍后...";
-        } else {
-          tips.message = `当前排队人数：${res.data}`;
-        }
-      });
-
-      this.$socket.on("builded", async (buildMessage) => {
-        tips.close();
-        if (buildMessage.status !== 200) {
-          this.$message.error(buildMessage.message);
-          return;
-        }
-
-        this.$notify({
-          title: "构建成功！",
-          type: "success",
-        });
-
-        this.$socket.off("buildQueue");
-        this.$socket.off("builded");
-
-        this.buildForm = {
-          name: this.$store.state.name,
-          publicPath: "./",
-        };
-      });
+      //TODO: save in storage
     },
 
-    preivew() {
+    display() {
       window.open(`/app/${this.$store.getters.id}/dist`);
     },
 
@@ -221,11 +118,6 @@ export default {
         event.stopPropagation();
         this.save();
       },
-    });
-
-    this.watcher = this.$watch("$store.state.name", function (value) {
-      this.buildForm.name = value;
-      this.watcher();
     });
   },
 };

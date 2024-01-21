@@ -1,6 +1,6 @@
 import Vue from "vue";
 import { MODULETYPE } from "@vis-three/middleware";
-import { engine } from "../../assets/js/VisFrame";
+import { engine } from "../../assets/js/vis";
 
 export const module = {
   namespaced: true,

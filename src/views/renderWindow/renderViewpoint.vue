@@ -13,13 +13,10 @@
 
 <script>
 import { VIEWPOINT } from "@vis-three/engine-modeling-support";
+import { engine } from "@/assets/js/vis";
 
 export default {
   props: {
-    connector: {
-      type: Object,
-      required: true,
-    },
     viewpoint: {
       type: String,
       default: VIEWPOINT.DEFAULT,
@@ -42,7 +39,7 @@ export default {
   watch: {
     cameraView: {
       handler(newVal) {
-        this.connector.setViewpoint(newVal);
+        engine.setViewpoint(newVal);
         this.$emit("changeViewpoint", newVal);
       },
     },

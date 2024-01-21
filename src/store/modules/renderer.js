@@ -1,6 +1,6 @@
 import Vue from "vue";
 import { MODULETYPE, CONFIGTYPE, generateConfig } from "@vis-three/middleware";
-import { engine } from "../../assets/js/VisFrame";
+import { engine } from "../../assets/js/vis";
 
 const webGLRenderer = generateConfig(CONFIGTYPE.WEBGLRENDERER, {
   clearColor: "rgba(15, 15, 15, 1)",

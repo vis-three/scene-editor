@@ -79,6 +79,9 @@
 </template>
 
 <script>
+import modelApi from "@/assets/js/api/model.js";
+import JSZip from "jszip";
+
 export default {
   data() {
     return {
@@ -137,17 +140,60 @@ export default {
     upload() {
       this.$refs.uploadInput.click();
     },
-    fileHandler(event) {
+    async fileHandler(event) {
+      const modelExt = ["fbx", "glb", "obj"];
+      const previewExt = ["jpg", "png", "jpeg"];
+
       const file = event.target.files[0];
-      const formData = new FormData();
+      const classifyId = this.currentFloder.id;
 
-      formData.append("file", file);
-      formData.append("classifyId", this.currentFloder.id);
+      const zip = new JSZip();
+      const zipData = await zip.loadAsync(file);
 
-      this.axios
-        .upload("/model/upload", formData)
-        .then((res) => {
-          this.$store.commit("modelLibrary/addChildren", res.data);
+      console.log(zipData);
+
+      const files = zipData.files;
+
+      let modelFile = false;
+      let previewFile = null;
+
+      for (const name of Object.keys(files)) {
+        if (modelExt.includes(this.$tool.getFileExt(name))) {
+          modelFile = name;
+        }
+        if (previewExt.includes(this.$tool.getFileExt(name))) {
+          previewFile = name;
+        }
+      }
+
+      if (!modelFile) {
+        this.$message.warning(
+          `不支持的模型文件格式。支持的模型文件格式：${modelExt.join(", ")}`
+        );
+      }
+
+      const model = await files[modelFile].async("blob");
+      let preview = null;
+
+      if (previewFile) {
+        preview =
+          `data:image/${this.$tool.getFileExt(previewFile)};base64,` +
+          (await files[previewFile].async("base64"));
+      }
+
+      modelApi
+        .uploadModel({
+          classifyId,
+          name: modelFile,
+          model,
+          ext: this.$tool.getFileExt(modelFile),
+          size: Object.values(files).reduce((total, item) => {
+            return total + item._data.uncompressedSize;
+          }, 0),
+          preview,
+        })
+        .then((data) => {
+          this.$store.commit("modelLibrary/addChildren", data);
         })
         .finally(() => {
           this.$refs.uploadInput.value = "";
@@ -155,20 +201,17 @@ export default {
     },
     addClassify() {
       if (this.classifyName.trim()) {
-        this.axios
-          .post("/model/addClassify", {
+        modelApi
+          .addClassify({
             name: this.classifyName.trim(),
             parentId: this.currentFloder.id,
           })
           .then((res) => {
-            if (res.status === 200) {
-              this.$store.commit("modelLibrary/addChildren", res.data);
-              this.classifyName = "";
-              this.classifyVisible = false;
-              this.$message.success("添加分类成功！");
-            } else {
-              this.$message.error(res.message);
-            }
+            console.log(res);
+            this.$store.commit("modelLibrary/addChildren", res);
+            this.classifyName = "";
+            this.classifyVisible = false;
+            this.$message.success("添加分类成功！");
           });
       } else {
         this.classifyName = "";

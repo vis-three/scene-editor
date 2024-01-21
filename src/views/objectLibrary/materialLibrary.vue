@@ -61,7 +61,7 @@
 
 <script>
 import { v4 as getUuid } from "uuid";
-import { engine, materialDisplayer } from "@/assets/js/VisFrame";
+import { engine, materialDisplayer } from "@/assets/js/vis";
 import { CONFIGTYPE, generateConfig } from "@vis-three/middleware";
 
 export default {

@@ -12,12 +12,10 @@
 </template>
 
 <script>
+import { engine } from "@/assets/js/vis";
+
 export default {
   props: {
-    connector: {
-      type: Object,
-      required: true,
-    },
     viewpoint: {
       type: String,
       required: true,
@@ -52,9 +50,9 @@ export default {
       handler(newVal) {
         if (newVal) {
           const camera = VIS.engine.compilerManager.getObjectBySymbol(newVal);
-          this.connector.setCamera(camera);
+          engine.setCamera(camera);
         } else {
-          this.connector.setViewpoint(this.viewpoint);
+          engine.setViewpoint(this.viewpoint);
         }
 
         this.$emit("changeCamera", newVal);

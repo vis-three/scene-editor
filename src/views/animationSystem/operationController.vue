@@ -144,7 +144,7 @@ import {
   generateConfig,
   AniScriptGeneratorManager,
 } from "@vis-three/middleware";
-import { engine } from "../../assets/js/VisFrame";
+import { engine } from "../../assets/js/vis";
 import aniScrpit from "@/assets/js/aniScriptLibrary";
 import Vue from "vue";
 

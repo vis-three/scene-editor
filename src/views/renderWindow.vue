@@ -24,13 +24,11 @@
         <render-viewpoint
           v-show="showRenderViewPoint"
           :viewpoint="currentViewPoint"
-          :connector="connector"
           @changeViewpoint="changeViewpoint"
         ></render-viewpoint>
-        <auxiliary-display :connector="connector"></auxiliary-display>
+        <auxiliary-display></auxiliary-display>
         <camera-viewpoint
           ref="cameraViewpoint"
-          :connector="connector"
           :viewpoint="currentViewPoint"
           @changeCamera="changeCamera"
         ></camera-viewpoint>
@@ -39,7 +37,18 @@
 
     <position-layout-box class="top-function-box" :offsetX="5" :offsetY="5">
       <template #main>
-        <performance-monitor :connector="connector"></performance-monitor>
+        <performance-monitor></performance-monitor>
+      </template>
+    </position-layout-box>
+
+    <position-layout-box
+      class="top-function-box"
+      :offsetX="5"
+      :offsetY="35"
+      v-show="draw"
+    >
+      <template #main>
+        <path-drawing></path-drawing>
       </template>
     </position-layout-box>
 
@@ -55,32 +64,18 @@
 </template>
 
 <script>
-import Vue from "vue";
-
-import { engine, componentManager } from "@/assets/js/VisFrame";
-
-import Connector from "@/assets/js/Connector";
-
-// import { v4 as getUuid } from 'uuid'
+import { engine } from "@/assets/js/vis";
 
 import positionLayoutBox from "@/components/positionLayoutBox.vue";
 // import dragMoveBox from '@//components/dragMoveBox'
 import objectLibrary from "./renderWindow/objectLibrary.vue";
-import {
-  CONFIGTYPE,
-  generateConfig,
-  JSONHandler,
-  Template,
-  uniqueSymbol,
-} from "@vis-three/middleware";
 
 const renderViewpoint = () => import("./renderWindow/renderViewpoint.vue");
 const cameraViewpoint = () => import("./renderWindow/cameraViewpoint.vue");
 const auxiliaryDisplay = () => import("./renderWindow/auxiliaryDisplay.vue");
-// const renderScene = () => import('./renderWindow/renderScene')
-// const renderMode = () => import("./renderWindow/renderMode");
 const performanceMonitor = () =>
   import("./renderWindow/performanceMonitor.vue");
+const pathDrawing = () => import("./renderWindow/pathDrawing.vue");
 
 export default {
   components: {
@@ -90,9 +85,8 @@ export default {
     renderViewpoint,
     cameraViewpoint,
     auxiliaryDisplay,
-    // // renderScene,
-    // renderMode,
     performanceMonitor,
+    pathDrawing,
   },
   props: {
     // 窗口标识
@@ -118,7 +112,6 @@ export default {
       throttleTime: 1000 / 60,
       width: "",
       height: "",
-      connector: "", // 引擎连接器
       showRenderViewPoint: true,
       currentViewPoint: "",
       visTarget: "", // vis引擎放置的target
@@ -126,8 +119,8 @@ export default {
   },
 
   computed: {
-    mode() {
-      return this.$store.getters.mode;
+    draw() {
+      return this.$store.getters["path/draw"];
     },
   },
   methods: {
@@ -155,21 +148,6 @@ export default {
   async mounted() {
     engine.setDom(this.$refs.renderElement).setSize().play();
 
-    // 设置连通器
-    this.connector = new Connector().apply(engine, [
-      "setSize",
-      "play",
-      "stop",
-      "setTransformControls",
-      "setStats",
-      "setViewpoint",
-      "setAxesHelper",
-      "setCamera",
-      "setGridHelper",
-      "setDisplayMode",
-      "setObjectHelper",
-    ]);
-
     // 渲染监听
     this.$watch(
       "play",
@@ -196,83 +174,6 @@ export default {
         }, this.throttleTime);
       }
     });
-
-    const loading = this.$loading({
-      text: "正在初始化项目...",
-      background: "rgba(0, 0, 0, 0.3)",
-    });
-
-    const id = this.$store.getters.id;
-    const appMessage = await this.axios
-      .post("app/detail", { id })
-      .catch((err) => {
-        this.$message.error(err.message);
-        loading.close();
-      });
-
-    if (appMessage.status !== 200) {
-      this.$message.error(appMessage.message);
-      loading.close();
-      return;
-    }
-
-    this.$store.commit("name", appMessage.data.name);
-
-    let config = (await this.axios.get(appMessage.data.app)) || {};
-
-    // // 组件加载
-    // const component = config.component;
-
-    // if (component) {
-    //   delete config.component;
-
-    //   const componentValues = [...Object.values(component)];
-
-    //   // 获取所有的packageJSON
-    //   const packageJSONList = await Promise.all(
-    //     componentValues.map((item) => this.axios.get(item.pkg))
-    //   ).catch((err) => {
-    //     this.$message.error(err.message);
-    //     loading.close();
-    //   });
-
-    //   // 获取所有组件注册组件
-    //   const componentList = await Promise.all(
-    //     componentValues.map((item, i) =>
-    //       componentManager.generate(item.url, packageJSONList[i], item)
-    //     )
-    //   ).catch((err) => {
-    //     this.$message.error(err.message);
-    //     loading.close();
-    //   });
-
-    //   componentList.forEach(({ resource, config }, i) => {
-    //     this.$store.commit("component/add", {
-    //       config,
-    //       configuration: packageJSONList[i].configuration,
-    //     });
-    //     engine.registerResources({
-    //       [config.cid]: resource,
-    //     });
-    //   });
-    // }
-
-    config = Template.handler(config, (objectConfig) =>
-      generateConfig(objectConfig.type, objectConfig, {
-        handler: (c) => Vue.observable(c),
-      })
-    );
-
-    engine.loadConfigAsync(config).then((res) => {
-      this.$store.commit(
-        "renderer/webGLRenderer",
-        uniqueSymbol(CONFIGTYPE.WEBGLRENDERER)
-      );
-      this.$store.commit("scene/currentScene", uniqueSymbol(CONFIGTYPE.SCENE));
-      this.$store.commit("notifyAll");
-    });
-
-    loading.close();
   },
 };
 </script>
@@ -281,6 +182,7 @@ export default {
 .renderWindow-container {
   position: relative;
   .boxSetting();
+  overflow: hidden;
   .render-mask {
     position: absolute;
     pointer-events: none;

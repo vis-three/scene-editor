@@ -2,6 +2,7 @@
   <div class="fileMenu-container">
     <div class="app-tips">
       <el-image src="/image/logo.png"></el-image>
+      <span class="app-title">STATIC</span>
     </div>
     <!-- <dropdown-menu
       icon="#iconwode"
@@ -55,6 +56,12 @@ export default {
     .flexLayout(row, flex-start, center);
     > .el-image {
       .boxSetting(40px, 40px);
+    }
+
+    > .app-title {
+      font-weight: bold;
+      font-size: 18px;
+      padding-left: @box-padding;
     }
   }
 }

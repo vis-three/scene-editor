@@ -16,13 +16,9 @@
 </template>
 
 <script>
+import { engine } from "@/assets/js/vis";
+
 export default {
-  props: {
-    connector: {
-      type: Object,
-      required: true,
-    },
-  },
   data() {
     return {
       show: false,
@@ -31,7 +27,7 @@ export default {
   watch: {
     show: {
       handler(newVal) {
-        this.connector.setStats(newVal);
+        engine.setStats(newVal);
       },
       immediate: true,
     },

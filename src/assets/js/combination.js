@@ -1,4 +1,4 @@
-import { engine, history } from "./VisFrame";
+import { engine, history } from "./vis";
 import store from "../../store";
 import { SelectionAction } from "./action/SelectionAction";
 import { TransformAction } from "./action/TransformAction";
@@ -47,8 +47,6 @@ engine.keyboardManager
       event.stopPropagation();
 
       const object = store.getters["active/object"];
-
-      console.log(object);
       object && (CopyObjectAction.tempSymbol = object.vid);
     },
   })
@@ -86,6 +84,9 @@ engine.keyboardManager
 
 // 物体选择
 engine.addEventListener("selected", (event) => {
+  engine.pathSupportControls.visible = false;
+  engine.pathSupportControls.disconnect();
+
   if (!SelectionAction.cacheSymbolBox.length && !event.objectSymbols.length) {
     return;
   }
@@ -100,13 +101,35 @@ engine.addEventListener("selected", (event) => {
   );
 
   if (event.objectSymbols.length === 1) {
-    store.commit(
-      "active/object",
-      engine.getConfigBySymbol(event.objectSymbols[0])
-    );
+    const obejctConfig = engine.getConfigBySymbol(event.objectSymbols[0]);
+
+    store.commit("active/object", obejctConfig);
+
+    const geometryConfig = obejctConfig.geometry
+      ? engine.getConfigBySymbol(obejctConfig.geometry)
+      : null;
+
+    if (geometryConfig && geometryConfig.type === "PathGeometry") {
+      const pathConfig = engine.getConfigBySymbol(geometryConfig.path);
+
+      engine.pathSupportControls.visible = true;
+      engine.pathSupportControls
+        .setConfig(pathConfig)
+        .setObject(event.objects[0])
+        .connect();
+    }
   } else {
     store.commit("active/clear");
   }
+});
+
+// 路径编辑
+engine.pathSupportControls.addEventListener("mousedown", (event) => {
+  engine.selectionDisable = true;
+
+  engine.eventManager.once("click", (event) => {
+    engine.selectionDisable = false;
+  });
 });
 
 // 物体基础变换

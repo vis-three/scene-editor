@@ -2,20 +2,17 @@ import { defineConfig } from "vite";
 import { createVuePlugin } from "vite-plugin-vue2";
 import path from "path";
 
-const apiList = ["app", "template", "texture", "model", "component"];
-
-const proxy = {};
-
-apiList.forEach((url) => {
-  proxy[`/${url}`] = {
-    target: "http://localhost:3001",
-    changeOrigin: true,
-  };
-});
-
-console.log(proxy);
-
 export default defineConfig({
+  build: {
+    outDir: path.resolve(__dirname, "./docs"),
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          three: ["three"],
+        },
+      },
+    },
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -40,8 +37,4 @@ export default defineConfig({
       },
     }),
   ],
-
-  server: {
-    proxy,
-  },
 });

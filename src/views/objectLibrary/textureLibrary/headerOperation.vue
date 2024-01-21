@@ -70,7 +70,7 @@
       <input
         type="file"
         style="display: none"
-        accept=".png, .jpg, .mp4"
+        :accept="ext"
         multiple="multiple"
         ref="uploadInput"
         @change="fileHandler"
@@ -80,11 +80,14 @@
 </template>
 
 <script>
+import textureApi from "@/assets/js/api/texture.js";
+
 export default {
   data() {
     return {
       classifyName: "", // 分类名
       classifyVisible: false,
+      ext: [".jpg", ".png", ".jpeg", ".video", ".hdr", ".dds"],
     };
   },
   computed: {
@@ -138,18 +141,27 @@ export default {
     upload() {
       this.$refs.uploadInput.click();
     },
-    fileHandler(event) {
-      const formData = new FormData();
+    async fileHandler(event) {
+      const files = event.target.files;
+      const classifyId = this.currentFloder.id;
+
+      const promises = [];
+
       for (const file of event.target.files) {
-        formData.append("files", file);
+        promises.push(
+          textureApi.uploadTexture({
+            classifyId,
+            name: file.name,
+            texture: await this.$tool.fileToBlob(file),
+            ext: this.$tool.getFileExt(file.name),
+            size: file.size,
+          })
+        );
       }
 
-      formData.append("classifyId", this.currentFloder.id);
-
-      this.axios
-        .upload("/texture/upload", formData)
-        .then((res) => {
-          this.$store.commit("textureLibrary/addChildren", res.data);
+      Promise.all(promises)
+        .then((data) => {
+          this.$store.commit("textureLibrary/addChildren", data);
         })
         .finally(() => {
           this.$refs.uploadInput.value = "";
@@ -157,20 +169,16 @@ export default {
     },
     addClassify() {
       if (this.classifyName.trim()) {
-        this.axios
-          .post("/texture/addClassify", {
+        textureApi
+          .addClassify({
             name: this.classifyName.trim(),
             parentId: this.currentFloder.id,
           })
           .then((res) => {
-            if (res.status === 200) {
-              this.$store.commit("textureLibrary/addChildren", res.data);
-              this.classifyName = "";
-              this.classifyVisible = false;
-              this.$message.success("添加分类成功！");
-            } else {
-              this.$message.error(res.message);
-            }
+            this.$store.commit("textureLibrary/addChildren", res);
+            this.classifyName = "";
+            this.classifyVisible = false;
+            this.$message.success("添加分类成功！");
           });
       } else {
         this.classifyName = "";

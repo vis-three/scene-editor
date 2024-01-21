@@ -104,7 +104,7 @@
 </template>
 
 <script>
-import { engine } from "@/assets/js/VisFrame";
+import { engine } from "@/assets/js/vis";
 import { CONFIGTYPE, JSONHandler, MODULETYPE } from "@vis-three/middleware";
 
 export default {

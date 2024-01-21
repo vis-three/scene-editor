@@ -21,17 +21,7 @@ Object.keys(context).forEach((url) => {
 });
 
 export default new Vuex.Store({
-  state: {
-    id: "",
-    name: "",
-  },
   getters: {
-    id(state) {
-      return state.id;
-    },
-    name(state) {
-      return state.name;
-    },
     objectMapList(state, getters) {
       return Object.keys(OBJECTMODULE).map((module) => {
         return getters[`${module}/get`];
@@ -39,12 +29,6 @@ export default new Vuex.Store({
     },
   },
   mutations: {
-    initProject(state, id) {
-      state.id = Number(id);
-    },
-    name(state, name) {
-      state.name = name;
-    },
     notifyAll(state) {
       Object.values(MODULETYPE).forEach((module) => {
         this.commit(`${module}/notify`);

@@ -64,14 +64,17 @@
 </template>
 
 <script>
-import { engine, textureDisplayer } from "@/assets/js/VisFrame";
+import { engine, textureDisplayer } from "@/assets/js/vis";
 import {
   EquirectangularRefractionMapping,
   LinearEncoding,
   LinearFilter,
 } from "three";
-import { CONFIGTYPE, generateConfig } from "@vis-three/middleware";
-import { v4 as getUuid } from "uuid";
+import {
+  CONFIGTYPE,
+  createSymbol,
+  generateConfig,
+} from "@vis-three/middleware";
 
 const fileSystem = () => import("./textureLibrary/fileSystem.vue");
 
@@ -114,6 +117,9 @@ export default {
     active() {
       return this.$store.getters["texture/currentTexture"];
     },
+    urls() {
+      return this.$store.getters["textureLibrary/urls"];
+    },
   },
   methods: {
     // 添加贴图方法
@@ -137,14 +143,19 @@ export default {
     loadTexture(textureList, configType) {
       engine
         .loadConfigAsync({
-          assets: textureList.map((elem) => elem.texture),
+          assets: textureList.map((elem) => {
+            return {
+              url: this.urls.get(elem),
+              ext: elem.ext,
+            };
+          }),
         })
         .then((event) => {
           textureList.forEach((elem) => {
-            const vid = getUuid();
+            const vid = createSymbol();
             const config = generateConfig(configType, {
               vid,
-              url: elem.texture,
+              url: this.urls.get(elem),
               name: `${elem.name}${vid.slice(-2)}`,
             });
 
@@ -167,7 +178,7 @@ export default {
       textureList.forEach((data) => {
         tips.forEach((tip) => {
           if (data.name.toLocaleLowerCase().includes(tip)) {
-            cubeMap[tip] = data.texture;
+            cubeMap[tip] = this.urls.get(data);
           }
         });
       });
@@ -179,7 +190,7 @@ export default {
       }
 
       engine.loadResourcesAsync(Object.values(cubeMap)).then((event) => {
-        const vid = getUuid();
+        const vid = createSymbol();
         const config = generateConfig(CONFIGTYPE.CUBETEXTURE, {
           vid,
           cube: cubeMap,
@@ -193,14 +204,19 @@ export default {
       console.log(textureList);
       engine
         .loadConfigAsync({
-          assets: textureList.map((elem) => elem.path),
+          assets: textureList.map((elem) => {
+            return {
+              url: this.urls.get(elem),
+              ext: elem.ext,
+            };
+          }),
         })
         .then((event) => {
           textureList.forEach((elem) => {
-            const vid = getUuid();
+            const vid = createSymbol();
             const config = generateConfig(CONFIGTYPE.LOADTEXTURE, {
               vid,
-              url: elem.path,
+              url: this.urls.get(elem),
               name: `${elem.name}${vid.slice(-2)}`,
               mapping: EquirectangularRefractionMapping,
               flipY: true,

@@ -45,29 +45,19 @@ export default {
           component: "basic-model-library",
         },
         {
-          label: "模板",
-          icon: "#iconmobanguanli",
-          component: "template-library",
-        },
-        {
-          label: "UI组件",
-          icon: "#iconvuejs",
-          component: "component-library",
-        },
-        {
-          label: "模型",
-          icon: "#iconkucunfenxi",
-          component: "model-library",
-        },
-        {
           label: "灯光",
           icon: "#icondengpao",
           component: "light-library",
         },
         {
-          label: "相机",
-          icon: "#iconxiangji1",
-          component: "camera-library",
+          label: "功能物体",
+          icon: "#iconfunobject",
+          component: "fun-object-library",
+        },
+        {
+          label: "模型",
+          icon: "#iconkucunfenxi",
+          component: "model-library",
         },
         {
           label: "材质",
@@ -79,6 +69,11 @@ export default {
           icon: "#icontexture",
           component: "texture-library",
         },
+        // {
+        //   label: "模板",
+        //   icon: "#iconmobanguanli",
+        //   component: "template-library",
+        // },
       ],
     };
   },

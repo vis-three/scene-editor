@@ -1,5 +1,5 @@
 import { CONFIGTYPE, generateConfig, MODULETYPE } from "@vis-three/middleware";
-import { engine } from "../../assets/js/VisFrame";
+import { engine } from "../../assets/js/vis";
 
 export const defaultScene = generateConfig(CONFIGTYPE.SCENE, {
   name: "默认场景",

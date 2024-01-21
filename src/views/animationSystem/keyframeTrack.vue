@@ -55,7 +55,7 @@
 
 <script>
 import aniScriptLibrary from "@/assets/js/aniScriptLibrary";
-import { engine } from "../../assets/js/VisFrame";
+import { engine } from "../../assets/js/vis";
 
 export default {
   props: {

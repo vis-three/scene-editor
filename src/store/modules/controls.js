@@ -5,7 +5,7 @@ import {
   generateConfig,
   MODULETYPE,
 } from "@vis-three/middleware";
-import { engine } from "../../assets/js/VisFrame";
+import { engine } from "../../assets/js/vis";
 
 const transformControls = generateConfig(CONFIGTYPE.TRANSFORMCONTROLS);
 const orbitControls = generateConfig(CONFIGTYPE.ORBITCONTROLS);
