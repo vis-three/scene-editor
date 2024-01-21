@@ -3,6 +3,7 @@ import { createVuePlugin } from "vite-plugin-vue2";
 import path from "path";
 
 export default defineConfig({
+  base: "/scene-editor",
   build: {
     outDir: path.resolve(__dirname, "./docs"),
     rollupOptions: {
