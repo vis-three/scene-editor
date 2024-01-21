@@ -1,7 +1,7 @@
 <template>
   <div class="fileMenu-container">
     <div class="app-tips">
-      <el-image src="/image/logo.png"></el-image>
+      <el-image :src="logo"></el-image>
       <span class="app-title">STATIC</span>
     </div>
     <!-- <dropdown-menu
@@ -28,7 +28,9 @@ export default {
     shortcutKeyDocument,
   },
   data() {
-    return {};
+    return {
+      logo: import.meta.env.BASE_URL + '/image/logo.png'
+    };
   },
   methods: {
     my() {
