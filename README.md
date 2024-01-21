@@ -31,6 +31,10 @@
 
 3. 本项目为`AGPL-3.0`社区版开源编辑器项目，如果您的需求与`LICENSE`冲突，欢迎进入社区进行协商。
 
+4. 对接服务版本请查看`0.6.x`，`0.3.x`分支。
+
+5. 如果你是二开需求，请先熟悉[vis-three 框架](https://github.com/Shiotsukikaedesari/vis-three)框架。
+
 ## 贡献者
 
 <a href="https://github.com/vis-three/scene-editor/graphs/contributors">
