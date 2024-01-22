@@ -146,7 +146,7 @@ export default {
     applyKeyframe() {
       if (this.active) {
         const animation = this.animation;
-        this.$store.commit("keyframeTrack/setKeyframe", {
+        this.$store.commit("animationTrack/setKeyframe", {
           vid: animation.target.vid,
           attribute: animation.attribute,
           frame: this.currentFrame,
@@ -157,13 +157,13 @@ export default {
     clickWatch(value) {
       const animation = this.animation;
       if (!value) {
-        this.$store.commit("keyframeTrack/remove", {
+        this.$store.commit("animationTrack/remove", {
           vid: animation.target.vid,
           attribute: animation.attribute,
         });
       } else {
         ["x", "y"].forEach((key) => {
-          this.$store.commit("keyframeTrack/add", {
+          this.$store.commit("animationTrack/registerFrame", {
             vid: animation.target.vid,
             attribute: animation.attribute + `.${key}`,
             config: {

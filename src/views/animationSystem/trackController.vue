@@ -4,7 +4,7 @@
       <template slot-scope="{ exactWidth }">
         <time-axis :exactWidth="exactWidth"></time-axis>
         <pre-render-area :exactWidth="exactWidth"></pre-render-area>
-        <keyframe-track :scrollTop="scrollTop"></keyframe-track>
+        <animation-track :scrollTop="scrollTop"></animation-track>
       </template>
     </view-track>
   </div>
@@ -15,13 +15,13 @@ import viewTrack from "./viewTrack.vue";
 import timeAxis from "./timeAxis.vue";
 import preRenderArea from "./preRenderArea.vue";
 
-const keyframeTrack = () => import("./keyframeTrack.vue");
+const animationTrack = () => import("./animationTrack.vue");
 export default {
   components: {
     viewTrack,
     timeAxis,
     preRenderArea,
-    keyframeTrack,
+    animationTrack,
   },
   props: {
     scrollTop: {

@@ -6,6 +6,9 @@ export const module = {
     texture: "",
     geometry: "",
     pass: "",
+    functionModuleMap: {},
+    functionModule: 0,
+    disable: false,
   },
   getters: {
     object(state) {
@@ -27,6 +30,12 @@ export const module = {
     pass(state) {
       return state.pass;
     },
+    functionModule(state) {
+      return state.functionModule;
+    },
+    disable(state) {
+      return state.disable;
+    },
   },
   mutations: {
     object(state, object) {
@@ -47,10 +56,16 @@ export const module = {
       } else {
         state.material = "";
       }
+
+      this.commit("active/functionModule", "object");
     },
 
     material(state, material) {
       state.material = material;
+    },
+
+    texture(state, texture) {
+      state.texture = texture;
     },
 
     pass(state, pass) {
@@ -60,6 +75,24 @@ export const module = {
     clear(state) {
       state.object = "";
       state.material = "";
+    },
+
+    initFunctionModules(state, modules) {
+      modules.forEach((module, i) => {
+        state.functionModuleMap[module] = i;
+      });
+    },
+
+    functionModule(state, module) {
+      if (typeof state.functionModuleMap[module] !== undefined) {
+        state.functionModule = state.functionModuleMap[module];
+      } else {
+        console.warn(`can not set module: ${module}`);
+      }
+    },
+
+    disable(state, status) {
+      state.disable = status;
     },
   },
   actions: {},

@@ -2,6 +2,7 @@
   <div class="objectSettingModule-container" v-if="config.type">
     <de-collapse-layout
       :label="transMessage.label"
+      :subLabel="config.type"
       :icon="transMessage.icon"
       arrowPosition="left"
     >
@@ -11,10 +12,13 @@
           v-model="config.name"
         ></de-controller-input>
         <de-controller-input
-          label="类型"
-          v-model="config.type"
-          disabled
+          label="别名"
+          v-model="config.alias"
         ></de-controller-input>
+        <de-controller-code
+          label="数据"
+          v-model="config.meta"
+        ></de-controller-code>
       </template>
     </de-collapse-layout>
 
@@ -150,62 +154,43 @@ import {
 } from "@vis-three/middleware";
 
 const geometrySettingModule = () => import("./geometrySettingModule.vue");
-const componentSettingModule = () => import("./componentSettingModule.vue");
 
-const Mesh = () => import("./objectSettingModule/Mesh.vue");
+const components = { geometrySettingModule };
 
-const PointLight = () => import("./objectSettingModule/light/PointLight.vue");
-const DirectionalLight = () =>
-  import("./objectSettingModule/light/DirectionalLight.vue");
-const SpotLight = () => import("./objectSettingModule/light/SpotLight.vue");
-const AmbientLight = () =>
-  import("./objectSettingModule/light/AmbientLight.vue");
-const HemisphereLight = () =>
-  import("./objectSettingModule/light/HemisphereLight.vue");
-const RectAreaLight = () =>
-  import("./objectSettingModule/light/RectAreaLight.vue");
+const contextList = [
+  import.meta.glob("./objectSettingModule/*.vue"),
+  import.meta.glob("./objectSettingModule/object/*.vue"),
+  import.meta.glob("./objectSettingModule/light/*.vue"),
+  import.meta.glob("./objectSettingModule/camera/*.vue"),
+];
 
-const PerspectiveCamera = () =>
-  import("./objectSettingModule/camera/PerspectiveCamera.vue");
-
-const CSS3DPlane = () => import("./objectSettingModule/CSS3DPlane.vue");
-const CSS3DSprite = () => import("./objectSettingModule/CSS3DSprite.vue");
-const CSS2DPlane = () => import("./objectSettingModule/CSS2DPlane.vue");
-
-const Sprite = () => import("./objectSettingModule/Sprite.vue");
-const Group = () => import("./objectSettingModule/Group.vue");
+for (const context of contextList) {
+  Object.keys(context).forEach((url) => {
+    components[
+      url
+        .split("/")
+        .pop()
+        .replace(/.\/|\.vue$/g, "")
+    ] = context[url];
+  });
+}
 
 export default {
-  components: {
-    geometrySettingModule,
-    componentSettingModule,
-
-    Mesh,
-    CSS3DPlane,
-    CSS3DSprite,
-    CSS2DPlane,
-    Sprite,
-    Group,
-
-    PointLight,
-    DirectionalLight,
-    SpotLight,
-    AmbientLight,
-    HemisphereLight,
-    RectAreaLight,
-
-    PerspectiveCamera,
-  },
+  components,
   data() {
     return {
       displayAccuracy: 2,
       transMap: {
         [MODULETYPE.MESH]: {
           label: "网格物体",
-          icon: "#iconjihetuxing",
+          icon: "#iconlifangti",
         },
         [MODULETYPE.LINE]: {
           label: "线条物体",
+          icon: "#iconquxian",
+        },
+        [MODULETYPE.LINESEGMENTS]: {
+          label: "线段物体",
           icon: "#iconquxian",
         },
         [MODULETYPE.CAMERA]: {
@@ -218,19 +203,31 @@ export default {
         },
         [MODULETYPE.CSS3D]: {
           label: "C3物体",
-          icon: "#iconchuangkou",
+          icon: "#iconC3pingmian",
         },
         [MODULETYPE.CSS2D]: {
           label: "C2物体",
-          icon: "#iconchuangkou",
+          icon: "#iconC2jingling",
         },
         [MODULETYPE.SPRITE]: {
           label: "精灵",
-          icon: "#iconchuangkou",
+          icon: "#iconjingling",
         },
         [MODULETYPE.GROUP]: {
           label: "组",
-          icon: "#iconchuangkou",
+          icon: "#iconzu",
+        },
+        [MODULETYPE.POINTS]: {
+          label: "点云",
+          icon: "#icondianyun",
+        },
+        [MODULETYPE.WATER]: {
+          label: "水域",
+          icon: "#iconic_shuiliu",
+        },
+        [MODULETYPE.PARTICLE]: {
+          label: "粒子",
+          icon: "#iconpitaya-YSguanli",
         },
       },
     };
@@ -259,13 +256,7 @@ export default {
         },
       ];
 
-      const objectList = [
-        this.$store.getters["mesh/get"],
-        this.$store.getters["camera/get"],
-        this.$store.getters["sprite/get"],
-        this.$store.getters["group/get"],
-        this.$store.getters["css3D/get"],
-      ];
+      const objectList = this.$store.getters.objectMapList;
 
       for (const map of objectList) {
         for (const config of Object.values(map)) {

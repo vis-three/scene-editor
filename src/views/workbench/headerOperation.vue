@@ -60,7 +60,7 @@
         ></vis-icon>
       </el-popover>
 
-      <vis-icon
+      <!-- <vis-icon
         code="#iconshangchuan-fill"
         v-tooltip.top="'上传'"
         v-if="canUpload"
@@ -73,12 +73,14 @@
         accept=".png, .jpg, .mp4"
         ref="uploadInput"
         @change="fileHandler"
-      />
+      /> -->
     </div>
   </div>
 </template>
 
 <script>
+import appApi from "@/assets/js/api/app.js";
+
 export default {
   data() {
     return {
@@ -133,37 +135,33 @@ export default {
       this.$refs.uploadInput.click();
     },
     fileHandler(event) {
-      const file = event.target.files[0];
-      const formData = new FormData();
+      // const file = event.target.files[0];
+      // const formData = new FormData();
 
-      formData.append("file", file);
-      formData.append("classifyId", this.currentFloder.id);
+      // formData.append("file", file);
+      // formData.append("classifyId", this.currentFloder.id);
 
-      this.axios
-        .upload("/app/upload", formData)
-        .then((res) => {
-          this.$store.commit("appLibrary/addChildren", res.data);
-        })
-        .finally(() => {
-          this.$refs.uploadInput.value = "";
-        });
+      // this.axios
+      //   .upload("/app/upload", formData)
+      //   .then((res) => {
+      //     this.$store.commit("appLibrary/addChildren", res.data);
+      //   })
+      //   .finally(() => {
+      //     this.$refs.uploadInput.value = "";
+      //   });
     },
     addClassify() {
       if (this.classifyName.trim()) {
-        this.axios
-          .post("/app/addClassify", {
+        appApi
+          .addClassify({
             name: this.classifyName.trim(),
             parentId: this.currentFloder.id,
           })
           .then((res) => {
-            if (res.status === 200) {
-              this.$store.commit("appLibrary/addChildren", res.data);
-              this.classifyName = "";
-              this.classifyVisible = false;
-              this.$message.success("添加分类成功！");
-            } else {
-              this.$message.error(res.message);
-            }
+            this.$store.commit("appLibrary/addChildren", res);
+            this.classifyName = "";
+            this.classifyVisible = false;
+            this.$message.success("添加分类成功！");
           });
       } else {
         this.classifyName = "";

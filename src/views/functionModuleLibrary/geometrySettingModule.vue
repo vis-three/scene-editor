@@ -6,6 +6,10 @@
       arrowPosition="left"
     >
       <template #container>
+        <de-controller-input
+          label="几何名称"
+          v-model="config.name"
+        ></de-controller-input>
         <de-controller-vector3
           :keyframe="false"
           label="锚点位置"
@@ -28,6 +32,11 @@
           unit="°"
           v-model="config.rotation"
         ></de-controller-vector3>
+        <de-controller-switch
+          :keyframe="false"
+          label="居中"
+          v-model="config.center"
+        ></de-controller-switch>
 
         <div class="geometry-groups">
           <el-button

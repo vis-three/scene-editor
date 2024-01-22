@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import appApi from "@/assets/js/api/app.js";
+
 const fileSystem = () => import("./workbench/fileSystem.vue");
 export default {
   components: {
@@ -43,7 +45,6 @@ export default {
       return this.$store.getters["appLibrary/selected"];
     },
     currentFloder() {
-      console.log(this.$store.getters["appLibrary/currentFloder"]);
       return this.$store.getters["appLibrary/currentFloder"];
     },
   },
@@ -53,23 +54,25 @@ export default {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
       }).then(({ value }) => {
-        this.$axios
-          .post("/app/create", {
-            appName: value,
+        appApi
+          .creatApp({
+            name: value,
             classifyId: this.$store.getters["appLibrary/currentFloder"].id,
           })
-          .then((res) => {
-            if (res.status === 200) {
-              this.$store.commit("initProject", res.data.id);
-              this.visible = false;
-            } else {
-              this.$message.error(res.message);
-            }
+          .then((data) => {
+            this.$store.commit("initProject", {
+              id: data.id,
+              name: value,
+            });
+            this.visible = false;
           });
       });
     },
     select() {
-      this.$store.commit("initProject", this.selected.id);
+      this.$store.commit("initProject", {
+        id: this.selected.id,
+        name: this.selected.name,
+      });
       this.visible = false;
     },
   },

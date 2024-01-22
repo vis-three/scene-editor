@@ -126,7 +126,10 @@ export default {
       return this.$store.getters["scene/currentScene"];
     },
     textureList() {
-      return this.$store.getters["texture/list"];
+      return [].concat(
+        [{ name: "无", vid: "" }],
+        this.$store.getters["texture/list"]
+      );
     },
   },
 };

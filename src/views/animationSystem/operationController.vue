@@ -41,14 +41,29 @@
       <!-- 标题栏 STR -->
       <div class="operationMain-title-box">
         <div class="operation-helper">
-          <vis-icon code="#iconkejian" title="可见"></vis-icon>
-          <vis-icon code="#iconlock" title="操作"></vis-icon>
-          <vis-icon code="#iconyuanxing" title="独奏"></vis-icon>
+          <vis-icon code="#iconshanchu" type="error" title="删除"></vis-icon>
+          <vis-icon code="#iconsanjiaojiantouyou" title="播放"></vis-icon>
           <vis-icon code="#iconshengyin" title="声音"></vis-icon>
         </div>
         <div class="operation-name">
           <vis-icon code="#iconbiaoqian"></vis-icon>
           <span>名称</span>
+        </div>
+        <div class="operation-add">
+          <el-select
+            v-model="selectObject"
+            size="mini"
+            filterable
+            placeholder="选择添加物体"
+            @change="addObject"
+          >
+            <el-option
+              v-for="item in allObject"
+              :key="item.vid"
+              :label="item.name || item.vid"
+              :value="item.vid"
+            ></el-option>
+          </el-select>
         </div>
       </div>
       <!-- 标题栏 END -->
@@ -65,23 +80,16 @@
             <div class="item-helper">
               <div class="item-helper-checkBox">
                 <vis-icon
-                  code="#iconkejian"
-                  title="可见"
-                  v-show="item.visible"
+                  code="#iconshanchu"
+                  title="删除"
+                  type="error"
                 ></vis-icon>
               </div>
               <div class="item-helper-checkBox">
                 <vis-icon
-                  code="#iconlock"
-                  title="操作"
+                  code="#iconsanjiaojiantouyou"
+                  title="播放"
                   v-show="item.lock"
-                ></vis-icon>
-              </div>
-              <div class="item-helper-checkBox">
-                <vis-icon
-                  code="#iconyuanxing"
-                  title="独奏"
-                  v-show="item.solo"
                 ></vis-icon>
               </div>
               <div class="item-helper-checkBox">
@@ -102,35 +110,105 @@
             <div class="item-name">
               <span v-text="getObjectName(index)"></span>
             </div>
+            <div class="item-animation-select">
+              <el-dropdown
+                @command="
+                  (command) => addAnimationCommand(command, index, item)
+                "
+              >
+                <span class="el-dropdown-link">
+                  <vis-icon
+                    code="#iconjia1"
+                    type="primary"
+                    title="添加动画"
+                  ></vis-icon>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item command="load">加载动画</el-dropdown-item>
+                  <el-dropdown-item command="script">脚本动画</el-dropdown-item>
+                  <el-dropdown-item command="keyframe">
+                    关键帧动画
+                  </el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+            </div>
+          </div>
+
+          <div
+            class="load-animation-box"
+            v-if="animationTrack[index].load.length"
+            v-show="item.open"
+          >
+            <div
+              class="item-track"
+              v-for="(trackItem, trackIndex) in animationTrack[index].load"
+              :key="trackIndex"
+            >
+              <span
+                class="track-title"
+                v-text="actionMap[trackItem].name"
+              ></span>
+
+              <el-select
+                v-model="actionMap[trackItem].clip"
+                placeholder="选择加载动作"
+                size="mini"
+              >
+                <el-option
+                  v-for="item in clipList"
+                  :key="item.vid"
+                  :label="item.name"
+                  :value="item.vid"
+                ></el-option>
+              </el-select>
+            </div>
           </div>
           <div
-            class="item-track"
+            class="script-animation-box"
+            v-if="Object.keys(animationTrack[index].script).length"
             v-show="item.open"
-            v-for="(trackItem, trackIndex) in keyframeTrack[index]"
-            :key="trackIndex"
           >
-            <span class="track-title" v-text="trackItem.name"></span>
-            <el-select
-              v-model="trackItem.script.name"
-              placeholder="选择脚本"
-              size="mini"
-              @change="
-                change({
-                  vid: index,
-                  attribute: trackIndex,
-                  scirpt: trackItem.script.name,
-                  item: trackItem,
-                })
-              "
+            <div
+              class="item-track"
+              v-for="(trackItem, trackIndex) in animationTrack[index].script"
+              :key="trackIndex"
             >
-              <el-option
-                v-for="item in aniScriptOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
+              <span
+                v-if="!trackItem.name"
+                class="track-pickup"
+                :class="{ 'track-pickup-active': trackItem.pickup }"
+                @click="pickup(trackItem)"
+              >
+                拾取属性
+                <vis-icon code="#iconxiguan_huaban1" color="white"></vis-icon>
+              </span>
+              <span v-else class="track-title" v-text="trackItem.name"></span>
+              <el-select
+                v-model="trackItem.script.name"
+                placeholder="选择脚本"
+                size="mini"
+                @change="
+                  change({
+                    vid: index,
+                    scirpt: trackItem.script.name,
+                    item: trackItem,
+                  })
+                "
+              >
+                <el-option
+                  v-for="item in aniScriptOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                ></el-option>
+              </el-select>
+            </div>
           </div>
+          <div
+            class="keyframe-animation-box"
+            v-if="Object.keys(animationTrack[index].keyframe).length"
+            v-show="item.open"
+          ></div>
         </div>
       </div>
       <!-- 选项栏 END -->
@@ -154,14 +232,21 @@ export default {
       searchValue: "",
       clipCurrentTime: "00:00:00",
       aniScriptOptions: [],
+      selectObject: "",
     };
   },
   computed: {
     animationMap() {
-      return this.$store.getters["animation/map"];
+      return this.$store.getters["animation/editorMap"];
     },
-    keyframeTrack() {
-      return this.$store.getters["keyframeTrack/get"];
+    animationTrack() {
+      return this.$store.getters["animationTrack/get"];
+    },
+    actionMap() {
+      return this.$store.getters["animationAction/get"];
+    },
+    clipList() {
+      return this.$store.getters["animationClip/list"];
     },
     totalTime() {
       const totalDuration = this.$store.getters["animation/totalDuration"];
@@ -184,6 +269,22 @@ export default {
     play() {
       return this.$store.getters["animation/play"];
     },
+    allObject() {
+      const list = [].concat(this.$store.getters.objectMapList);
+      list.push(
+        this.$store.getters["material/get"],
+        this.$store.getters["texture/get"]
+      );
+
+      return list.reduce((li, item) => {
+        const objectList = Object.values(item);
+        if (objectList.length) {
+          li.push(...objectList);
+        }
+
+        return li;
+      }, []);
+    },
   },
   methods: {
     triggleItem(item) {
@@ -198,21 +299,68 @@ export default {
     getObjectName(vid) {
       return engine.getConfigBySymbol(vid).name;
     },
+    addObject(value) {
+      this.$store.commit("animation/add", value);
+      this.$store.commit("animationTrack/add", value);
+      this.selectObject = "";
+    },
     chouseObject() {},
-    change({ vid, attribute, scirpt, item }) {
+    change({ vid, scirpt, item }) {
       if (item.script.name) {
-        const config = Vue.observable(
-          generateConfig(CONFIGTYPE.SCRIPTANIMATION, {
+        const config = generateConfig(
+          CONFIGTYPE.SCRIPTANIMATION,
+          {
             target: vid,
-            attribute: `.${attribute}`,
+            attribute: item.attribute,
             script: AniScriptGeneratorManager.generateConfig(scirpt),
-          })
+          },
+          { strict: false }
         );
-
         engine.applyConfig(config);
 
         item.script.vid = config.vid;
       }
+    },
+
+    addAnimationCommand(command, vid, item) {
+      const commandMap = {
+        load: () => {
+          if (!item.mixer) {
+            const mixer = generateConfig(CONFIGTYPE.MIXERANIMATION, {
+              target: vid,
+            });
+
+            item.mixer = mixer.vid;
+
+            this.$store.commit("animation/addMixer", mixer);
+          }
+          item.open = true;
+
+          const action = generateConfig(CONFIGTYPE.ANIMATIONACTION, {
+            mixer: item.mixer,
+          });
+
+          action.name = `动作-${action.vid.slice(-2)}`;
+
+          this.$store.commit("animationAction/add", action);
+          this.$store.commit("animationTrack/addActionTrack", {
+            object: vid,
+            action: action.vid,
+          });
+        },
+        script: () => {
+          this.$store.commit("animationTrack/addEventTrack", {
+            object: vid,
+          });
+          item.open = true;
+        },
+      };
+
+      commandMap[command]();
+    },
+
+    pickup(item) {
+      this.$store.commit("animationTrack/pickup", item);
     },
   },
   created() {
@@ -365,16 +513,29 @@ export default {
               white-space: nowrap;
             }
           }
+
+          > .item-animation-select {
+            .boxSetting();
+            .flexLayout(row, flex-end, center);
+          }
         }
-        > .item-track {
+        .item-track {
           height: 20px;
           padding: 0 @box-padding;
           border-bottom: 1px solid @brighterTheme-backgroundColor;
           background: @darkestTheme-backgroundColor;
           .flexLayout();
-          > .track-title {
+          > .track-title,
+          .track-pickup {
             margin-left: 14px * 4 + @box-margin * 4 + @box-padding;
             margin-right: @box-margin;
+          }
+          > .track-pickup {
+            background-color: @brightestTheme-backgroundColor;
+            padding: 0 4px;
+          }
+          > .track-pickup-active {
+            background-color: @theme-color;
           }
           /deep/ .el-select {
             width: 130px;
@@ -389,5 +550,16 @@ export default {
       }
     }
   }
+}
+
+.load-animation-box {
+  box-shadow: 0 0 0 1px rgb(255, 200, 100);
+}
+.script-animation-box {
+  box-shadow: 0 0 0 1px rgb(100, 255, 100);
+}
+
+.keyframe-animation-box {
+  box-shadow: 0 0 0 1px rgb(100, 185, 255);
 }
 </style>

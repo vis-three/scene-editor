@@ -170,7 +170,7 @@ export default {
     applyKeyframe() {
       if (this.active) {
         const animation = this.animation;
-        this.$store.commit("keyframeTrack/setKeyframe", {
+        this.$store.commit("animationTrack/setKeyframe", {
           vid: animation.target.vid,
           attribute: animation.attribute,
           frame: this.currentFrame,
@@ -181,13 +181,21 @@ export default {
     clickWatch(value) {
       const animation = this.animation;
       if (!value) {
-        this.$store.commit("keyframeTrack/remove", {
+        this.$store.commit("animationTrack/remove", {
           vid: animation.target.vid,
           attribute: animation.attribute,
         });
       } else {
+        const pickupItem = this.$store.getters["animationTrack/currentPickup"];
         ["x", "y", "z"].forEach((key) => {
-          this.$store.commit("keyframeTrack/add", {
+          if (key !== "x") {
+            this.$store.commit("animationTrack/addEventTrack", {
+              object: pickupItem.target,
+              pickup: true,
+            });
+          }
+
+          this.$store.commit("animationTrack/registerFrame", {
             vid: animation.target.vid,
             attribute: animation.attribute + `.${key}`,
             config: {

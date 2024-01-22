@@ -1,5 +1,7 @@
 import { defineConfig } from "vite";
 import { createVuePlugin } from "vite-plugin-vue2";
+import mdPlugin from "vite-plugin-markdown";
+
 import path from "path";
 
 export default defineConfig({
@@ -36,6 +38,9 @@ export default defineConfig({
       jsxOptions: {
         compositionAPI: true,
       },
+    }),
+    mdPlugin.plugin({
+      mode: "markdown",
     }),
   ],
 });

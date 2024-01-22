@@ -1,7 +1,8 @@
 <template>
   <div class="materialSettingModule-container" v-if="type">
     <de-collapse-layout
-      label="基础"
+      label="材质"
+      :subLabel="config.type"
       icon="#iconcaizhishezhi"
       arrowPosition="left"
     >
@@ -12,11 +13,13 @@
           v-model="config.name"
         ></de-controller-input>
         <de-controller-input
-          :keyframe="false"
-          label="类型"
-          v-model="config.type"
-          disabled
+          label="别名"
+          v-model="config.alias"
         ></de-controller-input>
+        <de-controller-code
+          label="数据"
+          v-model="config.meta"
+        ></de-controller-code>
         <de-controller-switch
           label="允许透明"
           v-model="config.transparent"
@@ -74,6 +77,7 @@
     >
       <template #container>
         <de-controller-number
+          :keyframe="false"
           label="alpha测试"
           :step="0.01"
           :dragMultply="3"
@@ -81,10 +85,15 @@
           :max="1"
           :displayAccuracy="2"
           v-model="config.alphaTest"
-          :animation="{
-            target: config,
-            attribute: 'alphaTest',
-          }"
+        ></de-controller-number>
+        <de-controller-number
+          :keyframe="false"
+          label="多边形偏移"
+          :step="1"
+          :dragMultply="1"
+          :min="-3"
+          :max="3"
+          v-model="polygonOffset"
         ></de-controller-number>
         <de-controller-switch
           label="颜色写入"
@@ -230,6 +239,26 @@ export default {
     },
     type() {
       return this.config?.type;
+    },
+    polygonOffset: {
+      get() {
+        if (!this.config.polygonOffset) {
+          return 0;
+        } else {
+          return this.config.polygonOffsetFactor;
+        }
+      },
+      set(value) {
+        if (!value) {
+          this.config.polygonOffset = false;
+          this.config.polygonOffsetFactor = 0;
+          this.config.polygonOffsetUnits = 0;
+        } else {
+          this.config.polygonOffset = true;
+          this.config.polygonOffsetFactor = value;
+          this.config.polygonOffsetUnits = value;
+        }
+      },
     },
   },
   methods: {},

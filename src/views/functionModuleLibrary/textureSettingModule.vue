@@ -2,6 +2,7 @@
   <div class="textureSettingModule-container" v-if="config">
     <de-collapse-layout
       label="贴图"
+      :subLabel="config.type"
       icon="#icontietushezhi"
       arrowPosition="left"
     >
@@ -11,10 +12,13 @@
           v-model="config.name"
         ></de-controller-input>
         <de-controller-input
-          label="类型"
-          v-model="config.type"
-          disabled
+          label="别名"
+          v-model="config.alias"
         ></de-controller-input>
+        <de-controller-code
+          label="数据"
+          v-model="config.meta"
+        ></de-controller-code>
       </template>
     </de-collapse-layout>
     <de-collapse-layout
@@ -23,11 +27,16 @@
       arrowPosition="left"
     >
       <template #container>
+        <de-controller-switch
+          :keyframe="false"
+          label="纵向翻转"
+          v-model="config.flipY"
+        ></de-controller-switch>
         <de-controller-number
           label="旋转"
           :step="1"
           :dragMultply="3"
-          :min="0"
+          :min="-360"
           :max="360"
           unit="°"
           :displayAccuracy="0"

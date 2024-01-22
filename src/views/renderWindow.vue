@@ -64,7 +64,14 @@
 </template>
 
 <script>
+import {
+  uniqueSymbol,
+  Template,
+  generateConfig,
+  CONFIGTYPE,
+} from "@vis-three/middleware";
 import { engine } from "@/assets/js/vis";
+import appApi from "../assets/js/api/app.js";
 
 import positionLayoutBox from "@/components/positionLayoutBox.vue";
 // import dragMoveBox from '@//components/dragMoveBox'
@@ -174,6 +181,45 @@ export default {
         }, this.throttleTime);
       }
     });
+
+    const loading = this.$loading({
+      text: "正在初始化项目...",
+      background: "rgba(0, 0, 0, 0.3)",
+    });
+
+    const id = this.$store.getters.id;
+
+    const appMessage = await appApi.getApp(id).catch((err) => {
+      this.$message.error(err);
+      loading.close();
+    });
+
+    let config = appMessage.app || {};
+    let editorConfig = appMessage.editor || {};
+
+    config = Template.handler(
+      config,
+      (c) =>
+        generateConfig(c.type, c, {
+          strict: false,
+        }),
+      {
+        filter: ["assets"],
+      }
+    );
+
+    engine.loadConfigAsync(config).then((res) => {
+      this.$store.commit(
+        "renderer/webGLRenderer",
+        uniqueSymbol(CONFIGTYPE.WEBGLRENDERER)
+      );
+      this.$store.commit("scene/currentScene", uniqueSymbol(CONFIGTYPE.SCENE));
+      this.$store.commit("notifyAll");
+
+      this.$store.dispatch("initEditorConfig", editorConfig);
+    });
+
+    loading.close();
   },
 };
 </script>

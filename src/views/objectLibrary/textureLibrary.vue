@@ -213,18 +213,11 @@ export default {
         })
         .then((event) => {
           textureList.forEach((elem) => {
-            const vid = createSymbol();
-            const config = generateConfig(CONFIGTYPE.LOADTEXTURE, {
-              vid,
-              url: this.urls.get(elem),
-              name: `${elem.name}${vid.slice(-2)}`,
-              mapping: EquirectangularRefractionMapping,
-              flipY: true,
-              encoding: LinearEncoding,
-              minFilter: LinearFilter,
-              magFilter: LinearFilter,
-            });
-            console.log(config.vid);
+            const config = engine.generateLoadTextureConfig(
+              this.urls.get(elem)
+            );
+            config.name = `${elem.name}-${config.vid.slice(-2)}`;
+            console.log(config);
             this.$store.commit("texture/add", config);
           });
         });

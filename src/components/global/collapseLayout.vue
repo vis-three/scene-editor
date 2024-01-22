@@ -10,6 +10,12 @@
       <div class="title-box">
         <vis-icon v-if="showIcon" :code="icon"></vis-icon>
         <span v-text="label"></span>
+        <span
+          v-if="subLabel"
+          style="color: rgb(100, 100, 100); font-size: 14px"
+        >
+          &nbsp;-&nbsp;{{ subLabel }}
+        </span>
       </div>
       <vis-icon
         v-if="arrowPosition === 'right'"
@@ -40,6 +46,10 @@ export default {
     label: {
       type: String,
       default: "折叠面板布局",
+    },
+    subLabel: {
+      type: String,
+      default: "",
     },
     fold: {
       // 是否折叠面板
@@ -88,7 +98,7 @@ export default {
       width: calc(100% - 19px);
       .flexLayout(row, flex-start, center);
       span {
-        width: calc(100% - 19px);
+        // width: calc(100% - 19px);
         overflow: hidden;
         text-overflow: ellipsis;
       }

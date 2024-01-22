@@ -7,8 +7,8 @@
     >
       快照
     </el-button>
-    <!-- <el-button size="mini" type="success" @click="save">保存</el-button>
-    <el-button size="mini" type="info" @click="display">展示</el-button>
+    <el-button size="mini" type="success" @click="save">保存</el-button>
+    <!-- <el-button size="mini" type="info" @click="display">展示</el-button>
     <el-button size="mini" type="info" @click="download">导出</el-button> -->
     <el-dialog
       title="快照设置"
@@ -49,6 +49,7 @@
 
 <script>
 import { engine } from "@/assets/js/vis";
+import appApi from "@/assets/js/api/app.js";
 
 export default {
   data() {
@@ -71,6 +72,9 @@ export default {
     name() {
       return this.$store.getters.name;
     },
+    id() {
+      return this.$store.getters.id;
+    },
   },
 
   methods: {
@@ -92,9 +96,34 @@ export default {
     },
 
     async save() {
-      const loading = this.$message.loading("正在保存...");
-      const config = engine.exportConfig();
-      //TODO: save in storage
+      const loading = this.$loading({
+        text: "正在保存...",
+        background: "rgb(0, 0, 0)",
+        target: ".renderWindow-container",
+      });
+
+      const app = engine.exportConfig();
+      const editor = await this.$store.dispatch("exportConfig");
+      const preview = await engine.getScreenshot({
+        width: 1920,
+        height: 1080,
+      });
+
+      appApi
+        .saveApp({
+          id: this.id,
+          name: this.name,
+          app,
+          editor,
+          preview,
+        })
+        .then((res) => {
+          console.log(res);
+          this.$message.success("保存成功！");
+        })
+        .finally(() => {
+          loading.close();
+        });
     },
 
     display() {

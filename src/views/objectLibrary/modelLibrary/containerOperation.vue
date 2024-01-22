@@ -223,7 +223,7 @@ export default {
 
   > .file-item-box {
     .flexLayout(column, space-between, center);
-    .boxSetting(170px, 110px);
+    .boxSetting(140px, 110px);
     margin: 0 0 @box-margin 0;
     cursor: pointer;
     .transitionSetting({background: @themeDarkHover-color;});

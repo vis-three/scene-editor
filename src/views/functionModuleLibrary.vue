@@ -1,6 +1,6 @@
 <template>
   <div class="functionModelLibrary-container">
-    <side-tabs cache>
+    <side-tabs cache :active="functionModule">
       <side-tab-item icon="#iconchangjing1" title="渲染器设置">
         <renderer-setting-module></renderer-setting-module>
       </side-tab-item>
@@ -24,6 +24,12 @@
       </side-tab-item>
       <side-tab-item icon="#iconbanshou" title="修改器">
         <modifier-module></modifier-module>
+      </side-tab-item>
+      <side-tab-item icon="#iconyueshu" title="约束器">
+        <constraintor-module></constraintor-module>
+      </side-tab-item>
+      <side-tab-item icon="#iconxiankuang" title="辅助配置">
+        <helper-setting-module></helper-setting-module>
       </side-tab-item>
     </side-tabs>
   </div>
@@ -49,7 +55,29 @@ Object.keys(context).forEach((url) => {
 export default {
   components,
   data() {
-    return {};
+    return {
+      modules: [
+        "renderer",
+        "scene",
+        "effect",
+        "object",
+        "material",
+        "texture",
+        "interact",
+        "modifier",
+        "helper",
+      ],
+    };
+  },
+
+  computed: {
+    functionModule() {
+      return this.$store.getters["active/functionModule"];
+    },
+  },
+
+  mounted() {
+    this.$store.commit("active/initFunctionModules", this.modules);
   },
 };
 </script>

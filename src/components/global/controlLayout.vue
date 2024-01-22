@@ -39,7 +39,7 @@ export default {
   },
   computed: {
     keyframeTrack() {
-      return this.$store.getters["keyframeTrack/get"];
+      return this.$store.getters["animationTrack/get"];
     },
     active() {
       if (this.keyframe) {

@@ -12,12 +12,14 @@
           size="mini"
           :placeholder="placeholder"
           @change="change"
+          :filterable="filterable"
+          :multiple="multiple"
         >
           <el-option
             v-for="(item, index) in options"
             :key="index"
-            :label="item[prop.label]"
-            :value="prop.value ? item[prop.value] : item"
+            :label="listType ? item : item[prop.label]"
+            :value="listType ? item : prop.value ? item[prop.value] : item"
           ></el-option>
         </el-select>
       </div>
@@ -52,6 +54,14 @@ export default {
       type: String,
       default: "请选择",
     },
+    filterable: {
+      type: Boolean,
+      default: true,
+    },
+    multiple: {
+      type: Boolean,
+      default: false,
+    },
     prop: {
       // 规定options字段
       type: Object,
@@ -61,6 +71,10 @@ export default {
           value: "value",
         };
       },
+    },
+    listType: {
+      type: Boolean,
+      default: false,
     },
     options: Array, // 选项
     value: null,
@@ -81,13 +95,18 @@ export default {
   },
   methods: {
     change(value) {
-      this.inputValue = value;
+      if (Array.isArray(value)) {
+        this.value.splice(0, this.value.length);
+        this.value.push(...value);
+      } else {
+        this.inputValue = value;
+      }
     },
     // 添加关键帧
     applyKeyframe(value) {
       if (this.active) {
         const animation = this.animation;
-        this.$store.commit("keyframeTrack/setKeyframe", {
+        this.$store.commit("animationTrack/setKeyframe", {
           vid: animation.target,
           attribute: animation.attribute,
           frame: this.currentFrame,
@@ -98,13 +117,13 @@ export default {
     clickWatch(value) {
       const animation = this.animation;
       if (!value) {
-        this.$store.commit("keyframeTrack/remove", {
-          vid: animation.target,
+        this.$store.commit("animationTrack/remove", {
+          vid: animation.target.vid,
           attribute: animation.attribute,
         });
       } else {
-        this.$store.commit("keyframeTrack/add", {
-          vid: animation.target,
+        this.$store.commit("animationTrack/registerFrame", {
+          vid: animation.target.vid,
           attribute: animation.attribute,
           config: {
             name: this.label,

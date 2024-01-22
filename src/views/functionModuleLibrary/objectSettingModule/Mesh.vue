@@ -44,6 +44,8 @@
 </template>
 
 <script>
+import Vue from "vue";
+
 export default {
   props: {
     config: {
@@ -58,7 +60,11 @@ export default {
       },
       set(value) {
         if (value) {
-          this.config.material = [this.config.material];
+          Vue.set(
+            this.config,
+            "material",
+            Vue.observable([this.config.material])
+          );
         } else {
           this.config.material = this.config.material[0] || "";
         }

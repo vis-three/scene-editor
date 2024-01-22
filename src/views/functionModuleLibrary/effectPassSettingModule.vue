@@ -5,6 +5,7 @@
       <de-collapse-layout
         v-if="config"
         label="后期"
+        :subLabel="config.type"
         icon="#iconcaizhishezhi"
         arrowPosition="left"
       >
@@ -14,10 +15,13 @@
             v-model="config.name"
           ></de-controller-input>
           <de-controller-input
-            label="类型"
-            v-model="config.type"
-            disabled
+            label="别名"
+            v-model="config.alias"
           ></de-controller-input>
+          <de-controller-code
+            label="数据"
+            v-model="config.meta"
+          ></de-controller-code>
         </template>
       </de-collapse-layout>
       <components :config="config" :is="type"></components>
@@ -29,24 +33,23 @@
 import dragPlane from "@/components/drag-plane.vue";
 import passLibrary from "../objectLibrary/passLibrary.vue";
 
-import UnrealBloomPass from "./effectPassSettingModule/UnrealBloomPass.vue";
-import SMAAPass from "./effectPassSettingModule/SMAAPass.vue";
+const components = { dragPlane, passLibrary };
 
-import AfterimagePass from "./effectPassSettingModule/AfterimagePass.vue";
-import FXAAShaderPass from "./effectPassSettingModule/FXAAShaderPass.vue";
+const context = import.meta.glob("./effectPassSettingModule/*.vue");
+
+Object.keys(context).forEach((url) => {
+  components[
+    url
+      .split("/")
+      .pop()
+      .replace(/.\/|\.vue$/g, "")
+  ] = context[url];
+});
 
 export default {
-  components: {
-    dragPlane,
-    passLibrary,
-    UnrealBloomPass,
-    FXAAShaderPass,
-    SMAAPass,
-    AfterimagePass,
-  },
+  components,
   computed: {
     config() {
-      console.log(this.$store.getters["active/pass"]);
       return this.$store.getters["active/pass"];
     },
     type() {

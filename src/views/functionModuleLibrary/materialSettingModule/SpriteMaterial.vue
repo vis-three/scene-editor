@@ -9,8 +9,13 @@
         <de-controller-picker
           label="材质颜色"
           v-model="config.color"
+          :animation="{
+            target: config,
+            attrubute: 'color',
+          }"
         ></de-controller-picker>
         <de-controller-switch
+          :keyframe="false"
           label="深度衰减"
           v-model="config.sizeAttenuation"
         ></de-controller-switch>
@@ -22,6 +27,10 @@
           :displayAccuracy="2"
           unit="°"
           v-model="config.rotation"
+          :animation="{
+            target: config,
+            attrubute: 'rotation',
+          }"
         ></de-controller-number>
       </template>
     </de-collapse-layout>
@@ -39,6 +48,10 @@
             value: 'vid',
           }"
           v-model="config.map"
+          :animation="{
+            target: config,
+            attrubute: 'map',
+          }"
         ></de-controller-select>
 
         <de-controller-select
@@ -49,6 +62,10 @@
             value: 'vid',
           }"
           v-model="config.alphaMap"
+          :animation="{
+            target: config,
+            attrubute: 'alphaMap',
+          }"
         ></de-controller-select>
       </template>
     </de-collapse-layout>

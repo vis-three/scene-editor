@@ -56,7 +56,7 @@
           slot="reference"
           code="#iconjia1"
           v-tooltip.top="'新增分类'"
-          v-if="canAddClassify"
+          v-show="canAddClassify"
         ></vis-icon>
       </el-popover>
 

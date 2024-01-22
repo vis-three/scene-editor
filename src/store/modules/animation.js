@@ -1,20 +1,25 @@
 import Vue from "vue";
+import { MODULETYPE } from "@vis-three/middleware";
 import { engine } from "@/assets/js/vis";
 
 const module = {
   namespaced: true,
   state: {
+    map: engine.dataSupportManager
+      .getDataSupport(MODULETYPE.ANIMATION)
+      .getData(),
     fps: 30,
     totalDuration: 10, // s
     currentTime: 0,
     totalFrame: 0,
     currentFrame: 0, // 当前帧
     play: false,
-    map: {
-      // ambientLight: {
+    editorMap: {
+      // object vid: {
       //   duration: 3,
       //   offset: 0,
       //   trackColor: 'rgb(128, 10, 200)',
+      //   mixer: vid,
       //   open: false
       // }
     },
@@ -25,6 +30,9 @@ const module = {
   getters: {
     map(state) {
       return state.map;
+    },
+    editorMap(state) {
+      return state.editorMap;
     },
     fps(state) {
       return state.fps;
@@ -49,6 +57,16 @@ const module = {
     },
   },
   mutations: {
+    init(state, map) {
+      state.editorMap = map;
+    },
+
+    appendInit(state, map) {
+      Object.keys(map).forEach((key) => {
+        Vue.set(state.editorMap, key, map[key]);
+      });
+    },
+
     add(state, vid) {
       // 获取较高亮度颜色
       const generateTrackColor = () => {
@@ -78,15 +96,23 @@ const module = {
         }
         return `rgb(${r}, ${g}, ${b})`;
       };
-      Vue.set(state.map, vid, {
+      Vue.set(state.editorMap, vid, {
         duration: state.totalDuration,
         offset: 0,
         trackColor: generateTrackColor(),
+        mixer: "",
         open: false,
       });
     },
+
+    addMixer(state, config) {
+      const observeObject = Vue.observable(config);
+      state.map[observeObject.vid] = observeObject;
+      state.map.__ob__.dep.notify();
+    },
+
     remove(state, vid) {
-      Vue.delete(state.map, vid);
+      Vue.delete(state.editorMap, vid);
     },
     // 直接store通知
     change(state, { dargVid, dropVid }) {},

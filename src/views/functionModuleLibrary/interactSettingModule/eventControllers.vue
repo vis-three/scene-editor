@@ -22,6 +22,7 @@
 import { controllers } from "@/assets/js/eventLibrary";
 import { Easing } from "@tweenjs/tween.js";
 import { OBJECTMODULE } from "@vis-three/middleware";
+import { TIMINGFUNCTION } from "@vis-three/library-event";
 
 export default {
   props: {
@@ -96,15 +97,27 @@ export default {
     animations() {
       return Object.values(this.$store.getters["animation/get"]).map((elem) => {
         return {
-          label: elem.vid,
+          label: elem.name,
           value: elem.vid,
         };
       });
     },
+
+    animationActions() {
+      return Object.values(this.$store.getters["animationAction/get"]).map(
+        (elem) => {
+          return {
+            label: elem.name,
+            value: elem.vid,
+          };
+        }
+      );
+    },
+
     timingFunction() {
       return [
-        { label: "线性运动", value: Easing.Linear.None },
-        { label: "二次缓进缓出", value: Easing.Quartic.InOut },
+        { label: "线性运动", value: TIMINGFUNCTION.EASING_LINEAR_NONE },
+        { label: "二次缓进缓出", value: TIMINGFUNCTION.EASING_QUADRATIC_INOUT },
       ];
     },
   },
