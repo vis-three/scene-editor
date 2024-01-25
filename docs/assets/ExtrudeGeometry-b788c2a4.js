@@ -1,1 +1,0 @@
-import{n}from"./index-9292a4d7.js";import"./three-2ccf5448.js";const o={};let _,r;const t={};var s=n(o,_,r,!1,l,null,null,null);function l(u){for(let e in t)this[e]=t[e]}const a=function(){return s.exports}();export{a as default};

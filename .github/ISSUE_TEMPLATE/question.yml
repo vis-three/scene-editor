@@ -48,13 +48,3 @@ body:
       label: 附加代码上下文
       description: 请提供出错时代码的上文，还有与此功能关联的代码模块。
       render: ts
-  - type: dropdown
-    id: return-mode
-    attributes:
-      label: 解决问题的回报选择
-      description: 为了避免形成白嫖习惯和依赖性习惯，对于非 bug，或者非新增，非特色等提问需要选择回报模式，比如一些信息可以从文档获取，或者是自己的技术水平和理解水平导致的问题，能够提供一定的警醒作用。具体详情请进入QQ 群：586362945 详谈。
-      options:
-        - 提供修复 pr 或者完善项目（文档完善，代码优化，示例优化等等）
-        - 一定的赞助资金
-    validations:
-      required: true

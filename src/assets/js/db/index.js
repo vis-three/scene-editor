@@ -9,4 +9,8 @@ db.version(1).stores({
   model: "++id, classifyId, name, model, ext, preview, size, delete",
   textureClassify: "++id, name, parentId, level, delete",
   texture: "++id, classifyId, name, texture, ext, size, delete",
+  componentClassify: "++id, name, parentId, level, delete",
+  component: "++id, classifyId, name, component, pkg, preview, size, delete",
+  templateClassify: "++id, name, parentId, level, delete",
+  template: "++id, classifyId, name, template, editor, preview, delete",
 });

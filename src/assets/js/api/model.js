@@ -69,4 +69,8 @@ export default {
 
     return params;
   },
+
+  async getModel(id) {
+    return await db.model.where("id").equals(id).first();
+  },
 };

@@ -66,4 +66,8 @@ export default {
 
     return params;
   },
+
+  async getTexture(id) {
+    return await db.texture.where("id").equals(Number(id)).first();
+  },
 };

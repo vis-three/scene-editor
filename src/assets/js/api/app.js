@@ -77,6 +77,6 @@ export default {
   },
 
   async getApp(id) {
-    return await db.app.where("id").equals(id).first();
+    return await db.app.where("id").equals(Number(id)).first();
   },
 };

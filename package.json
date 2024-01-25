@@ -1,7 +1,7 @@
 {
   "name": "vis-three-display-editor",
   "author": "Shiotsuki_",
-  "version": "0.6.12",
+  "version": "0.6.13",
   "license": "AGPL-3.0",
   "private": false,
   "type": "module",
@@ -24,6 +24,7 @@
   "dependencies": {
     "@vis-resm/importmap": "0.0.7",
     "@vis-three/convenient": "^0.5.1",
+    "@vis-three/engine-display-support": "^0.6.9",
     "@vis-three/engine-modeling-support": "^0.6.12",
     "@vis-three/library-animate-script": "^0.6.0",
     "@vis-three/library-event": "^0.6.3",
@@ -35,6 +36,7 @@
     "axios": "^1.3.4",
     "dexie": "^3.2.4",
     "element-ui": "^2.15.6",
+    "html2canvas": "^1.4.1",
     "js-cookie": "^3.0.1",
     "jszip": "^3.10.1",
     "mockjs": "^1.1.0",

@@ -33,7 +33,7 @@
 
 4. 对接服务版本请查看`0.6.x`，`0.3.x`分支。
 
-5. 如果你是二开需求，请先熟悉[vis-three 框架](https://github.com/Shiotsukikaedesari/vis-three)框架。
+5. 如果你是二开需求，请先熟悉[vis-three 框架](https://github.com/Shiotsukikaedesari/vis-three)。
 
 ## 贡献者
 
