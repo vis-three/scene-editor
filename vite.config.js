@@ -11,7 +11,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         index: path.resolve(__dirname, "./index.html"),
-        // examples: path.resolve(__dirname, "./examples.html"),
+        preview: path.resolve(__dirname, "./preview.html"),
       },
       output: {
         manualChunks: {
