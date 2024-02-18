@@ -3,11 +3,11 @@
     <object-collapse
       v-for="(item, index) in list"
       :key="index"
-      :dataList="item.list"
-      :clickHanlder="item.click"
+      :data-list="item.list"
+      :click-hanlder="item.click"
       :icon="item.icon"
       :label="item.label"
-    ></object-collapse>
+    />
   </div>
 </template>
 
@@ -106,7 +106,7 @@ export default {
               },
               {
                 observer: false,
-              }
+              },
             );
 
             history.apply(
@@ -117,7 +117,7 @@ export default {
                 store: this.$store,
                 engine: VIS.engine,
               }),
-              true
+              true,
             );
           },
         },
@@ -177,7 +177,7 @@ export default {
             {
               icon: "#iconxingzhuang",
               label: "形状",
-              click: function () {
+              click: function (item) {
                 const shape = generateConfig(CONFIGTYPE.SHAPE);
 
                 shape.name = `形状-${shape.vid.slice(-2)}`;
@@ -199,7 +199,7 @@ export default {
                     store: this.$store,
                     engine,
                   }),
-                  true
+                  true,
                 );
               },
             },
@@ -228,7 +228,7 @@ export default {
                   undefined,
                   {
                     observer: false,
-                  }
+                  },
                 );
                 const points = generateConfig(
                   CONFIGTYPE.POINTS,
@@ -237,7 +237,7 @@ export default {
                   },
                   {
                     observer: false,
-                  }
+                  },
                 );
                 points.name = `点云-${points.vid.slice(-2)}`;
                 points.icon = item.icon;
@@ -250,7 +250,7 @@ export default {
                     store: this.$store,
                     engine,
                   }),
-                  true
+                  true,
                 );
               },
             },
@@ -262,12 +262,12 @@ export default {
 
                 const selectFun = (event) => {
                   const objectConfig = engine.getConfigBySymbol(
-                    event.objectSymbols[0]
+                    event.objectSymbols[0],
                   );
 
                   if (!objectConfig) {
                     console.error(
-                      `engine can not found object with vid: ${event.objectSymbols[0]}`
+                      `engine can not found object with vid: ${event.objectSymbols[0]}`,
                     );
                     return;
                   }
@@ -280,7 +280,7 @@ export default {
                     },
                     {
                       observer: false,
-                    }
+                    },
                   );
 
                   const line = generateConfig(
@@ -290,7 +290,7 @@ export default {
                     },
                     {
                       observer: false,
-                    }
+                    },
                   );
 
                   line.name = `${item.label}-${line.vid.slice(-2)}`;
@@ -304,7 +304,7 @@ export default {
                       line,
                       geometry,
                     }),
-                    true
+                    true,
                   );
 
                   engine.removeEventListener("selected", selectFun);
@@ -321,12 +321,12 @@ export default {
 
                 const selectFun = (event) => {
                   const objectConfig = engine.getConfigBySymbol(
-                    event.objectSymbols[0]
+                    event.objectSymbols[0],
                   );
 
                   if (!objectConfig) {
                     console.error(
-                      `engine can not found object with vid: ${event.objectSymbols[0]}`
+                      `engine can not found object with vid: ${event.objectSymbols[0]}`,
                     );
                     return;
                   }
@@ -339,7 +339,7 @@ export default {
                     },
                     {
                       observer: false,
-                    }
+                    },
                   );
 
                   const line = generateConfig(
@@ -349,7 +349,7 @@ export default {
                     },
                     {
                       observer: false,
-                    }
+                    },
                   );
 
                   line.name = `${item.label}-${line.vid.slice(-2)}`;
@@ -363,7 +363,7 @@ export default {
                       line,
                       geometry,
                     }),
-                    true
+                    true,
                   );
 
                   engine.removeEventListener("selected", selectFun);
@@ -392,7 +392,7 @@ export default {
                   {},
                   {
                     observer: false,
-                  }
+                  },
                 );
                 config.name = `${item.label}-${config.vid.slice(-2)}`;
 
@@ -402,7 +402,7 @@ export default {
                     store: this.$store,
                     config,
                   }),
-                  true
+                  true,
                 );
               },
             },
@@ -418,7 +418,7 @@ export default {
                   },
                   {
                     observer: false,
-                  }
+                  },
                 );
                 config.name = `${item.label}-${config.vid.slice(-2)}`;
 
@@ -428,7 +428,7 @@ export default {
                     store: this.$store,
                     config,
                   }),
-                  true
+                  true,
                 );
               },
             },
@@ -449,7 +449,7 @@ export default {
                   },
                   {
                     observer: false,
-                  }
+                  },
                 );
                 config.name = `${item.label}-${config.vid.slice(-2)}`;
 
@@ -459,7 +459,7 @@ export default {
                     store: this.$store,
                     config,
                   }),
-                  true
+                  true,
                 );
               },
             },
@@ -480,7 +480,7 @@ export default {
                   },
                   {
                     observer: false,
-                  }
+                  },
                 );
                 config.name = `${item.label}-${config.vid.slice(-2)}`;
 
@@ -490,7 +490,7 @@ export default {
                     store: this.$store,
                     config,
                   }),
-                  true
+                  true,
                 );
               },
             },
@@ -527,7 +527,7 @@ export default {
                 config,
                 module: CONFIGMODULE[item.type],
               }),
-              true
+              true,
             );
           },
         },

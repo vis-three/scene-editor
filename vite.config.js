@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import { createVuePlugin } from "vite-plugin-vue2";
 import mdPlugin from "vite-plugin-markdown";
-
+import eslintPlugin from "vite-plugin-eslint";
 import path from "path";
 
 export default defineConfig({
@@ -34,6 +34,9 @@ export default defineConfig({
     },
   },
   plugins: [
+    eslintPlugin({
+      include: ["src/**/*.js", "src/**/*.vue", "src/*.js", "src/*.vue"],
+    }),
     createVuePlugin({
       compilerOptions: {
         whitespace: "condense",
@@ -43,6 +46,7 @@ export default defineConfig({
         compositionAPI: true,
       },
     }),
+
     mdPlugin.plugin({
       mode: "markdown",
     }),

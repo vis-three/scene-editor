@@ -7,8 +7,20 @@
     >
       快照
     </el-button>
-    <el-button size="mini" type="success" @click="save">保存</el-button>
-    <el-button size="mini" type="info" @click="display">展示</el-button>
+    <el-button
+      size="mini"
+      type="success"
+      @click="save"
+    >
+      保存
+    </el-button>
+    <el-button
+      size="mini"
+      type="info"
+      @click="display"
+    >
+      展示
+    </el-button>
     <!-- <el-button size="mini" type="info" @click="download">导出</el-button> -->
     <el-dialog
       title="快照设置"
@@ -16,30 +28,46 @@
       width="30%"
       center
     >
-      <el-form label-position="left" label-width="90px">
+      <el-form
+        label-position="left"
+        label-width="90px"
+      >
         <el-form-item label="文件名">
-          <el-input size="mini" v-model="screenshotSetting.name"></el-input>
+          <el-input
+            v-model="screenshotSetting.name"
+            size="mini"
+          />
         </el-form-item>
         <el-form-item label="宽度（px）">
           <el-input-number
-            size="mini"
             v-model="screenshotSetting.width"
+            size="mini"
             :controls="false"
-          ></el-input-number>
+          />
         </el-form-item>
         <el-form-item label="高度（px）">
           <el-input-number
-            size="mini"
             v-model="screenshotSetting.height"
+            size="mini"
             :controls="false"
-          ></el-input-number>
+          />
         </el-form-item>
       </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button size="mini" @click="screenshotDialogVisible = false">
+      <span
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button
+          size="mini"
+          @click="screenshotDialogVisible = false"
+        >
           取 消
         </el-button>
-        <el-button size="mini" type="primary" @click="getScreenshot">
+        <el-button
+          size="mini"
+          type="primary"
+          @click="getScreenshot"
+        >
           确 定
         </el-button>
       </span>
@@ -50,7 +78,6 @@
 <script>
 import { engine } from "@/editor/assets/js/vis";
 import appApi from "@/assets/js/api/app.js";
-import { JSONHandler } from "@vis-three/middleware";
 
 export default {
   data() {
@@ -76,6 +103,18 @@ export default {
     id() {
       return this.$store.getters.id;
     },
+  },
+
+  mounted() {
+    engine.keyboardManager.register({
+      shortcutKey: ["ctrl", "s"],
+      desp: "在线保存",
+      keydown: (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        this.save();
+      },
+    });
   },
 
   methods: {
@@ -109,61 +148,10 @@ export default {
         height: 1080,
       });
 
-      let app = engine.exportConfig();
-      let appJson = JSON.stringify(app, JSONHandler.stringify);
-      const urlDetails = this.$store.getters.urlDetails;
-
-      app.assets = app.assets.map((elem) => {
-        const result = {
-          id: null,
-          module: null,
-        };
-
-        if (!urlDetails[elem.url]) {
-          this.$message.console.error(
-            `导出失败，未找到相关资源缓存：${elem.url}`
-          );
-        } else {
-          const file = urlDetails[elem.url];
-          result.id = file.id;
-          result.module = file.model
-            ? "model"
-            : file.texture
-            ? "texture"
-            : null;
-
-          appJson = appJson.replace(
-            new RegExp(elem.url, "g"),
-            `<${result.module}-${result.id}>`
-          );
-        }
-
-        return result;
-      });
-
-      app.component.forEach((elem) => {
-        const result = {
-          id: null,
-          module: "component",
-        };
-
-        if (!urlDetails[elem.$url]) {
-          this.$message.error(`导出失败，未找到相关资源缓存：${elem.$url}`);
-        } else {
-          const file = urlDetails[elem.$url];
-          result.id = file.id;
-          appJson = appJson.replace(
-            new RegExp(elem.$url, "g"),
-            `<${result.module}-${result.id}>`
-          );
-        }
-
-        elem.$url = `<${result.module}-${result.id}>`;
-      });
-
-      appJson = JSON.parse(appJson, JSONHandler.parse);
-      appJson.assets = app.assets;
-      app = appJson;
+      let app = await this.$store.dispatch(
+        "urlTransform",
+        engine.exportConfig()
+      );
 
       console.log(app);
 
@@ -198,18 +186,6 @@ export default {
       a.href = `/app/${this.$store.getters.id}/dist.zip`;
       a.click();
     },
-  },
-
-  mounted() {
-    engine.keyboardManager.register({
-      shortcutKey: ["ctrl", "s"],
-      desp: "在线保存",
-      keydown: (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        this.save();
-      },
-    });
   },
 };
 </script>

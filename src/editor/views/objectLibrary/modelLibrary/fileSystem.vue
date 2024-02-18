@@ -1,7 +1,7 @@
 <template>
   <div class="fileSystem-container">
-    <header-operation></header-operation>
-    <container-operation></container-operation>
+    <header-operation />
+    <container-operation />
   </div>
 </template>
 

@@ -7,12 +7,22 @@
     :modal="false"
   >
     <div class="fileSystem-container">
-      <header-operation></header-operation>
-      <container-operation ref="container"></container-operation>
+      <header-operation />
+      <container-operation ref="container" />
     </div>
-    <span slot="footer" class="dialog-footer">
-      <el-button size="mini" @click="visible = false">取 消</el-button>
-      <el-button type="primary" size="mini" @click="confirm">确 定</el-button>
+    <span
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        size="mini"
+        @click="visible = false"
+      >取 消</el-button>
+      <el-button
+        type="primary"
+        size="mini"
+        @click="confirm"
+      >确 定</el-button>
     </span>
   </el-dialog>
 </template>
@@ -32,6 +42,9 @@ export default {
       confirmFun: () => {},
     };
   },
+  created() {
+    this.$store.commit("textureLibrary/request", "");
+  },
   methods: {
     open({ confirm }) {
       this.visible = true;
@@ -42,9 +55,6 @@ export default {
       this.confirmFun({ files: [].concat(this.$refs.container.selected) });
       this.$refs.container.selected = [];
     },
-  },
-  created() {
-    this.$store.commit("textureLibrary/request", "");
   },
 };
 </script>

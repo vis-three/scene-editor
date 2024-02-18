@@ -1,30 +1,40 @@
 <template>
-  <drag-plane height="710px" width="100%" :showDragsign="false">
-    <pass-library slot="view1"></pass-library>
-    <div class="materialSettingModule-container" slot="view2">
+  <drag-plane
+    height="710px"
+    width="100%"
+    :show-dragsign="false"
+  >
+    <pass-library slot="view1" />
+    <div
+      slot="view2"
+      class="materialSettingModule-container"
+    >
       <de-collapse-layout
         v-if="config"
         label="后期"
-        :subLabel="config.type"
+        :sub-label="config.type"
         icon="#iconcaizhishezhi"
-        arrowPosition="left"
+        arrow-position="left"
       >
         <template #container>
           <de-controller-input
-            label="名称"
             v-model="config.name"
-          ></de-controller-input>
+            label="名称"
+          />
           <de-controller-input
-            label="别名"
             v-model="config.alias"
-          ></de-controller-input>
+            label="别名"
+          />
           <de-controller-code
-            label="数据"
             v-model="config.meta"
-          ></de-controller-code>
+            label="数据"
+          />
         </template>
       </de-collapse-layout>
-      <components :config="config" :is="type"></components>
+      <components
+        :is="type"
+        :config="config"
+      />
     </div>
   </drag-plane>
 </template>

@@ -1,28 +1,28 @@
 <template>
   <div class="booleanModifier-container">
     <de-controller-input
+      v-model="config.name"
       :keyframe="false"
       label="名称"
-      v-model="config.name"
-    ></de-controller-input>
+    />
     <de-controller-input
+      v-model="config.type"
       :keyframe="false"
       label="类型"
-      v-model="config.type"
       disabled
-    ></de-controller-input>
+    />
     <de-controller-select
+      v-model="config.target"
       :keyframe="false"
       label="目标"
       :options="objects"
-      v-model="config.target"
-    ></de-controller-select>
+    />
     <de-controller-select
+      v-model="config.mode"
       :keyframe="false"
       label="模式"
       :options="modeOptions"
-      v-model="config.mode"
-    ></de-controller-select>
+    />
   </div>
 </template>
 

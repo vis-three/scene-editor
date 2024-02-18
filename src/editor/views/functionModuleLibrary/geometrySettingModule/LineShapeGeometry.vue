@@ -3,7 +3,7 @@
     <de-collapse-layout
       label="路径"
       icon="#iconjichubianhuan"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <el-button
@@ -17,34 +17,34 @@
         </el-button>
 
         <div
-          class="path-point-item"
           v-for="(item, index) in config.path"
           :key="index"
+          class="path-point-item"
         >
           <de-controller-vector2
             :keyframe="false"
             :label="'锚点' + index"
             :step="1"
-            :displayAccuracy="2"
+            :display-accuracy="2"
             :value="item"
-          ></de-controller-vector2>
+          />
 
           <i
-            class="el-icon-delete"
             v-show="config.path.length > 1"
+            class="el-icon-delete"
             @click="deletePoint(index)"
-          ></i>
+          />
         </div>
       </template>
     </de-collapse-layout>
     <de-controller-number
+      v-model="config.curveSegments"
       :keyframe="false"
       label="分段"
       :step="1"
-      :dragMultply="2"
+      :drag-multply="2"
       :min="3"
-      v-model="config.curveSegments"
-    ></de-controller-number>
+    />
   </div>
 </template>
 

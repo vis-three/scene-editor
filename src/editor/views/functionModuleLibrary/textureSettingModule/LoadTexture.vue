@@ -1,5 +1,5 @@
 <template>
-  <div class="ImageTexture-container"></div>
+  <div class="ImageTexture-container" />
 </template>
 
 <script>

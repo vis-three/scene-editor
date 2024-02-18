@@ -2,15 +2,18 @@
   <div class="dropdownSelect-container">
     <el-dropdown
       :trigger="trigger"
-      @command="handleCommand"
       placement="bottom-start"
+      @command="handleCommand"
     >
       <span class="el-dropdown-link">
-        <vis-icon v-if="icon" :code="icon"></vis-icon>
-        <span v-text="label"></span>
+        <vis-icon
+          v-if="icon"
+          :code="icon"
+        />
+        <span v-text="label" />
       </span>
       <el-dropdown-menu slot="dropdown">
-        <slot></slot>
+        <slot />
       </el-dropdown-menu>
     </el-dropdown>
   </div>

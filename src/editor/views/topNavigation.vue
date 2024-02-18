@@ -1,8 +1,8 @@
 <template>
   <div class="topNavigation-container">
-    <file-menu></file-menu>
-    <function-navigation></function-navigation>
-    <operate-navigation></operate-navigation>
+    <file-menu />
+    <function-navigation />
+    <operate-navigation />
   </div>
 </template>
 

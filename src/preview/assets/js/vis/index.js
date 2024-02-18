@@ -11,6 +11,7 @@ import {
 } from "@vis-three/middleware";
 
 import { ComponentManagerPlugin } from "./plugins/ComponentManager";
+import { CanvasManagerPlugin } from "./plugins/CanvasManager";
 
 import { GLTFLoader } from "./loaders/GLTFLoader";
 
@@ -35,9 +36,9 @@ defineOption({
   },
 });
 
-export const engine = new DisplayEngineSupport().install(
-  ComponentManagerPlugin()
-);
+export const engine = new DisplayEngineSupport()
+  .install(ComponentManagerPlugin())
+  .install(CanvasManagerPlugin());
 
 const gltfLoader = new GLTFLoader();
 

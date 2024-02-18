@@ -1,12 +1,28 @@
 <template>
-  <el-dialog :visible.sync="visible" width="30vw" center>
-    <div class="dialog-title" slot="title">
-      <vis-icon code="#iconjiaohu"></vis-icon>
+  <el-dialog
+    :visible.sync="visible"
+    width="30vw"
+    center
+  >
+    <div
+      slot="title"
+      class="dialog-title"
+    >
+      <vis-icon code="#iconjiaohu" />
       快捷键说明
     </div>
-    <el-table :data="tableData" height="50vh">
-      <el-table-column prop="desp" label="描述"></el-table-column>
-      <el-table-column prop="shortcutKey" label="快捷键">
+    <el-table
+      :data="tableData"
+      height="50vh"
+    >
+      <el-table-column
+        prop="desp"
+        label="描述"
+      />
+      <el-table-column
+        prop="shortcutKey"
+        label="快捷键"
+      >
         <template slot-scope="scope">
           <span>{{ scope.row.shortcutKey.join(" + ") }}</span>
         </template>

@@ -3,10 +3,11 @@
     <de-collapse-layout
       label="形状"
       icon="#iconjichubianhuan"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-select
+          v-model="config.target"
           :keyframe="false"
           label="目标几何"
           :options="geometryList"
@@ -14,15 +15,14 @@
             label: 'name',
             value: 'vid',
           }"
-          v-model="config.target"
-        ></de-controller-select>
+        />
         <de-controller-number
+          v-model="config.thresholdAngle"
           :keyframe="false"
           label="临界角"
           :step="1"
           :min="0"
-          v-model="config.thresholdAngle"
-        ></de-controller-number>
+        />
       </template>
     </de-collapse-layout>
   </div>

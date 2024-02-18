@@ -1,19 +1,23 @@
 <template>
   <div class="VisAfterimagePass-container">
-    <de-collapse-layout label="设置" icon="#iconshezhi" arrowPosition="left">
+    <de-collapse-layout
+      label="设置"
+      icon="#iconshezhi"
+      arrow-position="left"
+    >
       <template #container>
         <de-controller-number
+          v-model="config.damp"
           label="程度"
           :step="0.01"
-          :dragMultply="3"
+          :drag-multply="3"
           :min="0"
-          :displayAccuracy="2"
+          :display-accuracy="2"
           :animation="{
             target: config.vid,
             attribute: 'damp',
           }"
-          v-model="config.damp"
-        ></de-controller-number>
+        />
       </template>
     </de-collapse-layout>
   </div>

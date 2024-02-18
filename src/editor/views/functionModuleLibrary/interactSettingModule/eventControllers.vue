@@ -1,19 +1,25 @@
 <template>
   <div class="eventControllers-container">
-    <de-collapse-layout :label="controllerConfigure.label" :showIcon="false">
+    <de-collapse-layout
+      :label="controllerConfigure.label"
+      :show-icon="false"
+    >
       <component
-        :keyframe="false"
-        slot="container"
-        v-for="(item, index) in controllerConfigure.params"
-        :key="index"
         :is="item.component"
-        :label="item.label"
+        v-for="(item, index) in controllerConfigure.params"
+        slot="container"
+        :key="index"
         v-model="eventConfigure.params[item.key]"
+        :keyframe="false"
+        :label="item.label"
         v-bind="item.props"
-      ></component>
+      />
     </de-collapse-layout>
-    <div class="operation-box" @click="deleteEvent(eventConfigure)">
-      <i class="el-icon-delete"></i>
+    <div
+      class="operation-box"
+      @click="deleteEvent(eventConfigure)"
+    >
+      <i class="el-icon-delete" />
     </div>
   </div>
 </template>
@@ -122,13 +128,13 @@ export default {
     },
   },
 
+  created() {},
+
   methods: {
     deleteEvent(eventConfigure) {
       this.$emit("deleteEvent", eventConfigure);
     },
   },
-
-  created() {},
 };
 </script>
 

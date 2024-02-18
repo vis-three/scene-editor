@@ -2,80 +2,87 @@
   <div class="headerOperation-container">
     <div class="operate-history">
       <vis-icon
+        code="#iconbianjiantouzuo"
         @click.native="
           () => {
             $store.commit('componentLibrary/backOffHistory');
           }
         "
-        code="#iconbianjiantouzuo"
-      ></vis-icon>
+      />
       <vis-icon
+        code="#iconbianjiantouyou"
         @click.native="
           () => {
             $store.commit('componentLibrary/forwardHistory');
           }
         "
-        code="#iconbianjiantouyou"
-      ></vis-icon>
+      />
     </div>
     <div class="operate-address">
       <span
-        class="address-sign-box"
         v-for="(item, index) in addressList"
         :key="index"
+        class="address-sign-box"
         @click="chouseFile(item)"
       >
         <vis-icon
           v-if="index > 0"
           code="#iconsanjiaojiantouyou"
           :style="{ transform: 'scale(0.6)' }"
-        ></vis-icon>
-        <span class="address-title" v-text="item.name"></span>
+        />
+        <span
+          class="address-title"
+          v-text="item.name"
+        />
       </span>
     </div>
     <div class="operate-operation">
       <!-- <vis-icon code="#iconsetting-fill" v-tooltip.top="'设置'"></vis-icon> -->
       <el-popover
+        v-model="classifyVisible"
         placement="bottom"
         width="200"
         trigger="click"
-        v-model="classifyVisible"
       >
         <el-input
+          v-model="classifyName"
           class="popover-input"
           size="mini"
-          v-model="classifyName"
           placeholder="输入分类名称"
-        ></el-input>
+        />
         <div class="popover-operation">
-          <el-button size="mini" type="text" @click="addClassify">
+          <el-button
+            size="mini"
+            type="text"
+            @click="addClassify"
+          >
             确定
           </el-button>
         </div>
         <vis-icon
-          slot="reference"
-          code="#iconjia1"
-          v-tooltip.top="'新增分类'"
           v-if="canAddClassify"
-        ></vis-icon>
+          slot="reference"
+          v-tooltip.top="'新增分类'"
+          code="#iconjia1"
+        />
       </el-popover>
 
       <vis-icon
-        code="#iconshangchuan-fill"
+        v-if="canUpload"
         v-tooltip.top="
           '上传UI组件zip压缩包，包含index.js入口文件，package.json包描述文件，preview.png预览图片'
         "
-        v-if="canUpload"
+        code="#iconshangchuan-fill"
         @click.native="upload"
-      ></vis-icon>
+      />
 
       <input
+        ref="uploadInput"
         type="file"
         style="display: none"
         accept=".zip, .tgz"
-        ref="uploadInput"
         @change="fileHandler"
-      />
+      >
     </div>
   </div>
 </template>
@@ -144,33 +151,50 @@ export default {
     },
     async fileHandler(event) {
       const file = event.target.files[0];
-
       const classifyId = this.currentFloder.id;
 
       const zip = new JSZip();
       const zipData = await zip.loadAsync(file);
       const files = zipData.files;
 
-      const previewExt = ["jpg", "png", "jpeg"];
-
-      let indexFile = null;
-      let preview = null;
-      let pkg = null;
-
-      if (!files["index.js"]) {
-        this.$message.warning("上传失败！找不到入口文件：index.js");
-        return;
-      }
-
       if (!files["package.json"]) {
         this.$message.warning("上传失败！找不到配置文件：package.json");
+        this.$refs.uploadInput.value = "";
         return;
       }
 
-      indexFile = await files["index.js"].async("string");
-      indexFile = new Blob([indexFile], { type: "application/javascript" });
+      const pkg = JSON.parse(await files["package.json"].async("string"));
 
-      pkg = JSON.parse(await files["package.json"].async("string"));
+      let indexPath = pkg.module || pkg.main;
+
+      if (!indexPath) {
+        this.$message.warning(
+          "上传失败！无法从package.json中获取有效的入口路径。"
+        );
+        this.$refs.uploadInput.value = "";
+        return;
+      }
+
+      if (indexPath.startsWith("/")) {
+        indexPath = indexPath.slice(1);
+      } else if (indexPath.startsWith("./")) {
+        indexPath = indexPath.slice(2);
+      }
+
+      if (!files[indexPath]) {
+        this.$message.warning(
+          "上传失败！无法根据package.json的相关字段获取入口文件。"
+        );
+        this.$refs.uploadInput.value = "";
+        return;
+      }
+
+      let scriptFile = files[indexPath];
+      scriptFile = await scriptFile.async("string");
+      scriptFile = new Blob([scriptFile], { type: "application/javascript" });
+
+      const previewExt = ["jpg", "png", "jpeg"];
+      let preview = undefined;
 
       for (const ext of previewExt) {
         if (files[`preview.${ext}`]) {
@@ -184,7 +208,7 @@ export default {
         .uploadComponent({
           classifyId,
           name: file.name.split(".").shift(),
-          component: indexFile,
+          component: scriptFile,
           pkg,
           preview,
           size: Object.values(files).reduce((total, item) => {

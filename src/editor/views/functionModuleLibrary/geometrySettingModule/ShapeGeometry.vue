@@ -3,23 +3,23 @@
     <de-collapse-layout
       label="形状"
       icon="#iconjichubianhuan"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-select
+          v-model="shape.shape"
           :keyframe="false"
           label="路径选择"
           :options="pathOptions"
-          v-model="shape.shape"
-        ></de-controller-select>
+        />
         <de-controller-number
+          v-model="config.curveSegments"
           :keyframe="false"
           label="面分段"
           :step="1"
-          :dragMultply="3"
+          :drag-multply="3"
           :min="3"
-          v-model="config.curveSegments"
-        ></de-controller-number>
+        />
       </template>
     </de-collapse-layout>
   </div>

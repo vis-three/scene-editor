@@ -8,7 +8,9 @@
       bottom: bottom,
     }"
   >
-    <slot name="main">布局盒子</slot>
+    <slot name="main">
+      布局盒子
+    </slot>
   </div>
 </template>
 

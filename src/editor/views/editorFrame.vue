@@ -7,7 +7,7 @@
         height: `${topAreaSetting.size}px`,
       }"
     >
-      <top-navigation></top-navigation>
+      <top-navigation />
     </div>
     <!-- 顶部导航 END -->
     <div
@@ -17,7 +17,7 @@
       }"
     >
       <drag-trans-box
-        rightDrag
+        right-drag
         :size="leftAreaSetting.size"
         @draging="(result) => draging(result, leftAreaSetting)"
         @draged="
@@ -26,7 +26,7 @@
           }
         "
       >
-        <left-section></left-section>
+        <left-section />
       </drag-trans-box>
       <!-- 3d可视化区域 STR -->
       <div
@@ -41,11 +41,11 @@
           :left="leftAreaSetting.size"
           :width="threeVisWidth"
           :height="middleAreaHeight"
-        ></render-area>
+        />
       </div>
       <!-- 3d可视化区域 END -->
       <drag-trans-box
-        leftDrag
+        left-drag
         :size="rightAreaSetting.size"
         @draging="(result) => draging(result, rightAreaSetting)"
         @draged="
@@ -54,12 +54,12 @@
           }
         "
       >
-        <function-module-library></function-module-library>
+        <function-module-library />
       </drag-trans-box>
     </div>
     <drag-trans-box
       class="bottom-area"
-      topDrag
+      top-drag
       :size="bottomAreaSetting.size"
       @draging="(result) => draging(result, bottomAreaSetting)"
       @draged="
@@ -68,7 +68,7 @@
         }
       "
     >
-      <animtion-system></animtion-system>
+      <animtion-system />
     </drag-trans-box>
   </div>
 </template>
@@ -133,6 +133,11 @@ export default {
     },
   },
   watch: {},
+  mounted() {
+    window.onresize = (e) => {
+      this.resetWindow();
+    };
+  },
   methods: {
     draging(result, setting) {
       let resultSize = setting.bufferSize + result;
@@ -166,11 +171,6 @@ export default {
         min: 150,
       };
     },
-  },
-  mounted() {
-    window.onresize = (e) => {
-      this.resetWindow();
-    };
   },
 };
 </script>

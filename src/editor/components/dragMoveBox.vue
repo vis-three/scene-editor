@@ -9,7 +9,9 @@
     }"
     @mousedown.stop="dragStart"
   >
-    <slot name="main">拖拽移动盒子</slot>
+    <slot name="main">
+      拖拽移动盒子
+    </slot>
   </div>
 </template>
 
@@ -78,6 +80,9 @@ export default {
       immediate: true,
     },
   },
+  mounted() {
+    // TODO: 遮罩， 递归寻找父级absolute确定拖拽范围
+  },
   methods: {
     // 拖动开始
     dragStart($event) {
@@ -114,9 +119,6 @@ export default {
       document.addEventListener("mousemove", dragFun);
       document.addEventListener("mouseup", removeFun);
     },
-  },
-  mounted() {
-    // TODO: 遮罩， 递归寻找父级absolute确定拖拽范围
   },
 };
 </script>

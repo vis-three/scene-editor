@@ -1,8 +1,8 @@
 <template>
   <div
+    ref="editorCanvas-container"
     class="editorCanvas-container"
     contenteditable="true"
-    ref="editorCanvas-container"
     @mouseenter="editorCanvasMouseenter"
     @mousemove="editorCanvasMousemove"
     @mouseleave="editorCanvasMouseleave"
@@ -11,20 +11,20 @@
       ref="canvasRulerBox"
       :height="boardHeight"
       :width="boardWidth"
-      :rulerLeft="rulerLeft"
-      :rulerTop="rulerTop"
-      :originLeft="originLeft"
-      :originTop="originTop"
-      @resetScroll="resetScroll"
-      :showMousePosition="showMousePosition"
-      :mousePositionX="mousePositionX"
-      :mousePositionY="mousePositionY"
+      :ruler-left="rulerLeft"
+      :ruler-top="rulerTop"
+      :origin-left="originLeft"
+      :origin-top="originTop"
+      :show-mouse-position="showMousePosition"
+      :mouse-position-x="mousePositionX"
+      :mouse-position-y="mousePositionY"
       contenteditable="false"
-    ></canvas-ruler-box>
+      @resetScroll="resetScroll"
+    />
     <div
+      ref="drawingBox"
       class="canvas-drawing-box"
       contenteditable="false"
-      ref="drawingBox"
       @scroll="scroll"
     >
       <div
@@ -32,8 +32,8 @@
         :style="{ height: `${boardHeight}px`, width: `${boardWidth}px` }"
       >
         <div
-          class="editorCanvas-iframe"
           id="editorCanvas-iframe"
+          class="editorCanvas-iframe"
           :style="{
             width: `${iframeWidth}px`,
             height: `${iframeHeight}px`,
@@ -49,19 +49,19 @@
           <component-canvas
             :width="iframeWidth"
             :height="iframeHeight"
-          ></component-canvas>
+          />
         </div>
       </div>
     </div>
     <div
+      v-show="moveMaskShow"
       class="canvas-move-mask"
       contenteditable="false"
-      v-show="moveMaskShow"
       :style="{ cursor: canMoveCanvas ? 'grabbing' : 'grab' }"
       @mousedown="moveMaskMousedown"
       @mousemove="moveMaskMousemove"
       @mouseup="moveMaskMouseup"
-    ></div>
+    />
   </div>
 </template>
 
@@ -70,6 +70,10 @@ const componentCanvas = () => import("./editorCanvas/componentCanvas"); // 组�
 const canvasRulerBox = () => import("./editorCanvas/canvasRulerBox"); // 编辑器标尺组件
 
 export default {
+  components: {
+    componentCanvas, // 组件画板
+    canvasRulerBox, // 编辑器标尺组件
+  },
   props: {
     // 画布宽度
     iframeWidth: {
@@ -81,10 +85,6 @@ export default {
       type: Number,
       required: true,
     },
-  },
-  components: {
-    componentCanvas, // 组件画板
-    canvasRulerBox, // 编辑器标尺组件
   },
   data() {
     return {
@@ -125,6 +125,20 @@ export default {
         this.originTop
       );
     },
+  },
+  mounted() {
+    const drawingBox = this.$refs.drawingBox;
+    const canvasWidth = drawingBox.offsetWidth;
+    const canvasHeight = drawingBox.offsetHeight;
+    // 整个画板居中
+    drawingBox.scrollTop = this.boardHeight / 2 - canvasHeight / 2;
+    drawingBox.scrollLeft = this.boardWidth / 2 - canvasWidth / 2;
+    // 缓存居中的位移距离
+    this.originScrollLeft = drawingBox.scrollLeft;
+    this.originScrollTop = drawingBox.scrollTop;
+    // 初始嵌页
+    this.iframeTop = drawingBox.scrollTop + this.originTop;
+    this.iframeLeft = drawingBox.scrollLeft + this.originLeft;
   },
   methods: {
     // 滚动方法
@@ -175,20 +189,6 @@ export default {
     editorCanvasMouseleave() {
       this.showMousePosition = false;
     },
-  },
-  mounted() {
-    const drawingBox = this.$refs.drawingBox;
-    const canvasWidth = drawingBox.offsetWidth;
-    const canvasHeight = drawingBox.offsetHeight;
-    // 整个画板居中
-    drawingBox.scrollTop = this.boardHeight / 2 - canvasHeight / 2;
-    drawingBox.scrollLeft = this.boardWidth / 2 - canvasWidth / 2;
-    // 缓存居中的位移距离
-    this.originScrollLeft = drawingBox.scrollLeft;
-    this.originScrollTop = drawingBox.scrollTop;
-    // 初始嵌页
-    this.iframeTop = drawingBox.scrollTop + this.originTop;
-    this.iframeLeft = drawingBox.scrollLeft + this.originLeft;
   },
 };
 </script>

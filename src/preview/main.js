@@ -22,8 +22,8 @@ Vue.config.productionTip = false;
 Vue.use(ElementUI);
 
 const app = new Vue({
-  render: (h) => h(App),
   mounted() {
     Nprogress.done();
   },
+  render: (h) => h(App),
 }).$mount("#app");

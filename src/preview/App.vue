@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <render-window></render-window>
+    <render-window />
+    <loading-manager />
   </div>
 </template>
 

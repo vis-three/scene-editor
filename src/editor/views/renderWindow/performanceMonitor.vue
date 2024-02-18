@@ -10,7 +10,10 @@
         }
       "
     >
-      <vis-icon size="16px" code="#iconjiankong"></vis-icon>
+      <vis-icon
+        size="16px"
+        code="#iconjiankong"
+      />
     </div>
   </div>
 </template>

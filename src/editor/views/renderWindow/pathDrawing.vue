@@ -1,19 +1,19 @@
 <template>
   <div class="pathDrawing-container">
     <div
-      class="path-line-box"
-      :class="{ 'active-box': drawPen === item.name }"
-      v-tooltip="item.label"
       v-for="item in curveList"
       :key="item.name"
+      v-tooltip="item.label"
+      class="path-line-box"
+      :class="{ 'active-box': drawPen === item.name }"
       @click="$store.commit('path/drawPen', item.name)"
     >
-      <vis-icon :code="item.icon"></vis-icon>
+      <vis-icon :code="item.icon" />
     </div>
 
     <div
-      class="exist-path-box"
       v-tooltip="'退出绘制'"
+      class="exist-path-box"
       @click="
         $store.commit('path/draw', {
           status: false,
@@ -21,7 +21,7 @@
         })
       "
     >
-      <vis-icon code="#iconredo"></vis-icon>
+      <vis-icon code="#iconredo" />
     </div>
   </div>
 </template>

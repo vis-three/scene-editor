@@ -1,5 +1,8 @@
 <template>
-  <div class="modelTapPlane-container" ref="container"></div>
+  <div
+    ref="container"
+    class="modelTapPlane-container"
+  />
 </template>
 
 <script>
@@ -18,13 +21,6 @@ export default {
       fileTree: [], // 当前的文件树
       files: [], // 需要渲染的文件
     };
-  },
-  methods: {
-    // 进入文件夹
-    enter(item) {
-      console.log(item);
-    },
-    updateFile() {},
   },
   created() {
     this.axios
@@ -45,6 +41,13 @@ export default {
   mounted() {
     this.fileSystem = fileSystemFactory();
     this.$refs.container.appendChild(this.fileSystem.$el);
+  },
+  methods: {
+    // 进入文件夹
+    enter(item) {
+      console.log(item);
+    },
+    updateFile() {},
   },
 };
 </script>

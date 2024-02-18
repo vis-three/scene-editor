@@ -4,44 +4,44 @@
       label="设置"
 
       icon="#iconshezhi"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-switch
+          v-model="config.ground"
           :keyframe="false"
           label="地面"
-          v-model="config.ground"
-        ></de-controller-switch>
+        />
         <de-controller-picker
+          v-model="config.groudOption.color"
           :keyframe="false"
           label="地面颜色"
-          v-model="config.groudOption.color"
-        ></de-controller-picker>
+        />
         <de-controller-number
+          v-model="config.opacity"
           :keyframe="false"
           label="透明度"
           :step="0.01"
-          :dragMultply="3"
+          :drag-multply="3"
           :min="0"
           :max="1"
-          :displayAccuracy="2"
-          v-model="config.opacity"
-        ></de-controller-number>
+          :display-accuracy="2"
+        />
         <de-controller-number
+          v-model="config.maxDistance"
           :keyframe="false"
           label="反射距离"
           :step="0.1"
-          :dragMultply="10"
+          :drag-multply="10"
           :min="0"
-          :displayAccuracy="1"
-          v-model="config.maxDistance"
-        ></de-controller-number>
+          :display-accuracy="1"
+        />
         <de-controller-select
+          v-model="config.selects"
           :keyframe="false"
           label="反射物体"
           :options="objects"
-          v-model="config.selects"
-        ></de-controller-select>
+        />
       </template>
     </de-collapse-layout>
   </div>

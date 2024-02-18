@@ -3,99 +3,99 @@
     <de-collapse-layout
       label="场景设置"
       icon="#iconchangjing"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-input
-          label="名称"
           v-model="scene.name"
-        ></de-controller-input>
+          label="名称"
+        />
         <de-controller-select
+          v-model="scene.fog.type"
           :keyframe="false"
           label="场景雾"
           :options="fogList"
-          v-model="scene.fog.type"
-        ></de-controller-select>
+        />
         <de-controller-picker
           v-if="scene.fog.type"
-          label="颜色"
           v-model="scene.fog.color"
+          label="颜色"
           :animation="{
             target: scene.fog,
             attribute: 'color',
           }"
-        ></de-controller-picker>
+        />
         <de-controller-number
           v-if="scene.fog.type === 'Fog'"
+          v-model="scene.fog.near"
           label="最小距离"
           :step="1"
-          :dragMultply="5"
+          :drag-multply="5"
           :min="0"
-          v-model="scene.fog.near"
           :animation="{
             target: scene.fog,
             attribute: 'near',
           }"
-        ></de-controller-number>
+        />
         <de-controller-number
           v-if="scene.fog.type === 'Fog'"
+          v-model="scene.fog.far"
           label="最大距离"
           :step="1"
-          :dragMultply="5"
+          :drag-multply="5"
           :min="0"
-          v-model="scene.fog.far"
           :animation="{
             target: scene.fog,
             attribute: 'far',
           }"
-        ></de-controller-number>
+        />
         <de-controller-number
           v-if="scene.fog.type === 'FogExp2'"
+          v-model="scene.fog.density"
           label="密度"
           :step="0.001"
-          :dragMultply="3"
+          :drag-multply="3"
           :min="0"
-          v-model="scene.fog.density"
           :animation="{
             target: scene.fog,
             attribute: 'density',
           }"
-        ></de-controller-number>
+        />
         <de-controller-picker
           v-if="!scene.background"
-          label="背景颜色"
           v-model="scene.background"
+          label="背景颜色"
           :animation="{
             target: scene,
             attribute: 'background',
           }"
-        ></de-controller-picker>
+        />
         <de-controller-select
+          v-model="scene.background"
           label="背景贴图"
           :options="textureList"
           :prop="{
             label: 'name',
             value: 'vid',
           }"
-          v-model="scene.background"
           :animation="{
             target: scene,
             attribute: 'background',
           }"
-        ></de-controller-select>
+        />
         <de-controller-select
+          v-model="scene.environment"
           label="环境贴图"
           :options="textureList"
           :prop="{
             label: 'name',
             value: 'vid',
           }"
-          v-model="scene.environment"
           :animation="{
             target: scene,
             attribute: 'environment',
           }"
-        ></de-controller-select>
+        />
       </template>
     </de-collapse-layout>
   </div>

@@ -2,9 +2,9 @@
   <div class="trackController-container">
     <view-track>
       <template slot-scope="{ exactWidth }">
-        <time-axis :exactWidth="exactWidth"></time-axis>
-        <pre-render-area :exactWidth="exactWidth"></pre-render-area>
-        <animation-track :scrollTop="scrollTop"></animation-track>
+        <time-axis :exact-width="exactWidth" />
+        <pre-render-area :exact-width="exactWidth" />
+        <animation-track :scroll-top="scrollTop" />
       </template>
     </view-track>
   </div>

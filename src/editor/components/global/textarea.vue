@@ -1,5 +1,8 @@
 <template>
-  <control-layout :keyframe="keyframe" :label="label">
+  <control-layout
+    :keyframe="keyframe"
+    :label="label"
+  >
     <template #controller>
       <div class="textarea-controller">
         <el-input
@@ -7,7 +10,7 @@
           size="mini"
           :disabled="disabled"
           :autosize="{ minRows: minRows, maxRows: minRows }"
-        ></el-input>
+        />
       </div>
     </template>
   </control-layout>
@@ -16,7 +19,7 @@
 <script>
 import controlLayout from "./controlLayout.vue";
 export default {
-  name: "de-controller-textarea",
+  name: "DeControllerTextarea",
   components: {
     controlLayout,
   },

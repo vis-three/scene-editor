@@ -1,11 +1,11 @@
 <template>
   <div class="light-container">
     <object-collapse
-      :dataList="light"
-      :clickHanlder="addLight"
+      :data-list="light"
+      :click-hanlder="addLight"
       icon="#icondengpao"
       label="灯光"
-    ></object-collapse>
+    />
   </div>
 </template>
 

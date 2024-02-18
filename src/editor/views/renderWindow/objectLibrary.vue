@@ -1,15 +1,23 @@
 <template>
   <div class="objectLibrary-container">
-    <el-tabs v-model="active" type="card" @tab-click="triggle">
+    <el-tabs
+      v-model="active"
+      type="card"
+      @tab-click="triggle"
+    >
       <el-tab-pane
         v-for="(item, index) in list"
         :key="index"
         :name="item.component"
       >
-        <div slot="label" class="tab-plane-label" v-tooltip.top="item.label">
-          <vis-icon :code="item.icon"></vis-icon>
+        <div
+          slot="label"
+          v-tooltip.top="item.label"
+          class="tab-plane-label"
+        >
+          <vis-icon :code="item.icon" />
         </div>
-        <component :is="item.component"></component>
+        <component :is="item.component" />
       </el-tab-pane>
     </el-tabs>
   </div>

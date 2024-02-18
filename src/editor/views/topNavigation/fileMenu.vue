@@ -1,7 +1,7 @@
 <template>
   <div class="fileMenu-container">
     <div class="app-tips">
-      <el-image :src="logo"></el-image>
+      <el-image :src="logo" />
       <span class="app-title">STATIC</span>
     </div>
     <!-- <dropdown-menu
@@ -9,12 +9,20 @@
       label="我的"
       @click.native="select('my')"
     ></dropdown-menu> -->
-    <dropdown-menu icon="#iconbangzhu" label="帮助" @select="select">
-      <el-dropdown-item command="shortcutKey">快捷键</el-dropdown-item>
-      <el-dropdown-item command="course">使用教程</el-dropdown-item>
+    <dropdown-menu
+      icon="#iconbangzhu"
+      label="帮助"
+      @select="select"
+    >
+      <el-dropdown-item command="shortcutKey">
+        快捷键
+      </el-dropdown-item>
+      <el-dropdown-item command="course">
+        使用教程
+      </el-dropdown-item>
     </dropdown-menu>
 
-    <shortcut-key-document ref="shortcutKey"></shortcut-key-document>
+    <shortcut-key-document ref="shortcutKey" />
   </div>
 </template>
 

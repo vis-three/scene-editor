@@ -3,7 +3,10 @@
     enter-active-class="animate__animated animate__fadeIn animate__fast"
     leave-active-class="animate__animated animate__fadeOut animate__fast"
   >
-    <div class="vis-popup-container" v-show="value">
+    <div
+      v-show="value"
+      class="vis-popup-container"
+    >
       <div
         ref="main"
         class="popup-main"
@@ -17,8 +20,12 @@
           padding: padding ? '10px' : '',
         }"
       >
-        <div class="close-button" v-if="showClose" @click="close">
-          <vis-icon code="#iconguanbi"></vis-icon>
+        <div
+          v-if="showClose"
+          class="close-button"
+          @click="close"
+        >
+          <vis-icon code="#iconguanbi" />
         </div>
 
         <slot name="main">
@@ -28,16 +35,16 @@
                 class="title"
                 :style="{ fontSize: fontSize }"
                 v-text="title"
-              ></div>
+              />
             </slot>
           </div>
 
           <div class="popup-container">
-            <slot name="container"></slot>
+            <slot name="container" />
           </div>
 
           <div class="popup-footer">
-            <slot name="footer"></slot>
+            <slot name="footer" />
           </div>
         </slot>
       </div>
@@ -47,7 +54,7 @@
 
 <script>
 export default {
-  name: "vis-popup",
+  name: "VisPopup",
   props: {
     // 标题
     title: {
@@ -103,18 +110,6 @@ export default {
       marginTop: 0,
     };
   },
-  methods: {
-    cacleCenter() {
-      const mainDom = this.$refs.main;
-      this.marginLeft = mainDom.offsetWidth / 2;
-      this.marginTop = mainDom.offsetHeight / 2;
-    },
-
-    close() {
-      this.$emit("close");
-      this.$emit("input", false);
-    },
-  },
   watch: {
     value: {
       handler(newValue) {
@@ -133,6 +128,18 @@ export default {
 
   beforeDestroy() {
     document.removeEventListener("onresize", this.cacleCenter);
+  },
+  methods: {
+    cacleCenter() {
+      const mainDom = this.$refs.main;
+      this.marginLeft = mainDom.offsetWidth / 2;
+      this.marginTop = mainDom.offsetHeight / 2;
+    },
+
+    close() {
+      this.$emit("close");
+      this.$emit("input", false);
+    },
   },
 };
 </script>

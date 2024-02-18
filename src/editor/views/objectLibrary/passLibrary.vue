@@ -5,8 +5,11 @@
         size="mini"
         prefix-icon="el-icon-search"
         placeholder="插件筛选"
-      ></el-input>
-      <el-dropdown trigger="click" @command="addPass">
+      />
+      <el-dropdown
+        trigger="click"
+        @command="addPass"
+      >
         <el-button
           size="mini"
           icon="el-icon-circle-plus-outline"
@@ -18,30 +21,37 @@
           <el-dropdown-item
             v-for="(item, index) in pass"
             :key="index"
-            v-text="item.label"
             :command="item"
-          ></el-dropdown-item>
+            v-text="item.label"
+          />
         </el-dropdown-menu>
       </el-dropdown>
     </div>
 
     <div class="box-container">
-      <el-tree :data="passList" node-key="vid" @node-click="nodeClick">
+      <el-tree
+        :data="passList"
+        node-key="vid"
+        @node-click="nodeClick"
+      >
         <span
+          slot-scope="{ data }"
           class="custom-tree-node"
           :class="{ active: currentPass && data.vid === currentPass.vid }"
-          slot-scope="{ data }"
         >
           <span class="message-box">
             <span>{{ data.name }}</span>
           </span>
-          <span class="operate-box" @click="removePass(data)">
+          <span
+            class="operate-box"
+            @click="removePass(data)"
+          >
             <vis-icon
               code="#iconshanchu"
               :color="
                 data.vid === (currentPass && currentPass.vid) ? null : '#FF4C4C'
               "
-            ></vis-icon>
+            />
           </span>
         </span>
       </el-tree>

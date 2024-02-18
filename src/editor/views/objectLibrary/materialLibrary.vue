@@ -5,8 +5,11 @@
         size="mini"
         prefix-icon="el-icon-search"
         placeholder="材质筛选"
-      ></el-input>
-      <el-dropdown trigger="click" @command="addMaterial">
+      />
+      <el-dropdown
+        trigger="click"
+        @command="addMaterial"
+      >
         <el-button
           size="mini"
           icon="el-icon-circle-plus-outline"
@@ -18,9 +21,9 @@
           <el-dropdown-item
             v-for="(item, index) in material"
             :key="index"
-            v-text="item.label"
             :command="item"
-          ></el-dropdown-item>
+            v-text="item.label"
+          />
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -28,31 +31,34 @@
     <div class="box-container">
       <div class="material-main">
         <div
-          class="material-elem"
           v-for="(item, index) in materialList"
           :key="index"
+          class="material-elem"
           @mousedown="changeCurrentMaterial(item.vid)"
         >
           <div
+            :id="item.vid"
+            :ref="item.vid"
             draggable="true"
             class="render-box"
             :class="{ active: currentMaterial.vid === item.vid }"
-            :id="item.vid"
-            :ref="item.vid"
             @dragstart="dragstart($event, item.vid)"
-          ></div>
+          />
           <div
-            class="operate-box"
             v-tooltip.top="'删除'"
+            class="operate-box"
             @click="deleteMaterial(item)"
           >
-            <vis-icon code="#iconshanchu" color="red"></vis-icon>
+            <vis-icon
+              code="#iconshanchu"
+              color="red"
+            />
           </div>
           <div
+            v-tooltip.bottom="item.name"
             class="element-title"
             v-text="item.name"
-            v-tooltip.bottom="item.name"
-          ></div>
+          />
         </div>
       </div>
     </div>
@@ -114,6 +120,54 @@ export default {
       return this.$store.getters["active/material"];
     },
   },
+  watch: {
+    materialList: {
+      handler(newValue, oldValue) {
+        this.$nextTick(() => {
+          Object.keys(newValue).forEach((vid) => {
+            // 生成展示器
+            if (!this.$refs[vid]) {
+              console.error(`can not found this dom: '${vid}'`);
+              return false;
+            }
+
+            if (this.canvasMap[vid]) {
+              return false;
+            }
+
+            const targetDom = this.$refs[vid][0];
+            const canvas = document.createElement("canvas");
+
+            canvas.setAttribute("width", 75);
+            canvas.setAttribute("height", 55);
+
+            targetDom.appendChild(canvas);
+
+            this.canvasMap[vid] = canvas;
+
+            // 主动监听当前对象的属性改变更新displayer
+            this.watchMap[vid] = this.$watch(
+              function () {
+                return this.materialList[vid];
+              },
+              (newVal) => {
+                this.$nextTick(() => {
+                  this.updateMaterialDisplay(vid);
+                });
+              },
+              {
+                deep: true,
+                immediate: true,
+              }
+            );
+          });
+        });
+      },
+      immediate: true,
+    },
+  },
+
+  mounted() {},
   methods: {
     dragstart(event, vid) {
       event.preventDefault();
@@ -243,54 +297,6 @@ export default {
       });
     },
   },
-  watch: {
-    materialList: {
-      handler(newValue, oldValue) {
-        this.$nextTick(() => {
-          Object.keys(newValue).forEach((vid) => {
-            // 生成展示器
-            if (!this.$refs[vid]) {
-              console.error(`can not found this dom: '${vid}'`);
-              return false;
-            }
-
-            if (this.canvasMap[vid]) {
-              return false;
-            }
-
-            const targetDom = this.$refs[vid][0];
-            const canvas = document.createElement("canvas");
-
-            canvas.setAttribute("width", 75);
-            canvas.setAttribute("height", 55);
-
-            targetDom.appendChild(canvas);
-
-            this.canvasMap[vid] = canvas;
-
-            // 主动监听当前对象的属性改变更新displayer
-            this.watchMap[vid] = this.$watch(
-              function () {
-                return this.materialList[vid];
-              },
-              (newVal) => {
-                this.$nextTick(() => {
-                  this.updateMaterialDisplay(vid);
-                });
-              },
-              {
-                deep: true,
-                immediate: true,
-              }
-            );
-          });
-        });
-      },
-      immediate: true,
-    },
-  },
-
-  mounted() {},
 };
 </script>
 

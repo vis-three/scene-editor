@@ -3,14 +3,14 @@
     <de-collapse-layout
       label="路径"
       icon="#iconjichubianhuan"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-switch
+          v-model="path.autoClose"
           :keyframe="false"
           label="自动闭合"
-          v-model="path.autoClose"
-        ></de-controller-switch>
+        />
         <el-button
           size="mini"
           icon="el-icon-edit"

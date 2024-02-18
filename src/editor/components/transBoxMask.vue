@@ -1,19 +1,19 @@
 <template>
   <canvas
+    v-if="darging"
     ref="canvas"
     :width="maskSize.width"
     :height="maskSize.height"
     :style="{ cursor: cursor }"
-    v-if="darging"
     class="transBoxMask-container"
     @mousemove="dargMove"
     @mouseup="dargEnd"
-  ></canvas>
+  />
 </template>
 
 <script>
 export default {
-  name: "trans-box-mask",
+  name: "TransBoxMask",
   data() {
     return {
       id: "", // 联系组件id
@@ -83,6 +83,14 @@ export default {
     // 吸附状态
     adsorbentStatus() {
       return this.$store.getters.getAdsorbent;
+    },
+  },
+  watch: {
+    // 拖动激活的时候载入一次map
+    darging(newValue, oldValue) {
+      if (newValue) {
+        this.generateMap();
+      }
     },
   },
   methods: {
@@ -734,14 +742,6 @@ export default {
       drawComponentLine();
       drawGuideLine();
       drawRootLine();
-    },
-  },
-  watch: {
-    // 拖动激活的时候载入一次map
-    darging(newValue, oldValue) {
-      if (newValue) {
-        this.generateMap();
-      }
     },
   },
 };

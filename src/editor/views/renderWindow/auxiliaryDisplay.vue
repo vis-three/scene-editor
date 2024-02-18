@@ -10,7 +10,10 @@
         }
       "
     >
-      <vis-icon size="16px" code="#iconzuobiaozhou"></vis-icon>
+      <vis-icon
+        size="16px"
+        code="#iconzuobiaozhou"
+      />
     </div>
     <div
       v-tooltip.top="'网格'"
@@ -22,7 +25,10 @@
         }
       "
     >
-      <vis-icon size="16px" code="#iconwangge"></vis-icon>
+      <vis-icon
+        size="16px"
+        code="#iconwangge"
+      />
     </div>
     <!-- <div
       v-tooltip.top="'辅助'"
@@ -46,7 +52,10 @@
         }
       "
     >
-      <vis-icon size="16px" code="#iconkongjian1"></vis-icon>
+      <vis-icon
+        size="16px"
+        code="#iconkongjian1"
+      />
     </div>
   </div>
 </template>

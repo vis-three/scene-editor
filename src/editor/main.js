@@ -63,8 +63,8 @@ Vue.config.productionTip = false;
 const app = new Vue({
   // router,
   store,
-  render: (h) => h(App),
   mounted() {
     Nprogress.done();
   },
+  render: (h) => h(App),
 }).$mount("#app");

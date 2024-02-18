@@ -1,35 +1,39 @@
 <template>
   <div class="AmbientLight-container">
-    <de-collapse-layout label="设置" icon="#iconshezhi" arrowPosition="left">
+    <de-collapse-layout
+      label="设置"
+      icon="#iconshezhi"
+      arrow-position="left"
+    >
       <template #container>
         <de-controller-number
+          v-model="config.intensity"
           label="亮度"
           :step="0.1"
-          :dragMultply="10"
+          :drag-multply="10"
           :min="0"
-          :displayAccuracy="1"
+          :display-accuracy="1"
           :animation="{
             target: config.vid,
             attribute: 'intensity',
           }"
-          v-model="config.intensity"
-        ></de-controller-number>
+        />
         <de-controller-picker
+          v-model="config.color"
           label="天空颜色"
           :animation="{
             target: config.vid,
             attribute: 'color',
           }"
-          v-model="config.color"
-        ></de-controller-picker>
+        />
         <de-controller-picker
+          v-model="config.groundColor"
           label="地面颜色"
           :animation="{
             target: config.vid,
             attribute: 'groundColor',
           }"
-          v-model="config.groundColor"
-        ></de-controller-picker>
+        />
       </template>
     </de-collapse-layout>
   </div>

@@ -3,126 +3,126 @@
     <de-collapse-layout
       label="参数设置"
       icon="#iconshezhi"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-switch
-          label="线框化"
           v-model="config.wireframe"
+          label="线框化"
           :animation="{
             target: config,
             attribute: 'wireframe',
           }"
-        ></de-controller-switch>
+        />
         <de-controller-picker
-          label="材质颜色"
           v-model="config.color"
+          label="材质颜色"
           :animation="{
             target: config,
             attribute: 'color',
           }"
-        ></de-controller-picker>
+        />
 
         <de-controller-number
+          v-model="config.aoMapIntensity"
           label="环境遮挡"
           :step="0.01"
-          :dragMultply="3"
+          :drag-multply="3"
           :min="0"
-          :displayAccuracy="2"
-          v-model="config.aoMapIntensity"
+          :display-accuracy="2"
           :animation="{
             target: config,
             attribute: 'aoMapIntensity',
           }"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.lightMapIntensity"
           label="光照强度"
           :step="0.01"
-          :dragMultply="3"
+          :drag-multply="3"
           :min="0"
-          :displayAccuracy="2"
-          v-model="config.lightMapIntensity"
+          :display-accuracy="2"
           :animation="{
             target: config,
             attribute: 'lightMapIntensity',
           }"
-        ></de-controller-number>
+        />
 
         <de-controller-number
+          v-model="config.refractionRatio"
           label="空气折射率"
           :step="0.01"
-          :dragMultply="3"
+          :drag-multply="3"
           :min="0"
           :max="1"
-          :displayAccuracy="2"
-          v-model="config.refractionRatio"
+          :display-accuracy="2"
           :animation="{
             target: config,
             attribute: 'refractionRatio',
           }"
-        ></de-controller-number>
+        />
       </template>
     </de-collapse-layout>
     <de-collapse-layout
       label="贴图设置"
       icon="#icontexture"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-select
+          v-model="config.map"
           label="表面贴图"
           :options="textureList"
           :prop="{
             label: 'name',
             value: 'vid',
           }"
-          v-model="config.map"
           :animation="{
             target: config,
             attribute: 'map',
           }"
-        ></de-controller-select>
+        />
 
         <de-controller-select
+          v-model="config.alphaMap"
           label="透明贴图"
           :options="textureList"
           :prop="{
             label: 'name',
             value: 'vid',
           }"
-          v-model="config.alphaMap"
           :animation="{
             target: config,
             attribute: 'alphaMap',
           }"
-        ></de-controller-select>
+        />
 
         <de-controller-select
+          v-model="config.envMap"
           label="环境贴图"
           :options="textureList"
           :prop="{
             label: 'name',
             value: 'vid',
           }"
-          v-model="config.envMap"
           :animation="{
             target: config,
             attribute: 'envMap',
           }"
-        ></de-controller-select>
+        />
         <de-controller-select
+          v-model="config.aoMap"
           label="环境遮挡贴图"
           :options="textureList"
           :prop="{
             label: 'name',
             value: 'vid',
           }"
-          v-model="config.aoMap"
           :animation="{
             target: config,
             attribute: 'aoMap',
           }"
-        ></de-controller-select>
+        />
       </template>
     </de-collapse-layout>
   </div>

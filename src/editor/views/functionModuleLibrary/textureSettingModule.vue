@@ -1,190 +1,196 @@
 <template>
-  <div class="textureSettingModule-container" v-if="config">
+  <div
+    v-if="config"
+    class="textureSettingModule-container"
+  >
     <de-collapse-layout
       label="贴图"
-      :subLabel="config.type"
+      :sub-label="config.type"
       icon="#icontietushezhi"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-input
-          label="名称"
           v-model="config.name"
-        ></de-controller-input>
+          label="名称"
+        />
         <de-controller-input
-          label="别名"
           v-model="config.alias"
-        ></de-controller-input>
+          label="别名"
+        />
         <de-controller-code
-          label="数据"
           v-model="config.meta"
-        ></de-controller-code>
+          label="数据"
+        />
       </template>
     </de-collapse-layout>
     <de-collapse-layout
       label="基础设置"
       icon="#iconshezhi"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-switch
+          v-model="config.flipY"
           :keyframe="false"
           label="纵向翻转"
-          v-model="config.flipY"
-        ></de-controller-switch>
+        />
         <de-controller-number
+          v-model="rotation"
           label="旋转"
           :step="1"
-          :dragMultply="3"
+          :drag-multply="3"
           :min="-360"
           :max="360"
           unit="°"
-          :displayAccuracy="0"
-          v-model="rotation"
+          :display-accuracy="0"
           :animation="{
             target: config,
             attribute: 'rotation',
           }"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.center.x"
           label="中心点x"
           :step="0.01"
-          :dragMultply="3"
-          :displayAccuracy="2"
-          v-model="config.center.x"
+          :drag-multply="3"
+          :display-accuracy="2"
           :animation="{
             target: config.center,
             attribute: 'x',
           }"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.center.y"
           label="中心点y"
           :step="0.01"
-          :dragMultply="3"
-          :displayAccuracy="2"
-          v-model="config.center.y"
+          :drag-multply="3"
+          :display-accuracy="2"
           :animation="{
             target: config.center,
             attribute: 'y',
           }"
-        ></de-controller-number>
+        />
         <de-controller-select
+          v-model="config.wrapS"
           label="x包裹"
           :options="warpList"
-          v-model="config.wrapS"
           :animation="{
             target: config,
             attribute: 'wrapS',
           }"
-        ></de-controller-select>
+        />
         <de-controller-number
           v-if="config.wrapS !== warpList[0].value"
+          v-model="config.repeat.x"
           label="x重复"
           :step="1"
           :min="1"
-          :dragMultply="2"
-          v-model="config.repeat.x"
+          :drag-multply="2"
           :animation="{
             target: config.repeat,
             attribute: 'x',
           }"
-        ></de-controller-number>
+        />
         <de-controller-select
+          v-model="config.wrapT"
           label="y包裹"
           :options="warpList"
-          v-model="config.wrapT"
           :animation="{
             target: config,
             attribute: 'wrapT',
           }"
-        ></de-controller-select>
+        />
         <de-controller-number
           v-if="config.wrapS !== warpList[0].value"
+          v-model="config.repeat.y"
           label="y重复"
           :step="1"
           :min="1"
-          :dragMultply="2"
-          v-model="config.repeat.y"
+          :drag-multply="2"
           :animation="{
             target: config.repeat,
             attribute: 'y',
           }"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.offset.x"
           label="x偏移"
           :step="0.01"
           :min="0"
           :max="1"
-          :dragMultply="3"
-          :displayAccuracy="2"
-          v-model="config.offset.x"
+          :drag-multply="3"
+          :display-accuracy="2"
           :animation="{
             target: config.offset,
             attribute: 'x',
           }"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.offset.y"
           label="y偏移"
           :step="0.01"
           :min="0"
           :max="1"
-          :dragMultply="3"
-          :displayAccuracy="2"
-          v-model="config.offset.y"
+          :drag-multply="3"
+          :display-accuracy="2"
           :animation="{
             target: config.offset,
             attribute: 'y',
           }"
-        ></de-controller-number>
+        />
         <de-controller-select
+          v-model="config.mapping"
           label="映射类型"
           :options="mappingList"
-          v-model="config.mapping"
           :animation="{
             target: config,
             attribute: 'mapping',
           }"
-        ></de-controller-select>
+        />
         <de-controller-select
+          v-model="config.format"
           label="格式类型"
           :options="formatList"
-          v-model="config.format"
           :animation="{
             target: config,
             attribute: 'format',
           }"
-        ></de-controller-select>
+        />
         <de-controller-select
+          v-model="config.magFilter"
           label="放大滤镜"
           :options="magFilterList"
-          v-model="config.magFilter"
           :animation="{
             target: config,
             attribute: 'magFilter',
           }"
-        ></de-controller-select>
+        />
         <de-controller-select
+          v-model="config.minFilter"
           label="缩小滤镜"
           :options="minFilterList"
-          v-model="config.minFilter"
           :animation="{
             target: config,
             attribute: 'minFilter',
           }"
-        ></de-controller-select>
+        />
         <de-controller-select
+          v-model="config.encoding"
           label="编码类型"
           :options="encodingList"
-          v-model="config.encoding"
           :animation="{
             target: config,
             attribute: 'encoding',
           }"
-        ></de-controller-select>
+        />
       </template>
     </de-collapse-layout>
 
-    <components :config="config" :is="type"></components>
+    <components
+      :is="type"
+      :config="config"
+    />
   </div>
 </template>
 

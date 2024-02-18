@@ -7,7 +7,10 @@
   >
     <template #controller>
       <div class="switch-controller">
-        <el-switch v-model="inputValue" size="mini"></el-switch>
+        <el-switch
+          v-model="inputValue"
+          size="mini"
+        />
       </div>
     </template>
   </control-layout>
@@ -17,7 +20,7 @@
 import controlLayout from "./controlLayout.vue";
 import { InterpolateDiscrete } from "three";
 export default {
-  name: "de-controller-switch",
+  name: "DeControllerSwitch",
   components: {
     controlLayout,
   },

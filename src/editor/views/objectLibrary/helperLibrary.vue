@@ -1,18 +1,24 @@
 <template>
   <div class="helperModel-container">
-    <de-collapse-layout icon="#icondengpao" label="辅助">
+    <de-collapse-layout
+      icon="#icondengpao"
+      label="辅助"
+    >
       <template #container>
         <div class="helperModel-main">
           <div
-            class="helperModel-elem"
             v-for="(item, index) in helperModel"
             :key="index"
+            class="helperModel-elem"
             @click="addHelperModel(item)"
           >
             <div class="element-icon-box">
-              <vis-icon :code="item.icon"></vis-icon>
+              <vis-icon :code="item.icon" />
             </div>
-            <div class="element-title" v-text="item.label"></div>
+            <div
+              class="element-title"
+              v-text="item.label"
+            />
           </div>
         </div>
       </template>

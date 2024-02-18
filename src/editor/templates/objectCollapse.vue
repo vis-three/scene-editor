@@ -1,17 +1,23 @@
 <template>
-  <de-collapse-layout :icon="icon" :label="label">
+  <de-collapse-layout
+    :icon="icon"
+    :label="label"
+  >
     <template #container>
       <div class="basicElement-main">
         <div
-          class="basicELement-elem"
           v-for="(item, index) in dataList"
           :key="index"
+          class="basicELement-elem"
           @click="clickItem(item)"
         >
           <div class="element-icon-box">
-            <vis-icon :code="item.icon"></vis-icon>
+            <vis-icon :code="item.icon" />
           </div>
-          <div class="element-title" v-text="item.label"></div>
+          <div
+            class="element-title"
+            v-text="item.label"
+          />
         </div>
       </div>
     </template>

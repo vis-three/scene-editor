@@ -1,4 +1,5 @@
 import modelApi from "@/assets/js/api/model.js";
+import { Message } from "element-ui";
 
 const fileTree = {
   dir: true,
@@ -75,7 +76,7 @@ export const module = {
       if (state.historyPointer !== state.history.length - 1) {
         state.history.splice(
           state.historyPointer + 1,
-          state.history.length - 1
+          state.history.length - 1,
         );
       } else {
         // 判断最大缓存
@@ -134,7 +135,7 @@ export const module = {
     removeChildren(state, file) {
       state.currentFloder.children.splice(
         state.currentFloder.children.indexOf(file),
-        1
+        1,
       );
     },
   },

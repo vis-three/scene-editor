@@ -5,40 +5,40 @@
       :key="index"
       :label="$store.getters['attribute/nameMap'][item]"
       :icon="$store.getters['attribute/iconMap'][item]"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-vector3
+          v-model="$store.getters['attribute/configMap'][item].position"
           label="位置"
           :step="1"
-          :displayAccuracy="displayAccuracy"
-          v-model="$store.getters['attribute/configMap'][item].position"
+          :display-accuracy="displayAccuracy"
           :animation="{
             target: item,
             attribute: 'position',
           }"
-        ></de-controller-vector3>
+        />
         <de-controller-vector3
+          v-model="$store.getters['attribute/configMap'][item].rotation"
           label="旋转"
           :step="1"
-          :displayAccuracy="displayAccuracy"
+          :display-accuracy="displayAccuracy"
           unit="°"
-          v-model="$store.getters['attribute/configMap'][item].rotation"
           :animation="{
             target: item,
             attribute: 'rotation',
           }"
-        ></de-controller-vector3>
+        />
         <de-controller-vector3
+          v-model="$store.getters['attribute/configMap'][item].scale"
           label="缩放"
           :step="1"
-          :displayAccuracy="displayAccuracy"
-          v-model="$store.getters['attribute/configMap'][item].scale"
+          :display-accuracy="displayAccuracy"
           :animation="{
             target: item,
             attribute: 'scale',
           }"
-        ></de-controller-vector3>
+        />
       </template>
     </de-collapse-layout>
   </div>
@@ -54,8 +54,8 @@ export default {
     };
   },
   computed: {},
-  methods: {},
   watch: {},
+  methods: {},
 };
 </script>
 

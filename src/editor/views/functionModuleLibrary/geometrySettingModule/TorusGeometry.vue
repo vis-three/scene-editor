@@ -3,52 +3,52 @@
     <de-collapse-layout
       label="形状"
       icon="#iconjichubianhuan"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-number
+          v-model="config.radius"
           :keyframe="false"
           label="环面半径"
           :step="1"
-          :dragMultply="2"
+          :drag-multply="2"
           :min="0"
-          v-model="config.radius"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.tube"
           :keyframe="false"
           label="管道半径"
           :step="1"
-          :dragMultply="2"
+          :drag-multply="2"
           :min="0"
-          v-model="config.tube"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.radialSegments"
           :keyframe="false"
           label="半径分段"
           :step="1"
-          :dragMultply="2"
+          :drag-multply="2"
           :min="0"
-          v-model="config.radialSegments"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.tubularSegments"
           :keyframe="false"
           label="管道分段"
           :step="1"
-          :dragMultply="2"
+          :drag-multply="2"
           :min="0"
-          v-model="config.tubularSegments"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="arc"
           :keyframe="false"
           label="圆心角"
           :step="1"
-          :dragMultply="5"
+          :drag-multply="5"
           :min="0"
           :max="360"
           unit="°"
-          :displayAccuracy="0"
-          v-model="arc"
-        ></de-controller-number>
+          :display-accuracy="0"
+        />
       </template>
     </de-collapse-layout>
   </div>

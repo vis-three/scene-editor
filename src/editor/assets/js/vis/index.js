@@ -16,6 +16,7 @@ import {
 
 import { PathSupportControlsPlugin } from "@vis-three/plugin-path-support-controls";
 import { ComponentManagerPlugin } from "./plugins/ComponentManager";
+import { CanvasManagerPlugin } from "./plugins/CanvasManager";
 
 import { GLTFLoader } from "./loaders/GLTFLoader";
 
@@ -48,7 +49,8 @@ defineOption({
 
 export const engine = new ModelingEngineSupport()
   .install(PathSupportControlsPlugin())
-  .install(ComponentManagerPlugin());
+  .install(ComponentManagerPlugin())
+  .install(CanvasManagerPlugin());
 
 const gltfLoader = new GLTFLoader();
 

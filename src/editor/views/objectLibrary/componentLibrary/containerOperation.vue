@@ -1,41 +1,56 @@
 vabse
 <template>
   <div class="containerOperation-container">
-    <div v-show="loading" class="loading-mask">
-      <vis-icon class="ani" code="#iconxuanzhuan"></vis-icon>
+    <div
+      v-show="loading"
+      class="loading-mask"
+    >
+      <vis-icon
+        class="ani"
+        code="#iconxuanzhuan"
+      />
       <span>正在加载...</span>
     </div>
 
-    <div v-if="!loading && !floderChildren.length" class="empty-tips">
+    <div
+      v-if="!loading && !floderChildren.length"
+      class="empty-tips"
+    >
       <span>这里暂时是空的哦</span>
     </div>
 
     <div
-      v-else
       v-for="(item, index) in floderChildren"
+      v-else
       :key="index"
+      v-tooltip.bottom="`${item.name}`"
       class="file-item-box"
       :class="{ active: false }"
-      @click="chouseFile(item)"
       :draggable="!item.dir"
+      @click="chouseFile(item)"
       @dragstart="dragstart($event, item)"
-      v-tooltip.bottom="`${item.name}`"
     >
       <template v-if="item.dir">
-        <vis-icon :size="iconSize" code="#iconwenjianjia"></vis-icon>
+        <vis-icon
+          :size="iconSize"
+          code="#iconwenjianjia"
+        />
       </template>
       <template v-else>
-        <img :src="item.preview" />
+        <img :src="item.preview">
       </template>
 
-      <span class="item-title" v-text="item.name"></span>
+      <span
+        class="item-title"
+        v-text="item.name"
+      />
       <vis-icon
+        v-tooltip.bottom="`删除`"
         class="item-delete"
         size="16px"
         code="#iconshanchu"
-        v-tooltip.bottom="`删除`"
         @click.native.stop="remove(item)"
-      ></vis-icon>
+      />
     </div>
 
     <div
@@ -44,7 +59,7 @@ vabse
         display: floderChildren.length % 2 !== 0 ? 'block' : 'none',
         flex: 1,
       }"
-    ></div>
+    />
   </div>
 </template>
 

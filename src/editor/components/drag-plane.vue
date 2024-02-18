@@ -70,6 +70,151 @@ export default {
       touchNum: "", // 拖拽线的父对象标识
     };
   },
+  watch: {
+    height(newValue, oldValue) {
+      this.boxHight = newValue;
+    },
+    width(newValue, oldValue) {
+      this.boxWidth = newValue;
+    },
+  },
+  created() {
+    this.boxWidth = this.width;
+    this.boxHeight = this.height;
+  },
+  mounted() {
+    this.setDistance();
+  },
+  methods: {
+    // 设置距离
+    setDistance() {
+      // 计算高度 并 记录高度
+      let dragHeight =
+        (this.$refs.box.offsetHeight || parseInt(this.height)) / this.amount;
+      for (let i = 2; i <= this.amount; i += 1) {
+        let height = dragHeight * (this.amount - i + 1);
+        this.$refs[`drag${i}`].style.height = `${height}px`;
+        this.spaceData[i] = height;
+      }
+    },
+    // 里层线按下事件
+    dragLineMouseDown(event) {
+      event.preventDefault();
+      event.target.classList.add("dragFlexPanel-line-click");
+      this.touchNum = event.target.parentNode.id.slice(4);
+      this.showInnerMask = true;
+    },
+    // 遮罩层移动事件
+    innerMaskMouseMove(event) {
+      event.preventDefault();
+      // // TODO: 横轴的以后再判断
+      if (this.direction === "row") {
+        this.$refs[`drag${this.touchNum}`].style.height = event.offsetX;
+      } else {
+        let height = event.offsetY; // 拖动的位置
+        let upHeight =
+          (this.spaceData[parseInt(this.touchNum) + 1] || 0) +
+          this.safeDistance; // 上部的距离 考虑边缘
+        let downHeight =
+          (this.spaceData[parseInt(this.touchNum) - 1] ||
+            this.$refs.box.offsetHeight) - this.safeDistance; // 下部距离 考虑边缘
+        // 距离判断
+        if (height <= upHeight) {
+          this.$refs[`drag${this.touchNum}`].style.height = `${upHeight}px`;
+        } else if (height >= downHeight) {
+          this.$refs[`drag${this.touchNum}`].style.height = `${downHeight}px`;
+        } else {
+          this.$refs[`drag${this.touchNum}`].style.height = `${height}px`;
+        }
+        // console.log(height)
+        // 刷新数据
+        this.spaceData[this.touchNum] = parseInt(
+          this.$refs[`drag${this.touchNum}`].style.height
+        );
+      }
+    },
+    // 遮罩层移出事件
+    innerMaskMouseLeave(event) {
+      event.preventDefault();
+      this.innerMaskMouseUp();
+    },
+    // 遮罩层鼠标抬起事件
+    innerMaskMouseUp(event) {
+      this.showInnerMask = false;
+      let dragLine = this.$refs[`drag${this.touchNum}`].lastElementChild;
+      dragLine.classList.remove("dragFlexPanel-line-click");
+    },
+    // 盒子线按下事件
+    boxLineMouseDown(event, direction) {
+      event.preventDefault();
+      // 开启外层遮罩
+      this.showOutMask = true;
+      // 记录鼠标位置
+      this.mouseX = event.clientX;
+      this.mouseY = event.clientY;
+      // 记录拖拽方向
+      this.lineDirection = direction;
+      this.$refs[`boxLine-${this.lineDirection}`].classList.add(
+        "dragFlexPanel-boxLine-click"
+      );
+    },
+    // 遮罩层移动事件
+    outerMaskMouseMove(event) {
+      event.preventDefault();
+      let widthDiff = event.clientX - this.mouseX;
+      let heightDiff = event.clientY - this.mouseY;
+      if (this.lineDirection === "top" || this.lineDirection === "bottom") {
+        // 判断安全距离
+        let height = parseFloat(this.boxHeight) + heightDiff;
+        // 根据方向判断末尾距离
+        if (this.direction === "column") {
+          if (height <= this.spaceData[2] + this.boxSaveDistance) {
+            this.$refs.box.style.height =
+              this.spaceData[2] + this.boxSaveDistance;
+          } else {
+            this.$refs.box.style.height = `${height}px`;
+          }
+        } else {
+          if (height <= this.boxSaveDistance) {
+            this.$refs.box.style.height = this.boxSaveDistance;
+          } else {
+            this.$refs.box.style.height = `${height}px`;
+          }
+        }
+      } else if (
+        this.lineDirection === "right" ||
+        this.lineDirection === "left"
+      ) {
+        // 判断安全距离
+        let width = parseFloat(this.boxWidth) + widthDiff;
+        // 根据方向判断末尾距离
+        if (this.direction === "row") {
+          // TODO: 判断横向的安全距离
+        } else {
+          if (width <= this.boxSaveDistance) {
+            this.$refs.box.style.width = this.boxSaveDistance;
+          } else {
+            this.$refs.box.style.width = `${width}px`;
+          }
+        }
+      }
+    },
+    // 遮罩层移出事件
+    outerMaskMouseLeave(event) {
+      event.preventDefault();
+      this.outerMaskMouseUp();
+    },
+    // 遮罩层鼠标抬起事件
+    outerMaskMouseUp(event) {
+      this.showOutMask = false;
+      // 刷新盒子长宽数据
+      this.boxWidth = this.$refs.box.style.width;
+      this.boxHeight = this.$refs.box.style.height;
+      this.$refs[`boxLine-${this.lineDirection}`].classList.remove(
+        "dragFlexPanel-boxLine-click"
+      );
+    },
+  },
   // 由于生成的dom树是递归循环的树形态所以用render
   render(h) {
     // 拖拽dom
@@ -257,151 +402,6 @@ export default {
         boxLineRight,
       ]
     );
-  },
-  methods: {
-    // 设置距离
-    setDistance() {
-      // 计算高度 并 记录高度
-      let dragHeight =
-        (this.$refs.box.offsetHeight || parseInt(this.height)) / this.amount;
-      for (let i = 2; i <= this.amount; i += 1) {
-        let height = dragHeight * (this.amount - i + 1);
-        this.$refs[`drag${i}`].style.height = `${height}px`;
-        this.spaceData[i] = height;
-      }
-    },
-    // 里层线按下事件
-    dragLineMouseDown(event) {
-      event.preventDefault();
-      event.target.classList.add("dragFlexPanel-line-click");
-      this.touchNum = event.target.parentNode.id.slice(4);
-      this.showInnerMask = true;
-    },
-    // 遮罩层移动事件
-    innerMaskMouseMove(event) {
-      event.preventDefault();
-      // // TODO: 横轴的以后再判断
-      if (this.direction === "row") {
-        this.$refs[`drag${this.touchNum}`].style.height = event.offsetX;
-      } else {
-        let height = event.offsetY; // 拖动的位置
-        let upHeight =
-          (this.spaceData[parseInt(this.touchNum) + 1] || 0) +
-          this.safeDistance; // 上部的距离 考虑边缘
-        let downHeight =
-          (this.spaceData[parseInt(this.touchNum) - 1] ||
-            this.$refs.box.offsetHeight) - this.safeDistance; // 下部距离 考虑边缘
-        // 距离判断
-        if (height <= upHeight) {
-          this.$refs[`drag${this.touchNum}`].style.height = `${upHeight}px`;
-        } else if (height >= downHeight) {
-          this.$refs[`drag${this.touchNum}`].style.height = `${downHeight}px`;
-        } else {
-          this.$refs[`drag${this.touchNum}`].style.height = `${height}px`;
-        }
-        // console.log(height)
-        // 刷新数据
-        this.spaceData[this.touchNum] = parseInt(
-          this.$refs[`drag${this.touchNum}`].style.height
-        );
-      }
-    },
-    // 遮罩层移出事件
-    innerMaskMouseLeave(event) {
-      event.preventDefault();
-      this.innerMaskMouseUp();
-    },
-    // 遮罩层鼠标抬起事件
-    innerMaskMouseUp(event) {
-      this.showInnerMask = false;
-      let dragLine = this.$refs[`drag${this.touchNum}`].lastElementChild;
-      dragLine.classList.remove("dragFlexPanel-line-click");
-    },
-    // 盒子线按下事件
-    boxLineMouseDown(event, direction) {
-      event.preventDefault();
-      // 开启外层遮罩
-      this.showOutMask = true;
-      // 记录鼠标位置
-      this.mouseX = event.clientX;
-      this.mouseY = event.clientY;
-      // 记录拖拽方向
-      this.lineDirection = direction;
-      this.$refs[`boxLine-${this.lineDirection}`].classList.add(
-        "dragFlexPanel-boxLine-click"
-      );
-    },
-    // 遮罩层移动事件
-    outerMaskMouseMove(event) {
-      event.preventDefault();
-      let widthDiff = event.clientX - this.mouseX;
-      let heightDiff = event.clientY - this.mouseY;
-      if (this.lineDirection === "top" || this.lineDirection === "bottom") {
-        // 判断安全距离
-        let height = parseFloat(this.boxHeight) + heightDiff;
-        // 根据方向判断末尾距离
-        if (this.direction === "column") {
-          if (height <= this.spaceData[2] + this.boxSaveDistance) {
-            this.$refs.box.style.height =
-              this.spaceData[2] + this.boxSaveDistance;
-          } else {
-            this.$refs.box.style.height = `${height}px`;
-          }
-        } else {
-          if (height <= this.boxSaveDistance) {
-            this.$refs.box.style.height = this.boxSaveDistance;
-          } else {
-            this.$refs.box.style.height = `${height}px`;
-          }
-        }
-      } else if (
-        this.lineDirection === "right" ||
-        this.lineDirection === "left"
-      ) {
-        // 判断安全距离
-        let width = parseFloat(this.boxWidth) + widthDiff;
-        // 根据方向判断末尾距离
-        if (this.direction === "row") {
-          // TODO: 判断横向的安全距离
-        } else {
-          if (width <= this.boxSaveDistance) {
-            this.$refs.box.style.width = this.boxSaveDistance;
-          } else {
-            this.$refs.box.style.width = `${width}px`;
-          }
-        }
-      }
-    },
-    // 遮罩层移出事件
-    outerMaskMouseLeave(event) {
-      event.preventDefault();
-      this.outerMaskMouseUp();
-    },
-    // 遮罩层鼠标抬起事件
-    outerMaskMouseUp(event) {
-      this.showOutMask = false;
-      // 刷新盒子长宽数据
-      this.boxWidth = this.$refs.box.style.width;
-      this.boxHeight = this.$refs.box.style.height;
-      this.$refs[`boxLine-${this.lineDirection}`].classList.remove(
-        "dragFlexPanel-boxLine-click"
-      );
-    },
-  },
-  watch: {
-    height(newValue, oldValue) {
-      this.boxHight = newValue;
-    },
-    width(newValue, oldValue) {
-      this.boxWidth = newValue;
-    },
-  },
-  created() {
-    this.boxWidth = this.width;
-    this.boxHeight = this.height;
-  },
-  mounted() {
-    this.setDistance();
   },
 };
 </script>

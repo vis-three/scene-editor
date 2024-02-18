@@ -1,5 +1,5 @@
 <template>
-  <div class="VisCubeTexture-container"></div>
+  <div class="VisCubeTexture-container" />
 </template>
 
 <script>

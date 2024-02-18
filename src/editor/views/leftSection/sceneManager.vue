@@ -2,40 +2,40 @@
   <div class="sceneManager-container">
     <div class="sceneManager-header">
       <div class="header-title">
-        <vis-icon code="#iconchangjing2"></vis-icon>
+        <vis-icon code="#iconchangjing2" />
         场景
       </div>
       <div class="header-operation">
         <el-input
+          v-model="filterText"
           size="mini"
           suffix-icon="el-icon-search"
           placeholder="场景筛选"
-          v-model="filterText"
-        ></el-input>
+        />
         <i
-          class="el-icon-plus"
           v-tooltip.top="'添加场景'"
+          class="el-icon-plus"
           @click="addScene"
-        ></i>
+        />
       </div>
     </div>
     <div class="scene-manager-main">
       <div
-        class="scene-tiem"
-        :class="{ 'scene-active': currentScene.vid === item.vid }"
         v-for="item in sceneList"
         :key="item.vid"
+        class="scene-tiem"
+        :class="{ 'scene-active': currentScene.vid === item.vid }"
         @click="triggleScene(item.vid)"
       >
-        <span class="scene-message"><span v-text="item.name"></span></span>
+        <span class="scene-message"><span v-text="item.name" /></span>
         <span class="scene-operation">
           <vis-icon
             v-if="sceneList.length > 1"
+            v-tooltip.top="'删除场景'"
             class="scene-delete"
             code="#iconshanchu"
-            v-tooltip.top="'删除场景'"
             @click.native="deleteScene(item)"
-          ></vis-icon>
+          />
         </span>
       </div>
     </div>

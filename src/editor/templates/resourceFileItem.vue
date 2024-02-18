@@ -1,24 +1,30 @@
 <template>
   <div class="resourceFileItem-container">
     <template v-if="file.dir">
-      <vis-icon :size="iconSize" code="#iconwenjianjia"></vis-icon>
+      <vis-icon
+        :size="iconSize"
+        code="#iconwenjianjia"
+      />
     </template>
     <template v-else>
       <el-image
+        v-if="['jpg', 'jpeg', 'png'].includes(file.ext.toLocaleLowerCase())"
         :style="{
           maxWidth: iconSize,
           maxHeight: iconSize,
         }"
-        v-if="['jpg', 'jpeg', 'png'].includes(file.ext.toLocaleLowerCase())"
         :src="file.url"
-      ></el-image>
+      />
       <vis-icon
         v-else
         :size="iconSize"
         :code="fileIcon[file.ext] || '#iconwenjian1'"
-      ></vis-icon>
+      />
     </template>
-    <span class="item-title" v-text="file.name"></span>
+    <span
+      class="item-title"
+      v-text="file.name"
+    />
   </div>
 </template>
 

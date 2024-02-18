@@ -9,18 +9,26 @@
     :show-close="false"
   >
     <div class="workbench-container">
-      <file-system></file-system>
+      <file-system />
     </div>
-    <span slot="footer" class="dialog-footer">
+    <span
+      slot="footer"
+      class="dialog-footer"
+    >
       <el-button
+        v-if="!selected && currentFloder.parent"
         type="primary"
         size="mini"
-        v-if="!selected && currentFloder.parent"
         @click="addNew"
       >
         新建应用
       </el-button>
-      <el-button type="primary" size="mini" v-if="selected" @click="select">
+      <el-button
+        v-if="selected"
+        type="primary"
+        size="mini"
+        @click="select"
+      >
         进入应用
       </el-button>
     </span>
@@ -48,6 +56,7 @@ export default {
       return this.$store.getters["appLibrary/currentFloder"];
     },
   },
+  created() {},
   methods: {
     addNew() {
       this.$prompt("应用名称", "新建应用", {
@@ -76,7 +85,6 @@ export default {
       this.visible = false;
     },
   },
-  created() {},
 };
 </script>
 

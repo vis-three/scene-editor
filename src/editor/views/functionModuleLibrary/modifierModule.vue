@@ -1,36 +1,50 @@
 <template>
-  <div class="modifierModule-container" v-show="config">
+  <div
+    v-show="config"
+    class="modifierModule-container"
+  >
     <div class="eventSetting-title">
-      <vis-icon code="#iconjihetuxing"></vis-icon>
+      <vis-icon code="#iconjihetuxing" />
       <de-controller-input
-        label="名称"
         v-model="config.name"
-      ></de-controller-input>
+        label="名称"
+      />
     </div>
 
     <el-popover
+      v-model="visible"
       placement="bottom"
       width="200"
       trigger="click"
-      v-model="visible"
     >
       <el-cascader-panel
         v-model="cascaderValue"
         :options="modifierOptions"
         @change="change"
-      ></el-cascader-panel>
+      />
 
-      <el-button slot="reference" type="primary" size="mini">
+      <el-button
+        slot="reference"
+        type="primary"
+        size="mini"
+      >
         添加修改器
       </el-button>
     </el-popover>
 
-    <div class="modifier-item" v-for="item in modifierList" :key="item.vid">
-      <components :is="item.type" :config="item"></components>
+    <div
+      v-for="item in modifierList"
+      :key="item.vid"
+      class="modifier-item"
+    >
+      <components
+        :is="item.type"
+        :config="item"
+      />
       <div class="operation-box">
-        <vis-icon code="#iconsanjiaojiantoushang"></vis-icon>
-        <vis-icon code="#iconsanjiaojiantouxia"></vis-icon>
-        <vis-icon code="#iconshanchu"></vis-icon>
+        <vis-icon code="#iconsanjiaojiantoushang" />
+        <vis-icon code="#iconsanjiaojiantouxia" />
+        <vis-icon code="#iconshanchu" />
       </div>
     </div>
   </div>

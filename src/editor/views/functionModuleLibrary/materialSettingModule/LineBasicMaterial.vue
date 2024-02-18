@@ -3,38 +3,38 @@
     <de-collapse-layout
       label="参数设置"
       icon="#iconshezhi"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-picker
-          label="材质颜色"
           v-model="config.color"
+          label="材质颜色"
           :animation="{
             target: config,
             attribute: 'color',
           }"
-        ></de-controller-picker>
+        />
       </template>
     </de-collapse-layout>
     <de-collapse-layout
       label="贴图设置"
       icon="#icontexture"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-select
+          v-model="config.map"
           label="表面贴图"
           :options="textureList"
           :prop="{
             label: 'name',
             value: 'vid',
           }"
-          v-model="config.map"
           :animation="{
             target: config,
             attribute: 'map',
           }"
-        ></de-controller-select>
+        />
       </template>
     </de-collapse-layout>
   </div>

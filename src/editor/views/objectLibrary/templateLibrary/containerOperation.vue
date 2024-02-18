@@ -1,83 +1,104 @@
 vabse
 <template>
   <div class="containerOperation-container">
-    <div v-show="loading" class="loading-mask">
-      <vis-icon class="ani" code="#iconxuanzhuan"></vis-icon>
+    <div
+      v-show="loading"
+      class="loading-mask"
+    >
+      <vis-icon
+        class="ani"
+        code="#iconxuanzhuan"
+      />
       <span>正在加载...</span>
     </div>
 
-    <div v-if="!loading && !floderChildren.length" class="empty-tips">
+    <div
+      v-if="!loading && !floderChildren.length"
+      class="empty-tips"
+    >
       <span>这里暂时是空的哦</span>
     </div>
 
     <div
-      v-else
       v-for="(item, index) in floderChildren"
+      v-else
       :key="index"
-      class="file-item-box"
       v-tooltip.bottom="`${item.name}`"
+      class="file-item-box"
     >
       <template v-if="item.dir">
-        <vis-icon :size="iconSize" code="#iconwenjianjia"></vis-icon>
+        <vis-icon
+          :size="iconSize"
+          code="#iconwenjianjia"
+        />
       </template>
       <template v-else>
-        <img :src="item.preview" />
+        <img :src="item.preview">
         <div
-          class="item-selected-mask"
           v-show="selected.id === item.id"
+          class="item-selected-mask"
           @click.stop="$store.commit('templateLibrary/cancelSelected')"
         >
           <vis-icon
             class="item-selected"
             size="60px"
             code="#icongou"
-          ></vis-icon>
+          />
         </div>
       </template>
 
-      <span class="item-title" v-text="item.name"></span>
+      <span
+        class="item-title"
+        v-text="item.name"
+      />
 
-      <span class="item-operate-box" v-if="item.dir">
+      <span
+        v-if="item.dir"
+        class="item-operate-box"
+      >
         <vis-icon
+          v-tooltip.bottom="`移动`"
           size="20px"
           code="#iconpingyi"
-          v-tooltip.bottom="`移动`"
-        ></vis-icon>
+        />
         <vis-icon
+          v-tooltip.bottom="`打开`"
           size="20px"
           code="#iconyidong"
-          v-tooltip.bottom="`打开`"
           @click.native.stop="chouseFile(item)"
-        ></vis-icon>
+        />
         <vis-icon
+          v-tooltip.bottom="`删除`"
           class="item-delete"
           size="16px"
           code="#iconshanchu"
-          v-tooltip.bottom="`删除`"
           @click.native.stop="remove(item)"
-        ></vis-icon>
+        />
       </span>
 
-      <span v-else class="item-operate-box">
+      <span
+        v-else
+        class="item-operate-box"
+      >
         <vis-icon
+          v-tooltip.bottom="`更新`"
           size="16px"
           code="#iconxuanzhuan"
-          v-tooltip.bottom="`更新`"
           @click.native.stop="updateTempalte(item)"
-        ></vis-icon>
+        />
         <vis-icon
+          v-tooltip.bottom="`应用`"
           size="20px"
           code="#iconyingyong"
-          v-tooltip.bottom="`应用`"
           @click.native.stop="useTemplate(item)"
-        ></vis-icon>
+        />
         <vis-icon
+          v-tooltip.bottom="`删除`"
           class="item-delete"
           size="16px"
           code="#iconshanchu"
-          v-tooltip.bottom="`删除`"
           @click.native.stop="remove(item)"
-        ></vis-icon>
+        />
       </span>
     </div>
 
@@ -87,7 +108,7 @@ vabse
         display: floderChildren.length % 2 !== 0 ? 'block' : 'none',
         flex: 1,
       }"
-    ></div>
+    />
   </div>
 </template>
 
@@ -105,14 +126,7 @@ import {
 
 import { Pipeline } from "@vis-three/utils";
 
-import { AddTemplateAction } from "@/editor/assets/js/action/AddTemplateAction.js";
 import { history, engine } from "@/editor/assets/js/vis";
-import Vue from "vue";
-
-import appApi from "@/assets/js/api/app.js";
-import modelApi from "@/assets/js/api/model.js";
-import textureApi from "@/assets/js/api/texture.js";
-import componentApi from "@/assets/js/api/component.js";
 
 export default {
   data() {
@@ -207,95 +221,7 @@ export default {
       delete template.controls;
       delete template.scene;
 
-      let templateJson = JSON.stringify(template, JSONHandler.stringify);
-
-      const assetsPromise = [];
-      if (template.assets) {
-        template.assets.forEach((item) => {
-          if (item.module === "model") {
-            assetsPromise.push(
-              new Promise((resolve, reject) => {
-                modelApi
-                  .getModel(item.id)
-                  .then((file) => {
-                    const url = URL.createObjectURL(file.model);
-                    this.$store.commit("cacheUrl", {
-                      module: "model",
-                      file,
-                      url,
-                    });
-
-                    templateJson = templateJson.replace(
-                      new RegExp(`<${item.module}-${item.id}>`, "g"),
-                      url
-                    );
-                    resolve({ url, ext: file.ext });
-                  })
-                  .catch(reject);
-              })
-            );
-          } else if (item.module === "texture") {
-            assetsPromise.push(
-              new Promise((resolve, reject) => {
-                textureApi
-                  .getTexture(item.id)
-                  .then((file) => {
-                    const url = URL.createObjectURL(file.texture);
-                    this.$store.commit("cacheUrl", {
-                      module: "texture",
-                      file,
-                      url,
-                    });
-                    templateJson = templateJson.replace(
-                      new RegExp(`<${item.module}-${item.id}>`, "g"),
-                      url
-                    );
-                    resolve({ url, ext: file.ext });
-                  })
-                  .catch(reject);
-              })
-            );
-          }
-        });
-      }
-
-      const componentsPromise = [];
-      if (template.component) {
-        template.component.forEach((item) => {
-          const [module, id] = item.$url.slice(1, -1).split("-");
-          componentsPromise.push(
-            new Promise((resolve, reject) => {
-              componentApi.getComponent(id).then((file) => {
-                const url = URL.createObjectURL(file.component);
-                this.$store.commit("cacheUrl", {
-                  module: "component",
-                  file,
-                  url,
-                });
-
-                templateJson = templateJson.replace(
-                  new RegExp(`<${module}-${id}>`, "g"),
-                  url
-                );
-
-                item.$url = url;
-                item.$pkg = file.pkg;
-
-                resolve(item);
-              });
-            })
-          );
-        });
-      }
-
-      template.assets = await Promise.all(assetsPromise);
-      template.component = await Promise.all(componentsPromise);
-
-      templateJson = JSON.parse(templateJson, JSONHandler.parse);
-      templateJson.assets = template.assets;
-      templateJson.component = template.component;
-
-      template = templateJson;
+      template = await this.$store.dispatch("assetsTransform", template);
 
       const sceneChildren = [];
       let replaceSymbolMap = {};
@@ -315,6 +241,22 @@ export default {
 
           replaceSymbolMap = detail;
 
+          if (config.canvas) {
+            let jsonConfig = JSON.stringify(config, JSONHandler.stringify);
+
+            config.canvas.forEach((canvas) => {
+              const newCid = createSymbol();
+
+              jsonConfig = jsonConfig.replace(
+                new RegExp(canvas.$cid, "g"),
+                newCid
+              );
+
+              detail[canvas.$cid] = newCid;
+            });
+
+            config = JSON.parse(jsonConfig, JSONHandler.parse);
+          }
           return config;
         })
         .pipe((c) => {
@@ -375,20 +317,30 @@ export default {
         })
         .get();
 
-      const config = await engine.loadConfigAsync(template);
+      engine
+        .loadConfigAsync(template)
+        .then((res) => {
+          res.component.forEach((component) => {
+            this.$store.commit("component/add", {
+              config: component.config,
+              configuration: component.packageJSON.configuration,
+            });
+          });
 
-      config.component.forEach((component) => {
-        this.$store.commit("component/add", {
-          config: component.config,
-          configuration: component.packageJSON.configuration,
+          res.canvas.forEach((canvas) => {
+            this.$store.commit("canvas/add", {
+              config: canvas.config,
+              configuration: canvas.packageJSON.configuration,
+            });
+          });
+
+          this.currentScene.children.push(...sceneChildren);
+          this.$store.commit("notifyAll");
+          this.$store.dispatch("appendTemplateInit", editor);
+        })
+        .finally(() => {
+          message.close();
         });
-      });
-
-      this.currentScene.children.push(...sceneChildren);
-      this.$store.commit("notifyAll");
-      this.$store.dispatch("appendTemplateInit", editor);
-
-      message.close();
     },
 
     async updateTempalte(item) {

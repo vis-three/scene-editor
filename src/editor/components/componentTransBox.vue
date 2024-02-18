@@ -1,13 +1,8 @@
 <template>
   <div
+    ref="componentTransBox"
     class="componentTransBox-container"
     tabindex="-1"
-    @focusin="focusin"
-    @focusout="focusout"
-    @dblclick="dblclick"
-    @mousedown="dargStart"
-    @mouseup="dargStop"
-    ref="componentTransBox"
     :style="{
       top: `${top}px`,
       left: `${left}px`,
@@ -17,6 +12,11 @@
       height: `${height}px`,
       transform: `rotate(${rotate}deg)`,
     }"
+    @focusin="focusin"
+    @focusout="focusout"
+    @dblclick="dblclick"
+    @mousedown="dargStart"
+    @mouseup="dargStop"
   >
     <!-- 状态控件 STR -->
     <div
@@ -25,21 +25,36 @@
         'edit-status-box': editStatus,
         'hover-status-box': hoverStatus,
       }"
-    ></div>
+    />
     <!-- 状态控件 END -->
     <!-- 变换可视化 STR -->
-    <div class="trans-box" v-show="showTrans">
-      <div class="trans-line top-line" style="top: 0; left: 0">
-        <div class="drag-box"></div>
-        <div class="trans-rotate-box" @mousedown.stop="rotateComponent">
-          <mmd-icon code="#icon-xuanzhuan" color="rgb(230, 20, 240)"></mmd-icon>
+    <div
+      v-show="showTrans"
+      class="trans-box"
+    >
+      <div
+        class="trans-line top-line"
+        style="top: 0; left: 0"
+      >
+        <div class="drag-box" />
+        <div
+          class="trans-rotate-box"
+          @mousedown.stop="rotateComponent"
+        >
+          <mmd-icon
+            code="#icon-xuanzhuan"
+            color="rgb(230, 20, 240)"
+          />
         </div>
       </div>
-      <div class="trans-line right-line" style="left: unset; top: 0; right: 0">
+      <div
+        class="trans-line right-line"
+        style="left: unset; top: 0; right: 0"
+      >
         <div
           class="drag-box"
           @mousedown.stop="(event) => dragTrans(event, 'right', 'ew-resize')"
-        ></div>
+        />
       </div>
       <div
         class="trans-line bottom-line"
@@ -48,26 +63,29 @@
         <div
           class="drag-box"
           @mousedown.stop="(event) => dragTrans(event, 'bottom', 'ns-resize')"
-        ></div>
+        />
       </div>
-      <div class="trans-line left-line" style="top: 0; left: 0">
-        <div class="drag-box"></div>
+      <div
+        class="trans-line left-line"
+        style="top: 0; left: 0"
+      >
+        <div class="drag-box" />
       </div>
       <div
         class="drag-box corner-drag-box top-left"
         style="cursor: nw-resize"
         :style="{ top: cornerOffest, left: cornerOffest }"
-      ></div>
+      />
       <div
         class="drag-box corner-drag-box top-right"
         style="left: unset; cursor: ne-resize"
         :style="{ top: cornerOffest, right: cornerOffest }"
-      ></div>
+      />
       <div
         class="drag-box corner-drag-box bottom-left"
         style="top: unset; cursor: ne-resize"
         :style="{ bottom: cornerOffest, left: cornerOffest }"
-      ></div>
+      />
       <div
         class="drag-box corner-drag-box bottom-right"
         style="left: unset; top: unset; cursor: nw-resize"
@@ -75,11 +93,14 @@
         @mousedown.stop="
           (event) => dragTrans(event, 'bottom-right', 'nw-resize')
         "
-      ></div>
+      />
     </div>
     <!-- 变换可视化 END -->
     <!-- 组件位置 STR -->
-    <div class="component-container" :id="`${idSign}${id}`"></div>
+    <div
+      :id="`${idSign}${id}`"
+      class="component-container"
+    />
     <!-- 组件位置 END -->
   </div>
 </template>
@@ -135,12 +156,6 @@ export default {
       type: Array,
     },
   },
-  computed: {
-    // 当前的组件结构
-    componentStructure() {
-      return this.$store.getters["ui/getComponentStructureById"](this.id);
-    },
-  },
   data() {
     return {
       windowHeight: window.innerHeight,
@@ -156,6 +171,69 @@ export default {
       component: "", // 此盒子中渲染的组件
       mask: "", // 盒子中的辅助盒子
     };
+  },
+  computed: {
+    // 当前的组件结构
+    componentStructure() {
+      return this.$store.getters["ui/getComponentStructureById"](this.id);
+    },
+  },
+  mounted() {
+    // 通过extend的方式加入具体组件
+    const defaultComponentList =
+      this.$store.getters["ui/getDefautComponentList"];
+    const Component = Vue.extend(defaultComponentList[this.componentType]);
+    this.component = new Component();
+    this.component.$mount(`#${this.idSign}${this.id}`);
+
+    const Mask = Vue.extend(transBoxMask);
+    const component = this;
+    this.mask = new Mask({
+      el: document.createElement("div"),
+      data() {
+        return {
+          id: component.id,
+          bufferWidth: component.width,
+          bufferHeight: component.height,
+          bufferTop: component.top,
+          bufferLeft: component.left,
+        };
+      },
+      store,
+    }).$mount();
+    const editorCanvasIframe = document.getElementById("editorCanvas-iframe");
+    editorCanvasIframe.appendChild(this.mask.$el);
+    // 加入store组件数据
+    this.$store.commit("ui/addComponent", {
+      id: this.id,
+      component: this.component,
+    });
+    // 判断是否为新增状态
+    if (this.newStatus) {
+      // 生成后马上focusin
+      this.focusin();
+    } else {
+      // 加载需要注册事件方法和data
+      const configList = this.componentStructure.configList;
+      for (const key in configList) {
+        this.component[key] = configList[key];
+      }
+      const eventList = this.componentStructure.eventList;
+      eventList.forEach((eventElem) => {
+        eventElem.methodList.forEach((elem) => {
+          const saveParams = {};
+          // 按顺序注册
+          elem.params.forEach((paramElem) => {
+            saveParams[paramElem.name] = paramElem.value || paramElem.default;
+          });
+          this.component.applyEvent({
+            eventName: eventElem.event,
+            method: elem.name,
+            params: saveParams,
+          });
+        });
+      });
+    }
   },
   methods: {
     // 聚焦时方法
@@ -265,63 +343,6 @@ export default {
       //     });
       // });
     },
-  },
-  mounted() {
-    // 通过extend的方式加入具体组件
-    const defaultComponentList =
-      this.$store.getters["ui/getDefautComponentList"];
-    const Component = Vue.extend(defaultComponentList[this.componentType]);
-    this.component = new Component();
-    this.component.$mount(`#${this.idSign}${this.id}`);
-
-    const Mask = Vue.extend(transBoxMask);
-    const component = this;
-    this.mask = new Mask({
-      el: document.createElement("div"),
-      data() {
-        return {
-          id: component.id,
-          bufferWidth: component.width,
-          bufferHeight: component.height,
-          bufferTop: component.top,
-          bufferLeft: component.left,
-        };
-      },
-      store,
-    }).$mount();
-    const editorCanvasIframe = document.getElementById("editorCanvas-iframe");
-    editorCanvasIframe.appendChild(this.mask.$el);
-    // 加入store组件数据
-    this.$store.commit("ui/addComponent", {
-      id: this.id,
-      component: this.component,
-    });
-    // 判断是否为新增状态
-    if (this.newStatus) {
-      // 生成后马上focusin
-      this.focusin();
-    } else {
-      // 加载需要注册事件方法和data
-      const configList = this.componentStructure.configList;
-      for (const key in configList) {
-        this.component[key] = configList[key];
-      }
-      const eventList = this.componentStructure.eventList;
-      eventList.forEach((eventElem) => {
-        eventElem.methodList.forEach((elem) => {
-          const saveParams = {};
-          // 按顺序注册
-          elem.params.forEach((paramElem) => {
-            saveParams[paramElem.name] = paramElem.value || paramElem.default;
-          });
-          this.component.applyEvent({
-            eventName: eventElem.event,
-            method: elem.name,
-            params: saveParams,
-          });
-        });
-      });
-    }
   },
 };
 </script>

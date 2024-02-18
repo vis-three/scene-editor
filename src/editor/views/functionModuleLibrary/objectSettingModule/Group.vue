@@ -1,5 +1,5 @@
 <template>
-  <div class="Group-container"></div>
+  <div class="Group-container" />
 </template>
 
 <script>

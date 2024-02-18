@@ -3,47 +3,47 @@
     <de-collapse-layout
       label="形状"
       icon="#iconjichubianhuan"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-number
+          v-model="config.radius"
           :keyframe="false"
           label="半径"
           :step="1"
-          :dragMultply="2"
+          :drag-multply="2"
           :min="0"
-          v-model="config.radius"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.segments"
           :keyframe="false"
           label="分段"
           :step="1"
-          :dragMultply="2"
+          :drag-multply="2"
           :min="3"
-          v-model="config.segments"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="thetaStart"
           :keyframe="false"
           label="起始角度"
           :step="1"
-          :dragMultply="5"
+          :drag-multply="5"
           :min="0"
           :max="360"
           unit="°"
-          :displayAccuracy="0"
-          v-model="thetaStart"
-        ></de-controller-number>
+          :display-accuracy="0"
+        />
         <de-controller-number
+          v-model="thetaLength"
           :keyframe="false"
           label="环面范围"
           :step="1"
-          :dragMultply="5"
+          :drag-multply="5"
           :min="0"
           :max="360"
           unit="°"
-          :displayAccuracy="0"
-          v-model="thetaLength"
-        ></de-controller-number>
+          :display-accuracy="0"
+        />
       </template>
     </de-collapse-layout>
   </div>

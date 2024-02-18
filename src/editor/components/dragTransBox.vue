@@ -7,46 +7,68 @@
     }"
   >
     <div
-      class="dragBox-topDrag"
       v-if="topDrag"
+      class="dragBox-topDrag"
       @mousedown="dragStart($event, 'top')"
     >
-      <dragSignalRow></dragSignalRow>
+      <dragSignalRow />
     </div>
     <div
       class="dragBox-middleBox"
       :style="{ height: topDrag ? 'calc(100% - 20px)' : '100%' }"
     >
       <div
-        class="dragBox-leftDrag"
         v-if="leftDrag"
+        class="dragBox-leftDrag"
         @mousedown="dragStart($event, 'left')"
       >
-        <dragSignalColumn></dragSignalColumn>
+        <dragSignalColumn />
       </div>
       <div class="dragBox-display">
-        <slot></slot>
+        <slot />
       </div>
       <div
+        v-if="rightDrag"
         class="dragBox-rightDrag"
         @mousedown="dragStart($event, 'right')"
-        v-if="rightDrag"
       >
-        <dragSignalColumn></dragSignalColumn>
+        <dragSignalColumn />
       </div>
     </div>
     <div
-      class="dragBox-bottomDrag"
       v-if="bottomDrag"
+      class="dragBox-bottomDrag"
       @mousedown="dragStart($event, 'bottom')"
     >
-      <dragSignalRow></dragSignalRow>
+      <dragSignalRow />
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  components: {
+    // 横向拖拽标记
+    dragSignalRow: {
+      template: `
+      <div class="dragBox-dragSignalRow">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      `,
+    },
+    // 纵向拖拽标记
+    dragSignalColumn: {
+      template: `
+      <div class="dragBox-dragSignalColumn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      `,
+    },
+  },
   props: {
     width: {
       // 组件宽度
@@ -92,28 +114,6 @@ export default {
       // 节流时间
       type: Number, // ms
       default: 1000 / 30,
-    },
-  },
-  components: {
-    // 横向拖拽标记
-    dragSignalRow: {
-      template: `
-      <div class="dragBox-dragSignalRow">
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-      `,
-    },
-    // 纵向拖拽标记
-    dragSignalColumn: {
-      template: `
-      <div class="dragBox-dragSignalColumn">
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-      `,
     },
   },
   data() {

@@ -1,13 +1,17 @@
 <template>
   <div class="renderWindow-container">
     <iframe
+      ref="renderMask"
       width="100%"
       height="100%"
       scrolling="no"
-      ref="renderMask"
       class="render-mask"
-    ></iframe>
-    <div class="render-window" ref="renderElement" tabindex="0"></div>
+    />
+    <div
+      ref="renderElement"
+      class="render-window"
+      tabindex="0"
+    />
   </div>
 </template>
 
@@ -24,6 +28,7 @@ import appApi from "@/assets/js/api/app.js";
 import modelApi from "@/assets/js/api/model.js";
 import textureApi from "@/assets/js/api/texture.js";
 import componentApi from "@/assets/js/api/component.js";
+import canvasApi from "@/assets/js/api/canvas.js";
 
 import parse from "url-parse";
 
@@ -35,8 +40,6 @@ export default {
       throttleTime: 1000 / 60,
     };
   },
-
-  methods: {},
   async mounted() {
     engine.setDom(this.$refs.renderElement).setSize().play();
 
@@ -94,6 +97,7 @@ export default {
     let configJson = JSON.stringify(config, JSONHandler.stringify);
 
     !config.assets && (config.assets = []);
+    !config.canvasAssets && (config.canvasAssets = []);
 
     const assetsPromise = [];
 
@@ -133,6 +137,26 @@ export default {
       }
     });
 
+    const canvasAssetsPromise = [];
+
+    config.canvasAssets.forEach((item) => {
+      canvasAssetsPromise.push(
+        new Promise((resolve, reject) => {
+          canvasApi
+            .getCanvas(item.id)
+            .then((file) => {
+              const url = URL.createObjectURL(file.canvas);
+              configJson = configJson.replace(
+                new RegExp(`<${item.module}-${item.id}>`, "g"),
+                url
+              );
+              resolve({ url, file });
+            })
+            .catch(reject);
+        })
+      );
+    });
+
     !config.component && (config.component = []);
     const componentsPromise = [];
 
@@ -142,6 +166,7 @@ export default {
         new Promise((resolve, reject) => {
           componentApi.getComponent(id).then((file) => {
             const url = URL.createObjectURL(file.component);
+
             configJson = configJson.replace(
               new RegExp(`<${module}-${id}>`, "g"),
               url
@@ -157,11 +182,20 @@ export default {
     });
 
     config.assets = await Promise.all(assetsPromise);
+    config.canvasAssets = await Promise.all(canvasAssetsPromise);
     config.component = await Promise.all(componentsPromise);
 
     configJson = JSON.parse(configJson, JSONHandler.parse);
     configJson.assets = config.assets;
+    configJson.canvasAssets = config.canvasAssets;
     configJson.component = config.component;
+
+    configJson.canvas &&
+      configJson.canvas.forEach((elem) => {
+        elem.$pkg = config.canvasAssets.find(
+          (item) => item.url === elem.$url
+        ).file.pkg;
+      });
 
     config = configJson;
 
@@ -172,7 +206,7 @@ export default {
           strict: false,
         }),
       {
-        filter: ["assets", "component"],
+        filter: ["assets", "component", "canvasAssets", "canvas"],
       }
     );
 
@@ -184,6 +218,8 @@ export default {
 
     loading.close();
   },
+
+  methods: {},
 };
 </script>
 

@@ -1,15 +1,21 @@
 <template>
   <div class="collapseLayout-container">
-    <div class="collapseLayout-title" @click="toggle">
+    <div
+      class="collapseLayout-title"
+      @click="toggle"
+    >
       <vis-icon
         v-if="arrowPosition === 'left'"
         code="#iconjian"
         style="margin-right: 5px"
         :class="{ 'icon-open': !showCollapse }"
-      ></vis-icon>
+      />
       <div class="title-box">
-        <vis-icon v-if="showIcon" :code="icon"></vis-icon>
-        <span v-text="label"></span>
+        <vis-icon
+          v-if="showIcon"
+          :code="icon"
+        />
+        <span v-text="label" />
         <span
           v-if="subLabel"
           style="color: rgb(100, 100, 100); font-size: 14px"
@@ -21,11 +27,14 @@
         v-if="arrowPosition === 'right'"
         code="#iconjian"
         :class="{ 'icon-open': !showCollapse }"
-      ></vis-icon>
+      />
     </div>
     <el-collapse-transition>
-      <div class="collapseLayout-main" v-show="showCollapse">
-        <slot name="container"></slot>
+      <div
+        v-show="showCollapse"
+        class="collapseLayout-main"
+      >
+        <slot name="container" />
       </div>
     </el-collapse-transition>
   </div>
@@ -33,7 +42,7 @@
 
 <script>
 export default {
-  name: "de-collapse-layout",
+  name: "DeCollapseLayout",
   props: {
     icon: {
       type: String,

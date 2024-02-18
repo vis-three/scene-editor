@@ -1,12 +1,15 @@
 <template>
-  <control-layout :keyframe="keyframe" :label="label">
+  <control-layout
+    :keyframe="keyframe"
+    :label="label"
+  >
     <template #controller>
       <div class="color-controller">
         <el-input
           v-model="inputValue"
           size="mini"
           :disabled="disabled"
-        ></el-input>
+        />
       </div>
     </template>
   </control-layout>
@@ -15,7 +18,7 @@
 <script>
 import controlLayout from "./controlLayout.vue";
 export default {
-  name: "de-controller-input",
+  name: "DeControllerInput",
   components: {
     controlLayout,
   },

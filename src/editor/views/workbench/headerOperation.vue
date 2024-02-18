@@ -2,64 +2,74 @@
   <div class="headerOperation-container">
     <div class="operate-history">
       <vis-icon
+        code="#iconbianjiantouzuo"
         @click.native="
           () => {
             $store.commit('appLibrary/backOffHistory');
           }
         "
-        code="#iconbianjiantouzuo"
-      ></vis-icon>
+      />
       <vis-icon
+        code="#iconbianjiantouyou"
         @click.native="
           () => {
             $store.commit('appLibrary/forwardHistory');
           }
         "
-        code="#iconbianjiantouyou"
-      ></vis-icon>
+      />
     </div>
     <div class="operate-address">
       <span
-        class="address-sign-box"
         v-for="(item, index) in addressList"
         :key="index"
+        class="address-sign-box"
         @click="chouseFile(item)"
       >
         <vis-icon
           v-if="index > 0"
           code="#iconsanjiaojiantouyou"
           :style="{ transform: 'scale(0.6)' }"
-        ></vis-icon>
-        <span class="address-title" v-text="item.name"></span>
+        />
+        <span
+          class="address-title"
+          v-text="item.name"
+        />
       </span>
     </div>
     <div class="operate-operation">
       <!-- <vis-icon code="#iconsetting-fill" v-tooltip.top="'设置'"></vis-icon> -->
       <el-popover
+        v-model="classifyVisible"
         placement="bottom"
         width="200"
         trigger="click"
-        v-model="classifyVisible"
       >
         <el-input
+          v-model="classifyName"
           class="popover-input"
           size="mini"
-          v-model="classifyName"
           placeholder="输入分类名称"
-        ></el-input>
+        />
         <div class="popover-operation">
-          <el-button size="mini" type="text" @click="addClassify">
+          <el-button
+            size="mini"
+            type="text"
+            @click="addClassify"
+          >
             确定
           </el-button>
         </div>
 
         <el-tooltip
+          slot="reference"
           effect="dark"
           content="新增分类"
           placement="top"
-          slot="reference"
         >
-          <vis-icon code="#iconjia1" v-show="canAddClassify"></vis-icon>
+          <vis-icon
+            v-show="canAddClassify"
+            code="#iconjia1"
+          />
         </el-tooltip>
       </el-popover>
 

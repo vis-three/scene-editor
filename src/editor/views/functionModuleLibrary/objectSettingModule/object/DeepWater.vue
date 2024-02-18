@@ -1,34 +1,38 @@
 <template>
   <div class="DeepWater-container">
-    <de-collapse-layout label="深水域" icon="#iconshezhi" arrowPosition="left">
+    <de-collapse-layout
+      label="深水域"
+      icon="#iconshezhi"
+      arrow-position="left"
+    >
       <template #container>
         <de-controller-picker
-          label="水纹色泽"
           v-model="config.waterColor"
+          label="水纹色泽"
           :animation="{
             target: config,
             attribute: 'waterColor',
           }"
-        ></de-controller-picker>
+        />
         <de-controller-picker
-          label="光照色泽"
           v-model="config.sunColor"
+          label="光照色泽"
           :animation="{
             target: config,
             attribute: 'sunColor',
           }"
-        ></de-controller-picker>
+        />
         <de-controller-number
+          v-model="config.distortionScale"
           label="失真度"
           :step="0.1"
-          :dragMultply="5"
+          :drag-multply="5"
           :min="0"
-          v-model="config.distortionScale"
           :animation="{
             target: config,
             attribute: 'distortionScale',
           }"
-        ></de-controller-number>
+        />
         <!-- <de-controller-number
           label="透明度"
           :step="0.1"
@@ -41,42 +45,42 @@
           }"
         ></de-controller-number> -->
         <de-controller-number
+          v-model="config.size"
           label="纹理大小"
           :step="0.1"
-          :dragMultply="3"
+          :drag-multply="3"
           :min="0"
-          v-model="config.size"
           :animation="{
             target: config,
             attribute: 'size',
           }"
-        ></de-controller-number>
+        />
         <de-controller-select
+          v-model="config.waterNormals"
           label="水纹法线"
           :options="textureList"
           :prop="{
             label: 'name',
             value: 'vid',
           }"
-          v-model="config.waterNormals"
           :animation="{
             target: config,
             attribute: 'waterNormals',
           }"
-        ></de-controller-select>
+        />
         <de-controller-select
+          v-model="config.geometry"
           label="几何"
           :options="geometryList"
           :prop="{
             label: 'name',
             value: 'vid',
           }"
-          v-model="config.geometry"
           :animation="{
             target: config,
             attribute: 'geometry',
           }"
-        ></de-controller-select>
+        />
       </template>
     </de-collapse-layout>
   </div>

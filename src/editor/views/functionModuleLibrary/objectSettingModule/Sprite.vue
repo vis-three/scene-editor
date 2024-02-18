@@ -3,22 +3,22 @@
     <de-collapse-layout
       label="网格设置"
       icon="#iconshezhi"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-select
+          v-model="config.material"
           label="材质"
           :options="materialList"
           :prop="{
             label: 'name',
             value: 'vid',
           }"
-          v-model="config.material"
           :animation="{
             target: config,
             attribute: 'material',
           }"
-        ></de-controller-select>
+        />
       </template>
     </de-collapse-layout>
   </div>

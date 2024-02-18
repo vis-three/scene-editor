@@ -3,76 +3,76 @@
     <de-collapse-layout
       label="形状"
       icon="#iconjichubianhuan"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-number
+          v-model="config.radiusTop"
           :keyframe="false"
           label="顶部半径"
           :step="1"
-          :dragMultply="2"
+          :drag-multply="2"
           :min="0"
-          v-model="config.radiusTop"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.radiusBottom"
           :keyframe="false"
           label="底部半径"
           :step="1"
-          :dragMultply="2"
+          :drag-multply="2"
           :min="0"
-          v-model="config.radiusBottom"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.height"
           :keyframe="false"
           label="柱体高度"
           :step="1"
-          :dragMultply="2"
+          :drag-multply="2"
           :min="0"
-          v-model="config.height"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.radialSegments"
           :keyframe="false"
           label="半径分段"
           :step="1"
-          :dragMultply="2"
+          :drag-multply="2"
           :min="0"
-          v-model="config.radialSegments"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.heightSegments"
           :keyframe="false"
           label="垂直分段"
           :step="1"
-          :dragMultply="2"
+          :drag-multply="2"
           :min="0"
-          v-model="config.heightSegments"
-        ></de-controller-number>
+        />
         <de-controller-switch
+          v-model="config.openEnded"
           :keyframe="false"
           label="开放底面"
-          v-model="config.openEnded"
-        ></de-controller-switch>
+        />
         <de-controller-number
+          v-model="thetaStart"
           :keyframe="false"
           label="起始角度"
           :step="1"
-          :dragMultply="5"
+          :drag-multply="5"
           :min="0"
           :max="360"
           unit="°"
-          :displayAccuracy="0"
-          v-model="thetaStart"
-        ></de-controller-number>
+          :display-accuracy="0"
+        />
         <de-controller-number
+          v-model="thetaLength"
           :keyframe="false"
           label="扇区范围"
           :step="1"
-          :dragMultply="5"
+          :drag-multply="5"
           :min="0"
           :max="360"
           unit="°"
-          :displayAccuracy="0"
-          v-model="thetaLength"
-        ></de-controller-number>
+          :display-accuracy="0"
+        />
       </template>
     </de-collapse-layout>
   </div>

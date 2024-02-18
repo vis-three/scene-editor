@@ -3,64 +3,64 @@
     <de-collapse-layout
       label="基础设置"
       icon="#iconshezhi"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-picker
-          label="材质颜色"
           v-model="config.color"
+          label="材质颜色"
           :animation="{
             target: config,
             attribute: 'color',
           }"
-        ></de-controller-picker>
+        />
         <de-controller-picker
-          label="发光颜色"
           v-model="config.emissive"
+          label="发光颜色"
           :animation="{
             target: config,
             attribute: 'emissive',
           }"
-        ></de-controller-picker>
+        />
         <de-controller-number
+          v-model="config.emissiveIntensity"
           label="发光强度"
           :step="0.01"
-          :dragMultply="3"
+          :drag-multply="3"
           :min="0"
           :max="1"
-          :displayAccuracy="2"
-          v-model="config.emissiveIntensity"
+          :display-accuracy="2"
           :animation="{
             target: config,
             attribute: 'emissiveIntensity',
           }"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.metalness"
           label="金属度"
           :step="0.01"
-          :dragMultply="3"
+          :drag-multply="3"
           :min="0"
           :max="1"
-          :displayAccuracy="2"
-          v-model="config.metalness"
+          :display-accuracy="2"
           :animation="{
             target: config,
             attribute: 'metalness',
           }"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.roughness"
           label="粗糙度"
           :step="0.01"
-          :dragMultply="3"
+          :drag-multply="3"
           :min="0"
           :max="1"
-          :displayAccuracy="2"
-          v-model="config.roughness"
+          :display-accuracy="2"
           :animation="{
             target: config,
             attribute: 'roughness',
           }"
-        ></de-controller-number>
+        />
       </template>
     </de-collapse-layout>
   </div>

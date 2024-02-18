@@ -1,16 +1,19 @@
 <template>
   <div class="controlLayout-container">
     <div
+      v-if="keyframe"
       class="config-keyframe"
       :class="{ active: active }"
-      v-if="keyframe"
       @click="clickWatch"
     >
-      <vis-icon code="#iconziyuan29"></vis-icon>
+      <vis-icon code="#iconziyuan29" />
     </div>
-    <div class="config-title" v-text="label"></div>
+    <div
+      class="config-title"
+      v-text="label"
+    />
     <div class="config-component">
-      <slot name="controller"></slot>
+      <slot name="controller" />
     </div>
   </div>
 </template>

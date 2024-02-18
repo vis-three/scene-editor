@@ -2,79 +2,86 @@
   <div class="headerOperation-container">
     <div class="operate-history">
       <vis-icon
+        code="#iconbianjiantouzuo"
         @click.native="
           () => {
             $store.commit('textureLibrary/backOffHistory');
           }
         "
-        code="#iconbianjiantouzuo"
-      ></vis-icon>
+      />
       <vis-icon
+        code="#iconbianjiantouyou"
         @click.native="
           () => {
             $store.commit('textureLibrary/forwardHistory');
           }
         "
-        code="#iconbianjiantouyou"
-      ></vis-icon>
+      />
     </div>
     <div class="operate-address">
       <span
-        class="address-sign-box"
         v-for="(item, index) in addressList"
         :key="index"
+        class="address-sign-box"
         @click="chouseFile(item)"
       >
         <vis-icon
           v-if="index > 0"
           code="#iconsanjiaojiantouyou"
           :style="{ transform: 'scale(0.6)' }"
-        ></vis-icon>
-        <span class="address-title" v-text="item.name"></span>
+        />
+        <span
+          class="address-title"
+          v-text="item.name"
+        />
       </span>
     </div>
     <div class="operate-operation">
       <!-- <vis-icon code="#iconsetting-fill" v-tooltip.top="'设置'"></vis-icon> -->
       <el-popover
+        v-model="classifyVisible"
         placement="bottom"
         width="200"
         trigger="click"
-        v-model="classifyVisible"
       >
         <el-input
+          v-model="classifyName"
           class="popover-input"
           size="mini"
-          v-model="classifyName"
           placeholder="输入分类名称"
-        ></el-input>
+        />
         <div class="popover-operation">
-          <el-button size="mini" type="text" @click="addClassify">
+          <el-button
+            size="mini"
+            type="text"
+            @click="addClassify"
+          >
             确定
           </el-button>
         </div>
         <vis-icon
-          slot="reference"
-          code="#iconjia1"
-          v-tooltip.top="'新增分类'"
           v-show="canAddClassify"
-        ></vis-icon>
+          slot="reference"
+          v-tooltip.top="'新增分类'"
+          code="#iconjia1"
+        />
       </el-popover>
 
       <vis-icon
-        code="#iconshangchuan-fill"
-        v-tooltip.top="'上传'"
         v-if="canUpload"
+        v-tooltip.top="'上传'"
+        code="#iconshangchuan-fill"
         @click.native="upload"
-      ></vis-icon>
+      />
 
       <input
+        ref="uploadInput"
         type="file"
         style="display: none"
         :accept="ext"
         multiple="multiple"
-        ref="uploadInput"
         @change="fileHandler"
-      />
+      >
     </div>
   </div>
 </template>

@@ -1,145 +1,151 @@
 <template>
-  <div class="objectSettingModule-container" v-if="config.type">
+  <div
+    v-if="config.type"
+    class="objectSettingModule-container"
+  >
     <de-collapse-layout
       :label="transMessage.label"
-      :subLabel="config.type"
+      :sub-label="config.type"
       :icon="transMessage.icon"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-input
-          label="名称"
           v-model="config.name"
-        ></de-controller-input>
+          label="名称"
+        />
         <de-controller-input
-          label="别名"
           v-model="config.alias"
-        ></de-controller-input>
+          label="别名"
+        />
         <de-controller-code
-          label="数据"
           v-model="config.meta"
-        ></de-controller-code>
+          label="数据"
+        />
       </template>
     </de-collapse-layout>
 
     <de-collapse-layout
       label="基础设置"
       icon="#iconshezhi"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-vector3
+          v-model="config.position"
           label="位置"
           :step="0.1"
-          :displayAccuracy="displayAccuracy"
-          v-model="config.position"
+          :display-accuracy="displayAccuracy"
           :animation="{
             target: config,
             attribute: 'position',
           }"
-        ></de-controller-vector3>
+        />
         <de-controller-vector3
+          v-model="config.scale"
           label="缩放"
           :step="1"
-          :displayAccuracy="displayAccuracy"
-          v-model="config.scale"
+          :display-accuracy="displayAccuracy"
           :animation="{
             target: config,
             attribute: 'scale',
           }"
-        ></de-controller-vector3>
+        />
         <de-controller-vector3
+          v-model="config.rotation"
           label="旋转"
           :step="1"
-          :displayAccuracy="displayAccuracy"
+          :display-accuracy="displayAccuracy"
           unit="°"
-          v-model="config.rotation"
           :animation="{
             target: config,
             attribute: 'rotation',
           }"
-        ></de-controller-vector3>
+        />
         <de-controller-vector3
+          v-model="config.up"
           label="朝向"
           :step="1"
-          :displayAccuracy="displayAccuracy"
-          v-model="config.up"
+          :display-accuracy="displayAccuracy"
           :animation="{
             target: config,
             attribute: 'up',
           }"
-        ></de-controller-vector3>
+        />
         <de-controller-switch
-          label="可见性"
           v-model="config.visible"
+          label="可见性"
           :animation="{
             target: config,
             attribute: 'visible',
           }"
-        ></de-controller-switch>
+        />
         <de-controller-select
+          v-model="config.lookAt"
           label="看向目标"
           :options="objectList"
           :prop="{
             label: 'name',
             value: 'vid',
           }"
-          v-model="config.lookAt"
           :animation="{
             target: config,
             attribute: 'lookAt',
           }"
-        ></de-controller-select>
+        />
       </template>
     </de-collapse-layout>
 
-    <geometry-setting-module v-if="geometry"></geometry-setting-module>
-    <component-setting-module v-if="config.element"></component-setting-module>
+    <geometry-setting-module v-if="geometry" />
+    <component-setting-module v-if="config.element" />
 
-    <components :config="config" :is="component"></components>
+    <components
+      :is="component"
+      :config="config"
+    />
 
     <de-collapse-layout
       label="高级设置"
       icon="#iconshezhi"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-switch
-          label="接收阴影"
           v-model="config.receiveShadow"
+          label="接收阴影"
           :animation="{
             target: config,
             attribute: 'receiveShadow',
           }"
-        ></de-controller-switch>
+        />
         <de-controller-switch
-          label="产生阴影"
           v-model="config.castShadow"
+          label="产生阴影"
           :animation="{
             target: config,
             attribute: 'castShadow',
           }"
-        ></de-controller-switch>
+        />
         <de-controller-switch
-          label="自动更新"
           v-model="config.matrixAutoUpdate"
+          label="自动更新"
           :animation="{
             target: config,
             attribute: 'matrixAutoUpdate',
           }"
-        ></de-controller-switch>
+        />
         <de-controller-number
+          v-model="config.renderOrder"
           label="渲染顺序"
           :step="1"
-          :dragMultply="1"
+          :drag-multply="1"
           :min="-Infinity"
           :max="Infinity"
-          v-model="config.renderOrder"
           :animation="{
             target: config,
             attribute: 'renderOrder',
           }"
-        ></de-controller-number>
+        />
       </template>
     </de-collapse-layout>
   </div>

@@ -3,63 +3,63 @@
     <de-collapse-layout
       label="形状"
       icon="#iconjichubianhuan"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-number
+          v-model="config.innerRadius"
           :keyframe="false"
           label="内环半径"
           :step="1"
-          :dragMultply="2"
+          :drag-multply="2"
           :min="0"
-          v-model="config.innerRadius"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.outerRadius"
           :keyframe="false"
           label="外环半径"
           :step="1"
-          :dragMultply="2"
+          :drag-multply="2"
           :min="0"
-          v-model="config.outerRadius"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.thetaSegments"
           :keyframe="false"
           label="圆环分段"
           :step="1"
-          :dragMultply="2"
+          :drag-multply="2"
           :min="3"
-          v-model="config.thetaSegments"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.phiSegments"
           :keyframe="false"
           label="环面分段"
           :step="1"
-          :dragMultply="2"
+          :drag-multply="2"
           :min="1"
-          v-model="config.phiSegments"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="thetaStart"
           :keyframe="false"
           label="起始角度"
           :step="1"
-          :dragMultply="5"
+          :drag-multply="5"
           :min="0"
           :max="360"
           unit="°"
-          :displayAccuracy="0"
-          v-model="thetaStart"
-        ></de-controller-number>
+          :display-accuracy="0"
+        />
         <de-controller-number
+          v-model="thetaLength"
           :keyframe="false"
           label="环面范围"
           :step="1"
-          :dragMultply="5"
+          :drag-multply="5"
           :min="0"
           :max="360"
           unit="°"
-          :displayAccuracy="0"
-          v-model="thetaLength"
-        ></de-controller-number>
+          :display-accuracy="0"
+        />
       </template>
     </de-collapse-layout>
   </div>

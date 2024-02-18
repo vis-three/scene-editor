@@ -1,43 +1,53 @@
 <template>
-  <div class="constraintorModule-container" v-show="config">
+  <div
+    v-show="config"
+    class="constraintorModule-container"
+  >
     <div class="eventSetting-title">
-      <vis-icon code="#iconjihetuxing"></vis-icon>
+      <vis-icon code="#iconjihetuxing" />
       <de-controller-input
-        label="名称"
         v-model="config.name"
-      ></de-controller-input>
+        label="名称"
+      />
     </div>
 
     <el-popover
+      v-model="visible"
       placement="bottom"
       width="200"
       trigger="click"
-      v-model="visible"
     >
       <el-cascader-panel
         v-model="cascaderValue"
         :options="constraintorOptions"
         @change="change"
-      ></el-cascader-panel>
+      />
 
-      <el-button slot="reference" type="primary" size="mini">
+      <el-button
+        slot="reference"
+        type="primary"
+        size="mini"
+      >
         添加约束器
       </el-button>
     </el-popover>
 
     <div
-      class="constraintor-item"
       v-for="item in constraintorList"
       :key="item.vid"
+      class="constraintor-item"
     >
-      <components :is="item.type" :config="item"></components>
+      <components
+        :is="item.type"
+        :config="item"
+      />
       <div class="operation-box">
-        <vis-icon code="#iconsanjiaojiantoushang"></vis-icon>
-        <vis-icon code="#iconsanjiaojiantouxia"></vis-icon>
+        <vis-icon code="#iconsanjiaojiantoushang" />
+        <vis-icon code="#iconsanjiaojiantouxia" />
         <vis-icon
           code="#iconshanchu"
           @click.native="deleteConstraintor(item)"
-        ></vis-icon>
+        />
       </div>
     </div>
   </div>

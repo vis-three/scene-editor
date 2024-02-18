@@ -1,9 +1,19 @@
 <template>
-  <control-layout :keyframe="keyframe" :label="label">
+  <control-layout
+    :keyframe="keyframe"
+    :label="label"
+  >
     <template #controller>
       <div class="code-controller">
-        <el-button size="mini" type="text" @click="openEditor">
-          <vis-icon code="#icondaima" size="18px"></vis-icon>
+        <el-button
+          size="mini"
+          type="text"
+          @click="openEditor"
+        >
+          <vis-icon
+            code="#icondaima"
+            size="18px"
+          />
         </el-button>
       </div>
     </template>
@@ -14,7 +24,7 @@
 import controlLayout from "./controlLayout.vue";
 import monacoEditor from "@/monaco";
 export default {
-  name: "de-controller-code",
+  name: "DeControllerCode",
   components: {
     controlLayout,
   },

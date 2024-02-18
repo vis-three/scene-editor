@@ -1,43 +1,47 @@
 <template>
   <div class="VisUnrealBloomPass-container">
-    <de-collapse-layout label="设置" icon="#iconshezhi" arrowPosition="left">
+    <de-collapse-layout
+      label="设置"
+      icon="#iconshezhi"
+      arrow-position="left"
+    >
       <template #container>
         <de-controller-number
+          v-model="config.threshold"
           label="阈值"
           :step="0.01"
-          :dragMultply="3"
+          :drag-multply="3"
           :min="0"
-          :displayAccuracy="2"
+          :display-accuracy="2"
           :animation="{
             target: config.vid,
             attribute: 'threshold',
           }"
-          v-model="config.threshold"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.strength"
           label="强度"
           :step="0.01"
-          :dragMultply="3"
+          :drag-multply="3"
           :min="0"
-          :displayAccuracy="2"
+          :display-accuracy="2"
           :animation="{
             target: config.vid,
             attribute: 'strength',
           }"
-          v-model="config.strength"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.radius"
           label="发光半径"
           :step="0.01"
-          :dragMultply="3"
+          :drag-multply="3"
           :min="0"
-          :displayAccuracy="2"
+          :display-accuracy="2"
           :animation="{
             target: config.vid,
             attribute: 'radius',
           }"
-          v-model="config.radius"
-        ></de-controller-number>
+        />
       </template>
     </de-collapse-layout>
   </div>

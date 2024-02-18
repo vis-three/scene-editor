@@ -2,16 +2,16 @@
   <div class="sceneStructure-container">
     <div class="sceneStructure-header">
       <div class="header-title">
-        <vis-icon code="#iconfuji"></vis-icon>
+        <vis-icon code="#iconfuji" />
         结构
       </div>
       <div class="header-operation">
         <el-input
+          v-model="filterText"
           size="mini"
           suffix-icon="el-icon-search"
           placeholder="结构筛选"
-          v-model="filterText"
-        ></el-input>
+        />
       </div>
     </div>
     <div class="scene-manager-main">
@@ -25,30 +25,30 @@
         :expand-on-click-node="false"
         draggable
         node-key="vid"
+        :filter-node-method="filterNode"
         @node-click="clickNode"
         @node-drop="handleDrop"
-        :filter-node-method="filterNode"
       >
         <div
+          slot-scope="{ data }"
           class="custom-tree-node"
           :class="{ 'custom-active': data.vid === activeObject.vid }"
-          slot-scope="{ data }"
         >
           <div class="tips-box">
-            <vis-icon :code="getIcon(data.type)"></vis-icon>
-            <span v-text="data.name"></span>
+            <vis-icon :code="getIcon(data.type)" />
+            <span v-text="data.name" />
           </div>
           <div class="operate-box">
             <vis-icon
               v-tooltip="'显示隐藏'"
               :code="data.visible ? '#iconkejian' : '#iconbukejian'"
               @click.native="triggleVisible(data)"
-            ></vis-icon>
+            />
             <vis-icon
               v-tooltip="'删除'"
               code="#iconshanchu"
               @click.native="deleteObject(data)"
-            ></vis-icon>
+            />
           </div>
         </div>
       </el-tree>

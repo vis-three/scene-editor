@@ -1,12 +1,12 @@
 <template>
   <div class="sideTabItem-container">
-    <slot></slot>
+    <slot />
   </div>
 </template>
 
 <script>
 export default {
-  name: "sideTabItem",
+  name: "SideTabItem",
   props: {
     icon: {
       type: String,

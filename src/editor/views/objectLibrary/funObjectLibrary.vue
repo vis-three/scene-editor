@@ -3,11 +3,11 @@
     <object-collapse
       v-for="(item, index) in list"
       :key="index"
-      :dataList="item.list"
-      :clickHanlder="item.click"
+      :data-list="item.list"
+      :click-hanlder="item.click"
       :icon="item.icon"
       :label="item.label"
-    ></object-collapse>
+    />
   </div>
 </template>
 

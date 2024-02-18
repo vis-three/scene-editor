@@ -11,16 +11,16 @@
           :value="value"
           size="mini"
           :placeholder="placeholder"
-          @change="change"
           :filterable="filterable"
           :multiple="multiple"
+          @change="change"
         >
           <el-option
             v-for="(item, index) in options"
             :key="index"
             :label="listType ? item : item[prop.label]"
             :value="listType ? item : prop.value ? item[prop.value] : item"
-          ></el-option>
+          />
         </el-select>
       </div>
     </template>
@@ -31,7 +31,7 @@
 import controlLayout from "./controlLayout.vue";
 import { InterpolateDiscrete } from "three";
 export default {
-  name: "de-controller-select",
+  name: "DeControllerSelect",
   components: {
     controlLayout,
   },

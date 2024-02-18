@@ -1,7 +1,7 @@
 <template>
   <div class="fileSystem-container">
-    <header-operation></header-operation>
-    <container-operation ref="container"></container-operation>
+    <header-operation />
+    <container-operation ref="container" />
   </div>
 </template>
 
@@ -20,6 +20,9 @@ export default {
       confirmFun: () => {},
     };
   },
+  created() {
+    this.$store.commit("appLibrary/request", "");
+  },
   methods: {
     open({ confirm }) {
       this.visible = true;
@@ -30,9 +33,6 @@ export default {
       this.confirmFun({ files: [].concat(this.$refs.container.selected) });
       this.$refs.container.selected = [];
     },
-  },
-  created() {
-    this.$store.commit("appLibrary/request", "");
   },
 };
 </script>

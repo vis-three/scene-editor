@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <editor-frame v-if="inited"></editor-frame>
-    <loading-manager></loading-manager>
-    <workbench ref="workbench"></workbench>
+    <editor-frame v-if="inited" />
+    <loading-manager />
+    <workbench ref="workbench" />
 
     <el-dialog
       title="更新公告"
@@ -10,12 +10,23 @@
       width="40%"
       center
     >
-      <render-markdown :md="notice"></render-markdown>
-      <span slot="footer" class="dialog-footer">
-        <el-button size="mini" type="primary" @click="noticeVisible = false">
+      <render-markdown :md="notice" />
+      <span
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button
+          size="mini"
+          type="primary"
+          @click="noticeVisible = false"
+        >
           关闭
         </el-button>
-        <el-button size="mini" type="primary" @click="notPrompting">
+        <el-button
+          size="mini"
+          type="primary"
+          @click="notPrompting"
+        >
           不再提示
         </el-button>
       </span>
@@ -50,12 +61,6 @@ export default {
       return this.$store.getters.id;
     },
   },
-  methods: {
-    notPrompting() {
-      window.localStorage.setItem("version", version);
-      this.noticeVisible = false;
-    },
-  },
   mounted() {
     this.$refs.workbench.visible = true;
 
@@ -64,6 +69,12 @@ export default {
     if (version !== currentVersion) {
       this.noticeVisible = true;
     }
+  },
+  methods: {
+    notPrompting() {
+      window.localStorage.setItem("version", version);
+      this.noticeVisible = false;
+    },
   },
 };
 </script>

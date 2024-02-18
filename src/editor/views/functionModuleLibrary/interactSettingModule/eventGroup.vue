@@ -2,23 +2,26 @@
   <div class="eventGroup-container">
     <div class="eventGroup-header">
       <span class="header-tips">
-        <i class="el-icon-position"></i>
-        <span v-text="label"></span>
+        <i class="el-icon-position" />
+        <span v-text="label" />
       </span>
 
       <div class="eventGroup-operation">
         <i
-          class="el-icon-document-copy"
           v-tooltip.top="'复制事件'"
+          class="el-icon-document-copy"
           @click="copyEvent"
-        ></i>
+        />
         <i
-          class="el-icon-document-checked"
           v-tooltip.top="'粘贴事件'"
+          class="el-icon-document-checked"
           @click="passEvent"
-        ></i>
+        />
         <el-dropdown trigger="hover">
-          <i class="el-icon-circle-plus" v-tooltip.top="'添加事件'"></i>
+          <i
+            v-tooltip.top="'添加事件'"
+            class="el-icon-circle-plus"
+          />
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>
               <el-cascader-panel
@@ -30,7 +33,7 @@
                   value: 'name',
                 }"
                 @change="change"
-              ></el-cascader-panel>
+              />
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -41,9 +44,9 @@
       <event-controllers
         v-for="(item, index) in activeObject[eventName]"
         :key="index"
-        :eventConfigure="item"
+        :event-configure="item"
         @deleteEvent="deleteEvent(index)"
-      ></event-controllers>
+      />
     </div>
   </div>
 </template>

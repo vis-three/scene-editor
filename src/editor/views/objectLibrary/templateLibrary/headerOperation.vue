@@ -2,87 +2,98 @@
   <div class="headerOperation-container">
     <div class="operate-history">
       <vis-icon
+        code="#iconbianjiantouzuo"
         @click.native="
           () => {
             $store.commit('templateLibrary/backOffHistory');
           }
         "
-        code="#iconbianjiantouzuo"
-      ></vis-icon>
+      />
       <vis-icon
+        code="#iconbianjiantouyou"
         @click.native="
           () => {
             $store.commit('templateLibrary/forwardHistory');
           }
         "
-        code="#iconbianjiantouyou"
-      ></vis-icon>
+      />
     </div>
     <div class="operate-address">
       <span
-        class="address-sign-box"
         v-for="(item, index) in addressList"
         :key="index"
+        class="address-sign-box"
         @click="chouseFile(item)"
       >
         <vis-icon
           v-if="index > 0"
           code="#iconsanjiaojiantouyou"
           :style="{ transform: 'scale(0.6)' }"
-        ></vis-icon>
-        <span class="address-title" v-text="item.name"></span>
+        />
+        <span
+          class="address-title"
+          v-text="item.name"
+        />
       </span>
     </div>
     <div class="operate-operation">
       <!-- <vis-icon code="#iconsetting-fill" v-tooltip.top="'设置'"></vis-icon> -->
       <el-popover
+        v-model="classifyVisible"
         placement="bottom"
         width="200"
         trigger="click"
-        v-model="classifyVisible"
       >
         <el-input
+          v-model="classifyName"
           class="popover-input"
           size="mini"
-          v-model="classifyName"
           placeholder="输入分类名称"
-        ></el-input>
+        />
         <div class="popover-operation">
-          <el-button size="mini" type="text" @click="addClassify">
+          <el-button
+            size="mini"
+            type="text"
+            @click="addClassify"
+          >
             确定
           </el-button>
         </div>
         <vis-icon
-          slot="reference"
-          code="#iconjia1"
-          v-tooltip.top="'新增分类'"
           v-show="canAddClassify"
-        ></vis-icon>
+          slot="reference"
+          v-tooltip.top="'新增分类'"
+          code="#iconjia1"
+        />
       </el-popover>
 
       <el-popover
+        v-model="templateVisible"
         placement="bottom"
         width="200"
         trigger="click"
-        v-model="templateVisible"
       >
         <el-input
+          v-model="templateName"
           class="popover-input"
           size="mini"
-          v-model="templateName"
           placeholder="输入模板名称"
-        ></el-input>
+        />
         <div class="popover-operation">
-          <el-button size="mini" type="text" @click="addTemplate">
+          <el-button
+            size="mini"
+            type="text"
+            @click="addTemplate"
+          >
             确定
           </el-button>
         </div>
         <vis-icon
-          code="#iconbaocun_mian"
-          slot="reference"
           v-show="canUpload"
+          slot="reference"
           v-tooltip.top="'当前场景保存为新模板'"
-        ></vis-icon>
+          code="#iconbaocun_mian"
+        />
       </el-popover>
 
       <!-- <vis-icon
@@ -206,9 +217,10 @@ export default {
 
     async addTemplate() {
       const loading = this.$message.loading("正在保存为模板...");
-      let config = engine.exportConfig();
-      let configJson = JSON.stringify(config, JSONHandler.stringify);
-
+      let config = await this.$store.dispatch(
+        "urlTransform",
+        engine.exportConfig()
+      );
       const editor = await this.$store.dispatch("exportConfig");
       // config.component = this.$store.getters["component/get"];
       // 模板去除全局灯光, 控制器, 渲染器, 多场景
@@ -230,60 +242,6 @@ export default {
           }
         });
       }
-
-      const urlDetails = this.$store.getters.urlDetails;
-
-      config.assets = config.assets.map((elem) => {
-        const result = {
-          id: null,
-          module: null,
-        };
-
-        if (!urlDetails[elem.url]) {
-          this.$message.console.error(
-            `导出失败，未找到相关资源缓存：${elem.url}`
-          );
-        } else {
-          const file = urlDetails[elem.url];
-          result.id = file.id;
-          result.module = file.model
-            ? "model"
-            : file.texture
-            ? "texture"
-            : null;
-
-          configJson = configJson.replace(
-            new RegExp(elem.url, "g"),
-            `<${result.module}-${result.id}>`
-          );
-        }
-
-        return result;
-      });
-
-      config.component.forEach((elem) => {
-        const result = {
-          id: null,
-          module: "component",
-        };
-
-        if (!urlDetails[elem.$url]) {
-          this.$message.error(`导出失败，未找到相关资源缓存：${elem.$url}`);
-        } else {
-          const file = urlDetails[elem.$url];
-          result.id = file.id;
-          configJson = configJson.replace(
-            new RegExp(elem.$url, "g"),
-            `<${result.module}-${result.id}>`
-          );
-        }
-
-        elem.$url = `<${result.module}-${result.id}>`;
-      });
-
-      configJson = JSON.parse(configJson, JSONHandler.parse);
-      configJson.assets = config.assets;
-      config = configJson;
 
       templateApi
         .creatTemplate({

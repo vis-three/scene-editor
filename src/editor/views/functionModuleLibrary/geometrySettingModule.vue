@@ -1,42 +1,45 @@
 <template>
-  <div class="geometrySettingModule-container" v-if="config">
+  <div
+    v-if="config"
+    class="geometrySettingModule-container"
+  >
     <de-collapse-layout
       label="几何基础"
       icon="#iconshezhi"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-input
-          label="几何名称"
           v-model="config.name"
-        ></de-controller-input>
+          label="几何名称"
+        />
         <de-controller-vector3
+          v-model="config.position"
           :keyframe="false"
           label="锚点位置"
           :step="0.1"
-          :displayAccuracy="displayAccuracy"
-          v-model="config.position"
-        ></de-controller-vector3>
+          :display-accuracy="displayAccuracy"
+        />
         <de-controller-vector3
+          v-model="config.scale"
           :keyframe="false"
           label="锚点缩放"
           :step="1"
-          :displayAccuracy="displayAccuracy"
-          v-model="config.scale"
-        ></de-controller-vector3>
+          :display-accuracy="displayAccuracy"
+        />
         <de-controller-vector3
+          v-model="config.rotation"
           :keyframe="false"
           label="锚点旋转"
           :step="1"
-          :displayAccuracy="displayAccuracy"
+          :display-accuracy="displayAccuracy"
           unit="°"
-          v-model="config.rotation"
-        ></de-controller-vector3>
+        />
         <de-controller-switch
+          v-model="config.center"
           :keyframe="false"
           label="居中"
-          v-model="config.center"
-        ></de-controller-switch>
+        />
 
         <div class="geometry-groups">
           <el-button
@@ -49,40 +52,43 @@
             添加几何组
           </el-button>
           <div
-            class="geometry-group-item"
             v-for="(item, index) in config.groups"
             :key="index"
+            class="geometry-group-item"
           >
             <div class="group-controller">
               <de-controller-number
+                v-model="item.start"
                 :keyframe="false"
                 label="起始顶点"
                 :step="1"
                 :min="0"
-                v-model="item.start"
-              ></de-controller-number>
+              />
               <de-controller-number
+                v-model="item.count"
                 :keyframe="false"
                 label="结束顶点"
                 :step="1"
                 :min="Infinity"
-                v-model="item.count"
-              ></de-controller-number>
+              />
               <de-controller-number
+                v-model="item.materialIndex"
                 :keyframe="false"
                 label="材质索引"
                 :step="1"
                 :min="0"
-                v-model="item.materialIndex"
-              ></de-controller-number>
+              />
             </div>
 
             <el-popconfirm
               title="确定删除当下几何组吗？"
               @confirm="deleteGroup(index)"
             >
-              <div class="group-operation" slot="reference">
-                <i class="el-icon-delete"></i>
+              <div
+                slot="reference"
+                class="group-operation"
+              >
+                <i class="el-icon-delete" />
               </div>
             </el-popconfirm>
           </div>
@@ -90,7 +96,10 @@
       </template>
     </de-collapse-layout>
 
-    <component :is="component" :config="config"></component>
+    <component
+      :is="component"
+      :config="config"
+    />
   </div>
 </template>
 

@@ -10,7 +10,7 @@
             $store.commit('history/undo');
           }
         "
-      ></top-navigation-function-elem>
+      />
       <top-navigation-function-elem
         tooltip="恢复"
         icon="#iconhuifu"
@@ -20,7 +20,7 @@
             $store.commit('history/redo');
           }
         "
-      ></top-navigation-function-elem>
+      />
     </div>
 
     <div class="function-part">
@@ -33,7 +33,7 @@
             transformControls.showX = !showX;
           }
         "
-      ></top-navigation-function-elem>
+      />
       <top-navigation-function-elem
         tooltip="y轴"
         icon="#iconyzhou"
@@ -43,7 +43,7 @@
             transformControls.showY = !showY;
           }
         "
-      ></top-navigation-function-elem>
+      />
       <top-navigation-function-elem
         tooltip="z轴"
         icon="#iconzzhou"
@@ -53,7 +53,7 @@
             transformControls.showZ = !showZ;
           }
         "
-      ></top-navigation-function-elem>
+      />
     </div>
 
     <div class="function-part">
@@ -66,7 +66,7 @@
             transformControls.mode = 'translate';
           }
         "
-      ></top-navigation-function-elem>
+      />
       <top-navigation-function-elem
         tooltip="缩放"
         icon="#iconsuofang"
@@ -76,7 +76,7 @@
             transformControls.mode = 'scale';
           }
         "
-      ></top-navigation-function-elem>
+      />
       <top-navigation-function-elem
         tooltip="旋转"
         icon="#iconxuanzhuan1"
@@ -86,7 +86,7 @@
             transformControls.mode = 'rotate';
           }
         "
-      ></top-navigation-function-elem>
+      />
     </div>
 
     <div class="function-part">
@@ -99,7 +99,7 @@
             transformControls.space = 'local';
           }
         "
-      ></top-navigation-function-elem>
+      />
       <top-navigation-function-elem
         tooltip="世界变换"
         icon="#iconshijiebianhuan"
@@ -109,7 +109,7 @@
             transformControls.space = 'world';
           }
         "
-      ></top-navigation-function-elem>
+      />
     </div>
 
     <div class="function-part">
@@ -122,18 +122,24 @@
             transformControls.snapAllow = !snapAllow;
           }
         "
-      ></top-navigation-function-elem>
+      />
       <top-navigation-function-elem tooltip="平移">
         <el-input
-          size="mini"
           v-model="transformControls.translationSnap"
-        ></el-input>
+          size="mini"
+        />
       </top-navigation-function-elem>
       <top-navigation-function-elem tooltip="旋转">
-        <el-input size="mini" v-model="rotationSnap"></el-input>
+        <el-input
+          v-model="rotationSnap"
+          size="mini"
+        />
       </top-navigation-function-elem>
       <top-navigation-function-elem tooltip="缩放">
-        <el-input size="mini" v-model="transformControls.scaleSnap"></el-input>
+        <el-input
+          v-model="transformControls.scaleSnap"
+          size="mini"
+        />
       </top-navigation-function-elem>
     </div>
   </div>

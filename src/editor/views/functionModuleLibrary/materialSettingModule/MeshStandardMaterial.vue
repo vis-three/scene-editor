@@ -3,315 +3,315 @@
     <de-collapse-layout
       label="参数设置"
       icon="#iconshezhi"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-switch
-          label="线框化"
           v-model="config.wireframe"
+          label="线框化"
           :animation="{
             target: config,
             attrubute: 'wireframe',
           }"
-        ></de-controller-switch>
+        />
         <de-controller-switch
-          label="平面着色"
           v-model="config.flatShading"
+          label="平面着色"
           :animation="{
             target: config,
             attrubute: 'flatShading',
           }"
-        ></de-controller-switch>
+        />
         <de-controller-picker
-          label="材质颜色"
           v-model="config.color"
+          label="材质颜色"
           :animation="{
             target: config,
             attrubute: 'color',
           }"
-        ></de-controller-picker>
+        />
         <de-controller-picker
-          label="反光颜色"
           v-model="config.emissive"
+          label="反光颜色"
           :animation="{
             target: config,
             attrubute: 'emissive',
           }"
-        ></de-controller-picker>
+        />
         <de-controller-number
+          v-model="config.emissiveIntensity"
           label="反光强度"
           :step="0.01"
-          :dragMultply="3"
+          :drag-multply="3"
           :min="0"
-          :displayAccuracy="2"
-          v-model="config.emissiveIntensity"
+          :display-accuracy="2"
           :animation="{
             target: config,
             attrubute: 'emissiveIntensity',
           }"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.metalness"
           label="金属度"
           :step="0.01"
-          :dragMultply="3"
+          :drag-multply="3"
           :min="0"
           :max="1"
-          :displayAccuracy="2"
-          v-model="config.metalness"
+          :display-accuracy="2"
           :animation="{
             target: config,
             attrubute: 'metalness',
           }"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.roughness"
           label="粗糙度"
           :step="0.01"
-          :dragMultply="3"
+          :drag-multply="3"
           :min="0"
           :max="1"
-          :displayAccuracy="2"
-          v-model="config.roughness"
+          :display-accuracy="2"
           :animation="{
             target: config,
             attrubute: 'roughness',
           }"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.aoMapIntensity"
           label="环境遮挡"
           :step="0.01"
-          :dragMultply="3"
+          :drag-multply="3"
           :min="0"
-          :displayAccuracy="2"
-          v-model="config.aoMapIntensity"
+          :display-accuracy="2"
           :animation="{
             target: config,
             attrubute: 'aoMapIntensity',
           }"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.envMapIntensity"
           label="环境反射"
           :step="0.01"
-          :dragMultply="3"
+          :drag-multply="3"
           :min="0"
-          :displayAccuracy="2"
-          v-model="config.envMapIntensity"
+          :display-accuracy="2"
           :animation="{
             target: config,
             attrubute: 'envMapIntensity',
           }"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.lightMapIntensity"
           label="光照强度"
           :step="0.01"
-          :dragMultply="3"
+          :drag-multply="3"
           :min="0"
-          :displayAccuracy="2"
-          v-model="config.lightMapIntensity"
+          :display-accuracy="2"
           :animation="{
             target: config,
             attrubute: 'lightMapIntensity',
           }"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.bumpScale"
           label="凹凸程度"
           :step="0.01"
-          :dragMultply="3"
+          :drag-multply="3"
           :min="0"
-          :displayAccuracy="2"
-          v-model="config.bumpScale"
+          :display-accuracy="2"
           :animation="{
             target: config,
             attrubute: 'bumpScale',
           }"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.displacementScale"
           label="位移程度"
           :step="0.01"
-          :dragMultply="3"
+          :drag-multply="3"
           :min="0"
-          :displayAccuracy="2"
-          v-model="config.displacementScale"
+          :display-accuracy="2"
           :animation="{
             target: config,
             attrubute: 'displacementScale',
           }"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.displacementBias"
           label="偏移量"
           :step="0.01"
-          :dragMultply="3"
+          :drag-multply="3"
           :min="0"
-          :displayAccuracy="2"
-          v-model="config.displacementBias"
+          :display-accuracy="2"
           :animation="{
             target: config,
             attrubute: 'displacementBias',
           }"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.refractionRatio"
           label="空气折射率"
           :step="0.01"
-          :dragMultply="3"
+          :drag-multply="3"
           :min="0"
           :max="1"
-          :displayAccuracy="2"
-          v-model="config.refractionRatio"
+          :display-accuracy="2"
           :animation="{
             target: config,
             attrubute: 'refractionRatio',
           }"
-        ></de-controller-number>
+        />
       </template>
     </de-collapse-layout>
     <de-collapse-layout
       label="贴图设置"
       icon="#icontexture"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-select
+          v-model="config.map"
           label="表面贴图"
           :options="textureList"
           :prop="{
             label: 'name',
             value: 'vid',
           }"
-          v-model="config.map"
           :animation="{
             target: config,
             attrubute: 'map',
           }"
-        ></de-controller-select>
+        />
         <de-controller-select
+          v-model="config.emissiveMap"
           label="反光贴图"
           :options="textureList"
           :prop="{
             label: 'name',
             value: 'vid',
           }"
-          v-model="config.emissiveMap"
           :animation="{
             target: config,
             attrubute: 'emissiveMap',
           }"
-        ></de-controller-select>
+        />
         <de-controller-select
+          v-model="config.alphaMap"
           label="透明贴图"
           :options="textureList"
           :prop="{
             label: 'name',
             value: 'vid',
           }"
-          v-model="config.alphaMap"
           :animation="{
             target: config,
             attrubute: 'alphaMap',
           }"
-        ></de-controller-select>
+        />
         <de-controller-select
+          v-model="config.metalnessMap"
           label="金属贴图"
           :options="textureList"
           :prop="{
             label: 'name',
             value: 'vid',
           }"
-          v-model="config.metalnessMap"
           :animation="{
             target: config,
             attrubute: 'metalnessMap',
           }"
-        ></de-controller-select>
+        />
         <de-controller-select
+          v-model="config.roughnessMap"
           label="粗糙贴图"
           :options="textureList"
           :prop="{
             label: 'name',
             value: 'vid',
           }"
-          v-model="config.roughnessMap"
           :animation="{
             target: config,
             attrubute: 'roughnessMap',
           }"
-        ></de-controller-select>
+        />
         <de-controller-select
+          v-model="config.bumpMap"
           label="凹凸贴图"
           :options="textureList"
           :prop="{
             label: 'name',
             value: 'vid',
           }"
-          v-model="config.bumpMap"
           :animation="{
             target: config,
             attrubute: 'bumpMap',
           }"
-        ></de-controller-select>
+        />
         <de-controller-select
+          v-model="config.displacementMap"
           label="位移贴图"
           :options="textureList"
           :prop="{
             label: 'name',
             value: 'vid',
           }"
-          v-model="config.displacementMap"
           :animation="{
             target: config,
             attrubute: 'displacementMap',
           }"
-        ></de-controller-select>
+        />
         <de-controller-select
+          v-model="config.normalMap"
           label="法线贴图"
           :options="textureList"
           :prop="{
             label: 'name',
             value: 'vid',
           }"
-          v-model="config.normalMap"
           :animation="{
             target: config,
             attrubute: 'normalMap',
           }"
-        ></de-controller-select>
+        />
         <de-controller-select
+          v-model="config.envMap"
           label="环境贴图"
           :options="textureList"
           :prop="{
             label: 'name',
             value: 'vid',
           }"
-          v-model="config.envMap"
           :animation="{
             target: config,
             attrubute: 'envMap',
           }"
-        ></de-controller-select>
+        />
         <de-controller-select
+          v-model="config.aoMap"
           label="环境遮挡贴图"
           :options="textureList"
           :prop="{
             label: 'name',
             value: 'vid',
           }"
-          v-model="config.aoMap"
           :animation="{
             target: config,
             attrubute: 'aoMap',
           }"
-        ></de-controller-select>
+        />
         <de-controller-select
+          v-model="config.lightMap"
           label="光照贴图"
           :options="textureList"
           :prop="{
             label: 'name',
             value: 'vid',
           }"
-          v-model="config.lightMap"
           :animation="{
             target: config,
             attrubute: 'lightMap',
           }"
-        ></de-controller-select>
+        />
       </template>
     </de-collapse-layout>
   </div>

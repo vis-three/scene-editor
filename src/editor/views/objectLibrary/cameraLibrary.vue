@@ -1,11 +1,11 @@
 <template>
   <div class="camera-container">
     <object-collapse
-      :dataList="camera"
-      :clickHanlder="addCamera"
+      :data-list="camera"
+      :click-hanlder="addCamera"
       icon="#iconxiangji2"
       label="相机"
-    ></object-collapse>
+    />
   </div>
 </template>
 

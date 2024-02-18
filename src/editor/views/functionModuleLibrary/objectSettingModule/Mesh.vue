@@ -3,23 +3,24 @@
     <de-collapse-layout
       label="网格设置"
       icon="#iconshezhi"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-select
+          v-model="config.geometry"
           label="几何"
           :options="geometryList"
           :prop="{
             label: 'name',
             value: 'vid',
           }"
-          v-model="config.geometry"
           :animation="{
             target: config,
             attribute: 'geometry',
           }"
-        ></de-controller-select>
+        />
         <de-controller-select
+          v-model="config.material"
           label="材质"
           :options="materialList"
           :prop="{
@@ -27,17 +28,16 @@
             value: 'vid',
           }"
           :multiple="multipleMaterial"
-          v-model="config.material"
           :animation="{
             target: config,
             attribute: 'material',
           }"
-        ></de-controller-select>
+        />
         <de-controller-switch
+          v-model="multipleMaterial"
           :keyframe="false"
           label="多材质"
-          v-model="multipleMaterial"
-        ></de-controller-switch>
+        />
       </template>
     </de-collapse-layout>
   </div>

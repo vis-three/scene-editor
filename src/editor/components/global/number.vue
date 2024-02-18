@@ -7,14 +7,14 @@
   >
     <template #controller>
       <number-controller
+        v-model="inputValue"
         :step="step"
-        :dragMultply="dragMultply"
+        :drag-multply="dragMultply"
         :min="min"
         :max="max"
         :unit="unit"
-        :displayAccuracy="displayAccuracy"
-        v-model="inputValue"
-      ></number-controller>
+        :display-accuracy="displayAccuracy"
+      />
     </template>
   </control-layout>
 </template>
@@ -25,7 +25,7 @@ import numberController from "./numberController.vue";
 import { InterpolateLinear } from "three";
 
 export default {
-  name: "de-controller-number",
+  name: "DeControllerNumber",
   components: {
     controlLayout,
     numberController,

@@ -3,30 +3,30 @@
     <de-collapse-layout
       label="形状"
       icon="#iconjichubianhuan"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-number
+          v-model="config.width"
           :keyframe="false"
           label="宽度"
           :step="1"
           :min="0"
-          v-model="config.width"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.height"
           :keyframe="false"
           label="高度"
           :step="1"
           :min="0"
-          v-model="config.height"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.depth"
           :keyframe="false"
           label="深度"
           :step="1"
           :min="0"
-          v-model="config.depth"
-        ></de-controller-number>
+        />
       </template>
     </de-collapse-layout>
   </div>

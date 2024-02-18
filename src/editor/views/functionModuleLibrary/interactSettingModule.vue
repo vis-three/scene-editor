@@ -1,39 +1,51 @@
 <template>
-  <div class="interactSettingModule-container" v-if="activeObject.vid">
+  <div
+    v-if="activeObject.vid"
+    class="interactSettingModule-container"
+  >
     <div class="eventSetting-title">
-      <vis-icon code="#iconjihetuxing"></vis-icon>
+      <vis-icon code="#iconjihetuxing" />
       <de-controller-input
-        label="名称"
         v-model="activeObject.name"
-      ></de-controller-input>
+        label="名称"
+      />
     </div>
     <event-group
       v-for="item in activeEventList"
       :key="item.name"
       :label="item.label"
-      :eventName="item.name"
-    ></event-group>
+      :event-name="item.name"
+    />
     <el-popover
+      v-model="eventVisible"
       placement="bottom"
       width="400"
       trigger="click"
-      v-model="eventVisible"
     >
-      <div class="event-current" @click="showEvent = true">
+      <div
+        class="event-current"
+        @click="showEvent = true"
+      >
         <span>当前事件：</span>
-        <span v-text="currentEvent.label"></span>
-        <vis-icon code="#iconbianji" v-tooltip="'编辑事件'"></vis-icon>
+        <span v-text="currentEvent.label" />
+        <vis-icon
+          v-tooltip="'编辑事件'"
+          code="#iconbianji"
+        />
       </div>
       <el-collapse-transition>
-        <div class="event-box" v-show="showEvent">
+        <div
+          v-show="showEvent"
+          class="event-box"
+        >
           <div
-            class="event-item"
             v-for="item in eventList"
             :key="item.name"
+            class="event-item"
             @click="addEvent(item)"
           >
-            <vis-icon :code="item.icon"></vis-icon>
-            <span v-text="item.label"></span>
+            <vis-icon :code="item.icon" />
+            <span v-text="item.label" />
           </div>
         </div>
       </el-collapse-transition>
@@ -48,9 +60,13 @@
           value: 'name',
         }"
         @change="change"
-      ></el-cascader-panel>
+      />
 
-      <el-button slot="reference" type="primary" size="mini">
+      <el-button
+        slot="reference"
+        type="primary"
+        size="mini"
+      >
         添加交互
       </el-button>
     </el-popover>

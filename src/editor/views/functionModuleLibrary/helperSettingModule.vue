@@ -1,44 +1,50 @@
 <template>
-  <div class="helperSettingModule-container" v-if="activeObject">
+  <div
+    v-if="activeObject"
+    class="helperSettingModule-container"
+  >
     <div class="helperSetting-title">
-      <vis-icon code="#iconjihetuxing"></vis-icon>
+      <vis-icon code="#iconjihetuxing" />
       <de-controller-input
-        label="名称"
         v-model="activeObject.name"
-      ></de-controller-input>
+        label="名称"
+      />
     </div>
 
     <el-button
+      v-if="!helperConfig"
       slot="reference"
       type="primary"
       size="mini"
-      v-if="!helperConfig"
       @click="generateHelper"
     >
       生成辅助
     </el-button>
 
-    <div class="helperSetting-main" v-else>
+    <div
+      v-else
+      class="helperSetting-main"
+    >
       <de-controller-switch
+        v-model="helperConfig.shape"
         :keyframe="false"
         label="形状"
-        v-model="helperConfig.shape"
-      ></de-controller-switch>
+      />
       <de-controller-switch
+        v-model="helperConfig.geometricOrigin"
         :keyframe="false"
         label="几何中心"
-        v-model="helperConfig.geometricOrigin"
-      ></de-controller-switch>
+      />
       <de-controller-switch
+        v-model="helperConfig.boundingBox"
         :keyframe="false"
         label="包围盒"
-        v-model="helperConfig.boundingBox"
-      ></de-controller-switch>
+      />
       <de-controller-switch
+        v-model="helperConfig.localAxes"
         :keyframe="false"
         label="本地坐标"
-        v-model="helperConfig.localAxes"
-      ></de-controller-switch>
+      />
     </div>
   </div>
 </template>

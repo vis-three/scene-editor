@@ -1,166 +1,172 @@
 <template>
-  <div class="materialSettingModule-container" v-if="type">
+  <div
+    v-if="type"
+    class="materialSettingModule-container"
+  >
     <de-collapse-layout
       label="材质"
-      :subLabel="config.type"
+      :sub-label="config.type"
       icon="#iconcaizhishezhi"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-input
+          v-model="config.name"
           :keyframe="false"
           label="名称"
-          v-model="config.name"
-        ></de-controller-input>
+        />
         <de-controller-input
-          label="别名"
           v-model="config.alias"
-        ></de-controller-input>
+          label="别名"
+        />
         <de-controller-code
-          label="数据"
           v-model="config.meta"
-        ></de-controller-code>
+          label="数据"
+        />
         <de-controller-switch
-          label="允许透明"
           v-model="config.transparent"
+          label="允许透明"
           :animation="{
             target: config,
             attribute: 'transparent',
           }"
-        ></de-controller-switch>
+        />
         <de-controller-number
+          v-model="config.opacity"
           label="透明度"
           :step="0.01"
-          :dragMultply="3"
+          :drag-multply="3"
           :min="0"
           :max="1"
-          :displayAccuracy="2"
-          v-model="config.opacity"
+          :display-accuracy="2"
           :animation="{
             target: config,
             attribute: 'opacity',
           }"
-        ></de-controller-number>
+        />
         <de-controller-switch
-          label="可见性"
           v-model="config.visible"
+          label="可见性"
           :animation="{
             target: config,
             attribute: 'visible',
           }"
-        ></de-controller-switch>
+        />
         <de-controller-select
+          v-model="config.shadowSide"
           label="投影面"
           :options="shadowSideList"
-          v-model="config.shadowSide"
           :animation="{
             target: config,
             attribute: 'shadowSide',
           }"
-        ></de-controller-select>
+        />
         <de-controller-select
+          v-model="config.side"
           label="渲染面"
           :options="sideList"
-          v-model="config.side"
           :animation="{
             target: config,
             attribute: 'side',
           }"
-        ></de-controller-select>
+        />
       </template>
     </de-collapse-layout>
-    <components :config="config" :is="type"></components>
+    <components
+      :is="type"
+      :config="config"
+    />
     <de-collapse-layout
       label="高级"
       icon="#iconcaizhishezhi"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-number
+          v-model="config.alphaTest"
           :keyframe="false"
           label="alpha测试"
           :step="0.01"
-          :dragMultply="3"
+          :drag-multply="3"
           :min="0"
           :max="1"
-          :displayAccuracy="2"
-          v-model="config.alphaTest"
-        ></de-controller-number>
+          :display-accuracy="2"
+        />
         <de-controller-number
+          v-model="polygonOffset"
           :keyframe="false"
           label="多边形偏移"
           :step="1"
-          :dragMultply="1"
+          :drag-multply="1"
           :min="-3"
           :max="3"
-          v-model="polygonOffset"
-        ></de-controller-number>
+        />
         <de-controller-switch
-          label="颜色写入"
           v-model="config.colorWrite"
+          label="颜色写入"
           :animation="{
             target: config,
             attribute: 'colorWrite',
           }"
-        ></de-controller-switch>
+        />
         <de-controller-switch
-          label="颜色抖动"
           v-model="config.dithering"
+          label="颜色抖动"
           :animation="{
             target: config,
             attribute: 'dithering',
           }"
-        ></de-controller-switch>
+        />
         <de-controller-switch
-          label="深度测试"
           v-model="config.depthTest"
+          label="深度测试"
           :animation="{
             target: config,
             attribute: 'depthTest',
           }"
-        ></de-controller-switch>
+        />
         <de-controller-switch
-          label="深度写入"
           v-model="config.depthWrite"
+          label="深度写入"
           :animation="{
             target: config,
             attribute: 'depthWrite',
           }"
-        ></de-controller-switch>
+        />
         <de-controller-select
+          v-model="config.depthFunc"
           label="深度函数"
           :options="depthFuncList"
-          v-model="config.depthFunc"
           :animation="{
             target: config,
             attribute: 'depthFunc',
           }"
-        ></de-controller-select>
+        />
         <de-controller-switch
-          label="雾影响"
           v-model="config.fog"
+          label="雾影响"
           :animation="{
             target: config,
             attribute: 'fog',
           }"
-        ></de-controller-switch>
+        />
         <de-controller-switch
-          label="色调映射"
           v-model="config.toneMapped"
+          label="色调映射"
           :animation="{
             target: config,
             attribute: 'toneMapped',
           }"
-        ></de-controller-switch>
+        />
         <de-controller-select
+          v-model="config.blending"
           label="混合模式"
           :options="blendingList"
-          v-model="config.blending"
           :animation="{
             target: config,
             attribute: 'blending',
           }"
-        ></de-controller-select>
+        />
       </template>
     </de-collapse-layout>
   </div>

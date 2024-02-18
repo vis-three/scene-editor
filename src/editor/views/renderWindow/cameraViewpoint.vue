@@ -1,12 +1,19 @@
 <template>
-  <div class="camera-viewpoint-container" v-tooltip.top="'相机视角'">
-    <el-select v-model="cameraView" size="mini" placeholder="请选择">
+  <div
+    v-tooltip.top="'相机视角'"
+    class="camera-viewpoint-container"
+  >
+    <el-select
+      v-model="cameraView"
+      size="mini"
+      placeholder="请选择"
+    >
       <el-option
         v-for="(item, index) in cameraList"
         :key="index"
         :label="item.label"
         :value="item.value"
-      ></el-option>
+      />
     </el-select>
   </div>
 </template>

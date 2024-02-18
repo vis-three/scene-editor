@@ -3,57 +3,58 @@
     <de-collapse-layout
       label="粒子设置"
       icon="#iconshezhi"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-number
+          v-model="config.amount"
           :keyframe="false"
           label="数量"
           :step="1"
-          :dragMultply="5"
+          :drag-multply="5"
           :min="0"
-          v-model="config.amount"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.size"
           :keyframe="false"
           label="尺寸"
           :step="1"
-          :dragMultply="1"
+          :drag-multply="1"
           :min="0"
-          v-model="config.size"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.opacity"
           :keyframe="false"
           label="透明度"
           :step="0.01"
-          :dragMultply="3"
+          :drag-multply="3"
           :min="0"
           :max="1"
-          v-model="config.opacity"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.floatRange"
           :keyframe="false"
           label="浮动范围"
           :step="0.1"
-          :dragMultply="3"
+          :drag-multply="3"
           :min="0"
-          v-model="config.floatRange"
-        ></de-controller-number>
+        />
         <de-controller-picker
+          v-model="config.refColor"
           :keyframe="false"
           label="颜色"
-          v-model="config.refColor"
-        ></de-controller-picker>
+        />
         <de-controller-number
+          v-model="config.colorRange"
           :keyframe="false"
           label="色彩范围"
           :step="0.01"
-          :dragMultply="3"
+          :drag-multply="3"
           :min="0"
           :max="1"
-          v-model="config.colorRange"
-        ></de-controller-number>
+        />
         <de-controller-select
+          v-model="config.alphaMap"
           :keyframe="false"
           label="粒子贴图"
           :options="textureList"
@@ -61,8 +62,7 @@
             label: 'name',
             value: 'vid',
           }"
-          v-model="config.alphaMap"
-        ></de-controller-select>
+        />
       </template>
     </de-collapse-layout>
   </div>

@@ -13,4 +13,6 @@ db.version(1).stores({
   component: "++id, classifyId, name, component, pkg, preview, size, delete",
   templateClassify: "++id, name, parentId, level, delete",
   template: "++id, classifyId, name, template, editor, preview, delete",
+  canvasClassify: "++id, name, parentId, level, delete",
+  canvas: "++id, classifyId, name, canvas, pkg, preview, size, delete",
 });

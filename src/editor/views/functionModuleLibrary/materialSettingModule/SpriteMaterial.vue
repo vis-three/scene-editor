@@ -3,70 +3,70 @@
     <de-collapse-layout
       label="参数设置"
       icon="#iconshezhi"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-picker
-          label="材质颜色"
           v-model="config.color"
+          label="材质颜色"
           :animation="{
             target: config,
             attrubute: 'color',
           }"
-        ></de-controller-picker>
+        />
         <de-controller-switch
+          v-model="config.sizeAttenuation"
           :keyframe="false"
           label="深度衰减"
-          v-model="config.sizeAttenuation"
-        ></de-controller-switch>
+        />
         <de-controller-number
+          v-model="config.rotation"
           label="转动角度"
           :step="0.01"
-          :dragMultply="3"
+          :drag-multply="3"
           :min="0"
-          :displayAccuracy="2"
+          :display-accuracy="2"
           unit="°"
-          v-model="config.rotation"
           :animation="{
             target: config,
             attrubute: 'rotation',
           }"
-        ></de-controller-number>
+        />
       </template>
     </de-collapse-layout>
     <de-collapse-layout
       label="贴图设置"
       icon="#icontexture"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-select
+          v-model="config.map"
           label="表面贴图"
           :options="textureList"
           :prop="{
             label: 'name',
             value: 'vid',
           }"
-          v-model="config.map"
           :animation="{
             target: config,
             attrubute: 'map',
           }"
-        ></de-controller-select>
+        />
 
         <de-controller-select
+          v-model="config.alphaMap"
           label="透明贴图"
           :options="textureList"
           :prop="{
             label: 'name',
             value: 'vid',
           }"
-          v-model="config.alphaMap"
           :animation="{
             target: config,
             attrubute: 'alphaMap',
           }"
-        ></de-controller-select>
+        />
       </template>
     </de-collapse-layout>
   </div>

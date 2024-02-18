@@ -8,10 +8,16 @@
     }"
   >
     <div slot="placeholder">
-      <img src="/image/loading.gif" alt="加载中" />
+      <img
+        src="/image/loading.gif"
+        alt="加载中"
+      >
     </div>
     <div slot="error">
-      <img src="/image/error.png" alt="加载失败" />
+      <img
+        src="/image/error.png"
+        alt="加载失败"
+      >
     </div>
   </el-image>
 </template>
@@ -19,7 +25,7 @@
 <script>
 import cacheManager from "./cacheManager";
 export default {
-  name: "vis-image",
+  name: "VisImage",
   props: {
     // 图标code
     src: {

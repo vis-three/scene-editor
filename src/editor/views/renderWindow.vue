@@ -1,64 +1,68 @@
 <template>
   <div class="renderWindow-container">
     <iframe
+      ref="renderMask"
       width="100%"
       height="100%"
       scrolling="no"
-      ref="renderMask"
       class="render-mask"
-    ></iframe>
+    />
     <div
-      class="render-window"
       ref="renderElement"
-      @click.stop="keyboardWatch"
+      class="render-window"
       tabindex="0"
-    ></div>
+      @click.stop="keyboardWatch"
+    />
 
     <position-layout-box
       class="bottom-function-box"
-      :offsetX="5"
-      :offsetY="5"
-      :isBottom="true"
+      :offset-x="5"
+      :offset-y="5"
+      :is-bottom="true"
     >
       <template #main>
         <render-viewpoint
           v-show="showRenderViewPoint"
           :viewpoint="currentViewPoint"
           @changeViewpoint="changeViewpoint"
-        ></render-viewpoint>
-        <auxiliary-display></auxiliary-display>
+        />
+        <auxiliary-display />
         <camera-viewpoint
           ref="cameraViewpoint"
           :viewpoint="currentViewPoint"
           @changeCamera="changeCamera"
-        ></camera-viewpoint>
-      </template>
-    </position-layout-box>
-
-    <position-layout-box class="top-function-box" :offsetX="5" :offsetY="5">
-      <template #main>
-        <performance-monitor></performance-monitor>
+        />
       </template>
     </position-layout-box>
 
     <position-layout-box
       class="top-function-box"
-      :offsetX="5"
-      :offsetY="35"
+      :offset-x="5"
+      :offset-y="5"
+    >
+      <template #main>
+        <performance-monitor />
+      </template>
+    </position-layout-box>
+
+    <position-layout-box
       v-show="draw"
+      class="top-function-box"
+      :offset-x="5"
+      :offset-y="35"
     >
       <template #main>
-        <path-drawing></path-drawing>
+        <path-drawing />
       </template>
     </position-layout-box>
 
     <position-layout-box
       class="top-function-box"
-      isRight
-      :offsetX="5"
-      :offsetY="5"
+      is-right
+      :offset-x="5"
+      :offset-y="5"
     >
-      <object-library slot="main"></object-library>
+      <object-library slot="main" />
     </position-layout-box>
   </div>
 </template>
@@ -73,9 +77,6 @@ import {
 } from "@vis-three/middleware";
 import { engine } from "@/editor/assets/js/vis";
 import appApi from "@/assets/js/api/app.js";
-import modelApi from "@/assets/js/api/model.js";
-import textureApi from "@/assets/js/api/texture.js";
-import componentApi from "@/assets/js/api/component.js";
 
 import positionLayoutBox from "@/editor/components/positionLayoutBox.vue";
 // import dragMoveBox from '@/editor//components/dragMoveBox'
@@ -134,20 +135,6 @@ export default {
       return this.$store.getters["path/draw"];
     },
   },
-  methods: {
-    // 相机视角改名
-    changeCamera(vid) {
-      this.showRenderViewPoint = !vid;
-    },
-    // 更改视角
-    changeViewpoint(value) {
-      this.currentViewPoint = value;
-    },
-    // 快捷键应用
-    keyboardWatch() {
-      engine.keyboardManager.watch(this.$refs.renderElement);
-    },
-  },
   watch: {
     viewpoint: {
       handler(newVal) {
@@ -198,98 +185,10 @@ export default {
       loading.close();
     });
 
-    let config = appMessage.app || {};
-    let configJson = JSON.stringify(config, JSONHandler.stringify);
-    let editorConfig = appMessage.editor || {};
-
-    !config.assets && (config.assets = []);
-
-    const assetsPromise = [];
-
-    config.assets.forEach((item) => {
-      if (item.module === "model") {
-        assetsPromise.push(
-          new Promise((resolve, reject) => {
-            modelApi
-              .getModel(item.id)
-              .then((file) => {
-                const url = URL.createObjectURL(file.model);
-                this.$store.commit("cacheUrl", {
-                  module: "model",
-                  file,
-                  url,
-                });
-
-                configJson = configJson.replace(
-                  new RegExp(`<${item.module}-${item.id}>`, "g"),
-                  url
-                );
-                resolve({ url, ext: file.ext });
-              })
-              .catch(reject);
-          })
-        );
-      } else if (item.module === "texture") {
-        assetsPromise.push(
-          new Promise((resolve, reject) => {
-            textureApi
-              .getTexture(item.id)
-              .then((file) => {
-                const url = URL.createObjectURL(file.texture);
-                this.$store.commit("cacheUrl", {
-                  module: "texture",
-                  file,
-                  url,
-                });
-                configJson = configJson.replace(
-                  new RegExp(`<${item.module}-${item.id}>`, "g"),
-                  url
-                );
-                resolve({ url, ext: file.ext });
-              })
-              .catch(reject);
-          })
-        );
-      }
-    });
-
-    !config.component && (config.component = []);
-    const componentsPromise = [];
-
-    config.component.forEach((item) => {
-      const [module, id] = item.$url.slice(1, -1).split("-");
-      componentsPromise.push(
-        new Promise((resolve, reject) => {
-          componentApi.getComponent(id).then((file) => {
-            const url = URL.createObjectURL(file.component);
-            this.$store.commit("cacheUrl", {
-              module: "component",
-              file,
-              url,
-            });
-
-            configJson = configJson.replace(
-              new RegExp(`<${module}-${id}>`, "g"),
-              url
-            );
-
-            item.$url = url;
-            item.$pkg = file.pkg;
-
-            resolve(item);
-          });
-        })
-      );
-    });
-
-    config.assets = await Promise.all(assetsPromise);
-    config.component = await Promise.all(componentsPromise);
-
-    configJson = JSON.parse(configJson, JSONHandler.parse);
-    configJson.assets = config.assets;
-    configJson.component = config.component;
-
-    config = configJson;
+    let config = await this.$store.dispatch(
+      "assetsTransform",
+      appMessage.app || {}
+    );
 
     config = Template.handler(
       config,
@@ -298,7 +197,7 @@ export default {
           strict: false,
         }),
       {
-        filter: ["assets", "component"],
+        filter: ["assets", "component", "canvasAssets", "canvas"],
       }
     );
 
@@ -310,6 +209,13 @@ export default {
         });
       });
 
+      res.canvas.forEach((canvas) => {
+        this.$store.commit("canvas/add", {
+          config: canvas.config,
+          configuration: canvas.packageJSON.configuration,
+        });
+      });
+
       this.$store.commit(
         "renderer/webGLRenderer",
         uniqueSymbol(CONFIGTYPE.WEBGLRENDERER)
@@ -317,10 +223,24 @@ export default {
       this.$store.commit("scene/currentScene", uniqueSymbol(CONFIGTYPE.SCENE));
       this.$store.commit("notifyAll");
 
-      this.$store.dispatch("initEditorConfig", editorConfig);
+      this.$store.dispatch("initEditorConfig", appMessage.editor);
     });
 
     loading.close();
+  },
+  methods: {
+    // 相机视角改名
+    changeCamera(vid) {
+      this.showRenderViewPoint = !vid;
+    },
+    // 更改视角
+    changeViewpoint(value) {
+      this.currentViewPoint = value;
+    },
+    // 快捷键应用
+    keyboardWatch() {
+      engine.keyboardManager.watch(this.$refs.renderElement);
+    },
   },
 };
 </script>

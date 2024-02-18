@@ -7,39 +7,39 @@
   >
     <template #controller>
       <div class="vector3-controller">
-        <span v-text="elemLabel.x"></span>
+        <span v-text="elemLabel.x" />
         <number-controller
-          :step="step"
-          :dragMultply="dragMultply"
-          :min="min"
-          :max="max"
-          :unit="unit"
-          :showButton="false"
-          :displayAccuracy="displayAccuracy"
           v-model="xValue"
-        ></number-controller>
-        <span v-text="elemLabel.y"></span>
-        <number-controller
           :step="step"
-          :dragMultply="dragMultply"
+          :drag-multply="dragMultply"
           :min="min"
           :max="max"
           :unit="unit"
-          :showButton="false"
-          :displayAccuracy="displayAccuracy"
+          :show-button="false"
+          :display-accuracy="displayAccuracy"
+        />
+        <span v-text="elemLabel.y" />
+        <number-controller
           v-model="yValue"
-        ></number-controller>
-        <span v-text="elemLabel.z"></span>
-        <number-controller
           :step="step"
-          :dragMultply="dragMultply"
+          :drag-multply="dragMultply"
           :min="min"
           :max="max"
           :unit="unit"
-          :showButton="false"
-          :displayAccuracy="displayAccuracy"
+          :show-button="false"
+          :display-accuracy="displayAccuracy"
+        />
+        <span v-text="elemLabel.z" />
+        <number-controller
           v-model="zValue"
-        ></number-controller>
+          :step="step"
+          :drag-multply="dragMultply"
+          :min="min"
+          :max="max"
+          :unit="unit"
+          :show-button="false"
+          :display-accuracy="displayAccuracy"
+        />
       </div>
     </template>
   </control-layout>
@@ -50,7 +50,7 @@ import controlLayout from "./controlLayout.vue";
 import numberController from "./numberController.vue";
 import { InterpolateLinear } from "three";
 export default {
-  name: "de-controller-vector3",
+  name: "DeControllerVector3",
   components: {
     controlLayout,
     numberController,

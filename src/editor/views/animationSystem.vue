@@ -2,7 +2,7 @@
   <div class="animationSystem-container">
     <drag-trans-box
       class="animationSystem-operationController"
-      rightDrag
+      right-drag
       :size="areaSetting.size"
       @draging="(result) => draging(result, areaSetting)"
       @draged="
@@ -13,13 +13,13 @@
     >
       <operation-controller
         @scrollHandler="scrollHandler"
-      ></operation-controller>
+      />
     </drag-trans-box>
     <div
       class="animationSystem-trackController"
       :style="{ width: `${trackControllerWidth}px` }"
     >
-      <track-controller :scrollTop="scrollTop"></track-controller>
+      <track-controller :scroll-top="scrollTop" />
     </div>
   </div>
 </template>
@@ -55,6 +55,19 @@ export default {
       return this.windowInnerWidth - this.areaSetting.size;
     },
   },
+  watch: {
+    trackControllerWidth: {
+      handler(newVal) {
+        this.$store.commit("animation/trackWidth", newVal - 10);
+      },
+      immediate: true,
+    },
+  },
+  mounted() {
+    window.addEventListener("resize", () => {
+      this.windowInnerWidth = window.innerWidth;
+    });
+  },
   methods: {
     scrollHandler(value) {
       this.scrollTop = value;
@@ -68,19 +81,6 @@ export default {
       }
       setting.size = resultSize;
     },
-  },
-  watch: {
-    trackControllerWidth: {
-      handler(newVal) {
-        this.$store.commit("animation/trackWidth", newVal - 10);
-      },
-      immediate: true,
-    },
-  },
-  mounted() {
-    window.addEventListener("resize", () => {
-      this.windowInnerWidth = window.innerWidth;
-    });
   },
 };
 </script>

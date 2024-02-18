@@ -1,12 +1,15 @@
 <template>
   <div class="topNavigationFunctionElem-container">
     <div
+      v-tooltip.top="tooltip"
       class="elem-button"
       :class="{ active: active }"
-      v-tooltip.top="tooltip"
     >
       <slot>
-        <vis-icon :code="icon" :size="size"></vis-icon>
+        <vis-icon
+          :code="icon"
+          :size="size"
+        />
       </slot>
     </div>
     <!-- <span class="elem-label" v-text="tooltip"></span> -->
@@ -15,7 +18,7 @@
 
 <script>
 export default {
-  name: "top-navigation-function-elem",
+  name: "TopNavigationFunctionElem",
   props: {
     icon: {
       type: String,

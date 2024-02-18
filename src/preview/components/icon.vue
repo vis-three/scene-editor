@@ -6,15 +6,18 @@
       color: color,
     }"
   >
-    <svg class="icon" aria-hidden="true">
-      <use :xlink:href="code"></use>
+    <svg
+      class="icon"
+      aria-hidden="true"
+    >
+      <use :xlink:href="code" />
     </svg>
   </div>
 </template>
 
 <script>
 export default {
-  name: "vis-icon",
+  name: "VisIcon",
   props: {
     // 图标code
     code: {

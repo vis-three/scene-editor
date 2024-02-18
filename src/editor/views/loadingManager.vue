@@ -1,11 +1,18 @@
 <template>
-  <div class="loadingManager-container" v-show="showLoading">
+  <div
+    v-show="showLoading"
+    class="loadingManager-container"
+  >
     <div class="loadingManage-main">
-      <div v-if="loadError" class="loadingManager-close" @click="close">
-        <vis-icon code="#iconguanbi"></vis-icon>
+      <div
+        v-if="loadError"
+        class="loadingManager-close"
+        @click="close"
+      >
+        <vis-icon code="#iconguanbi" />
       </div>
       <div class="progress-title">
-        <vis-icon code="#iconwenjian"></vis-icon>
+        <vis-icon code="#iconwenjian" />
         正在加载：{{ title }}
       </div>
       <div class="overall-progress-box">
@@ -16,12 +23,12 @@
               width: `${overllProgress}%`,
               backgroundColor: loadError ? '#FF4C4C' : null,
             }"
-          ></div>
+          />
         </div>
         <span
           class="overall-number"
           v-text="`${loadSuccess}/${loadTotal}`"
-        ></span>
+        />
       </div>
       <div class="detail-progress-box">
         <div
@@ -38,24 +45,33 @@
             :style="{
               transform: showDetail ? 'rotate(0)' : 'rotate(-90deg)',
             }"
-          ></vis-icon>
+          />
         </div>
-        <div v-if="showDetail" class="detail-message">
+        <div
+          v-if="showDetail"
+          class="detail-message"
+        >
           <div
-            class="detail-item"
             v-for="(item, index) in loadDetailMap"
             :key="index"
+            class="detail-item"
             :style="{ color: item.error ? '#FF4C4C' : null }"
           >
-            <span class="detail-url" v-text="item.url"></span>
+            <span
+              class="detail-url"
+              v-text="item.url"
+            />
             <template v-if="!item.error">
-              <span class="detail-seat"></span>
+              <span class="detail-seat" />
               <span
                 class="detail-number"
                 v-text="`${item.progress * 100}%`"
-              ></span>
+              />
             </template>
-            <span v-else v-text="item.message"></span>
+            <span
+              v-else
+              v-text="item.message"
+            />
           </div>
         </div>
       </div>
@@ -87,11 +103,6 @@ export default {
       }
     },
   },
-  methods: {
-    close() {
-      this.showLoading = false;
-    },
-  },
   mounted() {
     const loaderManager = engine.loaderManager;
 
@@ -119,6 +130,11 @@ export default {
       this.title = event.url;
       this.loadDetailMap = loaderManager.getLoadDetailMap();
     });
+  },
+  methods: {
+    close() {
+      this.showLoading = false;
+    },
   },
 };
 </script>

@@ -1,14 +1,22 @@
 <template>
   <div class="timeAxis-conatainer">
-    <div class="timeAxis-keyframe-list" @click="jumpTime">
+    <div
+      class="timeAxis-keyframe-list"
+      @click="jumpTime"
+    >
       <div
-        class="timeAxis-keyframe"
         v-for="(item, index) in timeKeyframeList"
         :key="index"
+        class="timeAxis-keyframe"
         :style="{ left: `${item.position}%` }"
       >
-        <div class="time" v-text="item.text"></div>
-        <div class="axis">|</div>
+        <div
+          class="time"
+          v-text="item.text"
+        />
+        <div class="axis">
+          |
+        </div>
       </div>
     </div>
     <div
@@ -17,7 +25,10 @@
       @mousedown="pointerMousedown"
     >
       <div class="pointer-header">
-        <vis-icon code="#iconzhencopy" color="yellow"></vis-icon>
+        <vis-icon
+          code="#iconzhencopy"
+          color="yellow"
+        />
       </div>
     </div>
   </div>
@@ -95,45 +106,6 @@ export default {
       return (this.currentFrame / this.totalFrame) * 100;
     },
   },
-  methods: {
-    pointerMousedown($event) {
-      const unitMoveDistance =
-        this.exactWidth / (this.totalDuration * this.fps);
-      this.bufferCurrentFrame = this.currentFrame;
-      const dragFun = (moveEvent) => {
-        // 设置鼠标指针
-        document.body.style.cursor = "ew-resize";
-        if (!this.canMove) {
-          return false;
-        } else {
-          this.timer = setTimeout(() => {
-            const moveX = moveEvent.clientX - $event.clientX;
-            const moveFrame = Math.floor(moveX / unitMoveDistance);
-            const currentFrame = this.bufferCurrentFrame + moveFrame;
-            if (currentFrame !== this.currentFrame) {
-              this.$store.commit("animation/currentFrame", currentFrame);
-            }
-            this.canMove = true;
-          }, this.throttleTime);
-        }
-      };
-      const removeFun = () => {
-        document.body.style.cursor = "default";
-        document.removeEventListener("mousemove", dragFun);
-        document.removeEventListener("mouseup", removeFun);
-      };
-
-      document.addEventListener("mousemove", dragFun);
-      document.addEventListener("mouseup", removeFun);
-    },
-    jumpTime($event) {
-      // 获取当下点击位置的时间
-      const time = ($event.offsetX / this.exactWidth) * this.totalDuration;
-      // 根据fps算出最近的帧时间
-      const currentFrame = Math.ceil(time * this.fps) - 1;
-      this.$store.commit("animation/currentFrame", currentFrame);
-    },
-  },
   watch: {
     currentMutiply: {
       handler(newValue, oldValue) {
@@ -189,6 +161,45 @@ export default {
   },
   created() {
     this.bufferCurrentFrame = this.currentFrame;
+  },
+  methods: {
+    pointerMousedown($event) {
+      const unitMoveDistance =
+        this.exactWidth / (this.totalDuration * this.fps);
+      this.bufferCurrentFrame = this.currentFrame;
+      const dragFun = (moveEvent) => {
+        // 设置鼠标指针
+        document.body.style.cursor = "ew-resize";
+        if (!this.canMove) {
+          return false;
+        } else {
+          this.timer = setTimeout(() => {
+            const moveX = moveEvent.clientX - $event.clientX;
+            const moveFrame = Math.floor(moveX / unitMoveDistance);
+            const currentFrame = this.bufferCurrentFrame + moveFrame;
+            if (currentFrame !== this.currentFrame) {
+              this.$store.commit("animation/currentFrame", currentFrame);
+            }
+            this.canMove = true;
+          }, this.throttleTime);
+        }
+      };
+      const removeFun = () => {
+        document.body.style.cursor = "default";
+        document.removeEventListener("mousemove", dragFun);
+        document.removeEventListener("mouseup", removeFun);
+      };
+
+      document.addEventListener("mousemove", dragFun);
+      document.addEventListener("mouseup", removeFun);
+    },
+    jumpTime($event) {
+      // 获取当下点击位置的时间
+      const time = ($event.offsetX / this.exactWidth) * this.totalDuration;
+      // 根据fps算出最近的帧时间
+      const currentFrame = Math.ceil(time * this.fps) - 1;
+      this.$store.commit("animation/currentFrame", currentFrame);
+    },
   },
 };
 </script>

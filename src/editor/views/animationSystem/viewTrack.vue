@@ -8,9 +8,18 @@
           width: `${scrollBarWidth}%`,
         }"
       >
-        <div class="scroll-arrow" @mousedown="stretchLeft"></div>
-        <div class="scroll-bar" @mousedown="scrollTrack"></div>
-        <div class="scroll-arrow" @mousedown="stretchRight"></div>
+        <div
+          class="scroll-arrow"
+          @mousedown="stretchLeft"
+        />
+        <div
+          class="scroll-bar"
+          @mousedown="scrollTrack"
+        />
+        <div
+          class="scroll-arrow"
+          @mousedown="stretchRight"
+        />
       </div>
     </div>
     <div class="viewTrack-veiw">
@@ -22,7 +31,7 @@
         }"
       >
         <div class="viewTrack-exact-slot">
-          <slot :exactWidth="exactWidth"></slot>
+          <slot :exact-width="exactWidth" />
         </div>
       </div>
     </div>

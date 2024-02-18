@@ -1,5 +1,8 @@
 <template>
-  <div class="number-controller" :class="{ 'draging-box': draging }">
+  <div
+    class="number-controller"
+    :class="{ 'draging-box': draging }"
+  >
     <div
       v-if="showButton"
       v-show="!draging"
@@ -10,22 +13,25 @@
         }
       "
     >
-      <vis-icon code="#iconbianjiantouzuo"></vis-icon>
+      <vis-icon code="#iconbianjiantouzuo" />
     </div>
-    <div class="input-box" @mousedown.stop="mousedown">
+    <div
+      class="input-box"
+      @mousedown.stop="mousedown"
+    >
       <span
         v-if="!editing"
         class="input-elem"
         v-text="`${inputValue}${unit}`"
-      ></span>
+      />
       <input
         v-else
+        ref="input"
         class="input-elem"
         type="text"
         :value="inputValue"
-        ref="input"
         @change="inputChange"
-      />
+      >
     </div>
     <div
       v-if="showButton"
@@ -37,7 +43,7 @@
         }
       "
     >
-      <vis-icon code="#iconbianjiantouyou"></vis-icon>
+      <vis-icon code="#iconbianjiantouyou" />
     </div>
   </div>
 </template>

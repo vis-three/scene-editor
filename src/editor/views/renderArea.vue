@@ -16,15 +16,15 @@
         :style="{ width: '100%', height: `${leftTopAreaHeight}%` }"
       >
         <render-window
-          sign="first"
           ref="renderWindowFirst"
+          sign="first"
           :play="areaNum > 0"
-        ></render-window>
+        />
         <div
           v-if="areaNum > 2"
           class="bottom-drag-line"
           @mousedown="dragStart($event, 'bottomLeft')"
-        ></div>
+        />
       </div>
       <div
         v-if="areaNum > 2"
@@ -32,17 +32,17 @@
         :style="{ width: '100%', height: `${100 - leftTopAreaHeight}%` }"
       >
         <render-window
+          ref="renderWindowThird"
           sign="third"
           viewpoint="right"
-          ref="renderWindowThird"
           :play="areaNum > 2"
-        ></render-window>
+        />
       </div>
       <div
         v-if="areaNum > 1"
         class="middle-drag-line"
         @mousedown="dragStart($event, 'middle')"
-      ></div>
+      />
     </div>
     <!-- 大窗口1 END -->
     <!-- 大窗口2 STR -->
@@ -58,16 +58,16 @@
         :style="{ width: '100%', height: `${rightTopAreaHeight}%` }"
       >
         <render-window
+          ref="renderWindowSecond"
           sign="second"
           viewpoint="front"
-          ref="renderWindowSecond"
           :play="areaNum > 1"
-        ></render-window>
+        />
         <div
           v-if="areaNum > 3"
           class="bottom-drag-line"
           @mousedown="dragStart($event, 'bottomRight')"
-        ></div>
+        />
       </div>
       <div
         v-if="areaNum > 3"
@@ -75,11 +75,11 @@
         :style="{ width: '100%', height: `${100 - rightTopAreaHeight}%` }"
       >
         <render-window
+          ref="renderWindowFouth"
           sign="fouth"
           viewpoint="top"
-          ref="renderWindowFouth"
           :play="areaNum > 3"
-        ></render-window>
+        />
       </div>
     </div>
     <!-- 大窗口2 STR -->
@@ -139,6 +139,7 @@ export default {
       return this.areaNum > 3 ? this.rightAreaHeight : 100; // %
     },
   },
+  mounted() {},
   methods: {
     // 拖动开始
     dragStart($event, cursor) {
@@ -195,7 +196,6 @@ export default {
       document.addEventListener("mouseup", removeFun);
     },
   },
-  mounted() {},
 };
 </script>
 

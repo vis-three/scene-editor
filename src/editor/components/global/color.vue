@@ -7,13 +7,16 @@
   >
     <template #controller>
       <div class="color-controller">
-        <el-input v-model="inputValue" size="mini"></el-input>
-        <el-color-picker
-          size="mini"
+        <el-input
           v-model="inputValue"
+          size="mini"
+        />
+        <el-color-picker
+          v-model="inputValue"
+          size="mini"
           :show-alpha="showAlpha"
           :color-format="colorFormat"
-        ></el-color-picker>
+        />
       </div>
     </template>
   </control-layout>
@@ -24,7 +27,7 @@ import controlLayout from "./controlLayout.vue";
 import { InterpolateLinear } from "three";
 // import { Photoshop } from 'vue-color'
 export default {
-  name: "de-controller-picker",
+  name: "DeControllerPicker",
   components: {
     controlLayout,
     // 'photoshop-picker': Photoshop

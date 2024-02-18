@@ -7,15 +7,25 @@
     :visible.sync="showFlag"
   >
     <div
-      class="editor-main"
       ref="editor"
+      class="editor-main"
       :style="{
         height: `${size.height}px`,
       }"
-    ></div>
-    <span slot="footer" class="dialog-footer">
-      <el-button size="mini" @click="cancel">取 消</el-button>
-      <el-button size="mini" type="primary" @click="confirm">确 定</el-button>
+    />
+    <span
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button
+        size="mini"
+        @click="cancel"
+      >取 消</el-button>
+      <el-button
+        size="mini"
+        type="primary"
+        @click="confirm"
+      >确 定</el-button>
     </span>
   </el-dialog>
 </template>
@@ -53,6 +63,15 @@ export default {
       cancelFun: () => {},
     };
   },
+  mounted() {
+    this.$nextTick(() => {
+      this.cache.editor = monaco.editor.create(this.$refs.editor, {
+        theme: "vs-dark",
+        language: "json",
+      });
+      this.showFlag = false;
+    });
+  },
   methods: {
     show(status, title, handler = { confirm: () => {}, cancel: () => {} }) {
       this.showFlag = status;
@@ -82,15 +101,6 @@ export default {
       this.confirmFun(data);
       this.show(false);
     },
-  },
-  mounted() {
-    this.$nextTick(() => {
-      this.cache.editor = monaco.editor.create(this.$refs.editor, {
-        theme: "vs-dark",
-        language: "json",
-      });
-      this.showFlag = false;
-    });
   },
 };
 </script>

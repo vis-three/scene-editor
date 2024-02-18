@@ -1,6 +1,6 @@
 <template>
   <div class="modelLibrary-container">
-    <file-system class="file-system"></file-system>
+    <file-system class="file-system" />
   </div>
 </template>
 

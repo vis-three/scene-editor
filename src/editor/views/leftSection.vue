@@ -1,8 +1,12 @@
 <template>
   <div class="leftSection-container">
-    <drag-plane height="100%" width="100%" :showDragsign="false">
-      <scene-manager slot="view1"></scene-manager>
-      <scene-structure slot="view2"></scene-structure>
+    <drag-plane
+      height="100%"
+      width="100%"
+      :show-dragsign="false"
+    >
+      <scene-manager slot="view1" />
+      <scene-structure slot="view2" />
     </drag-plane>
   </div>
 </template>

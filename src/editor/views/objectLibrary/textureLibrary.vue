@@ -5,8 +5,11 @@
         size="mini"
         prefix-icon="el-icon-search"
         placeholder="贴图筛选"
-      ></el-input>
-      <el-dropdown trigger="click" @command="addtexture">
+      />
+      <el-dropdown
+        trigger="click"
+        @command="addtexture"
+      >
         <el-button
           size="mini"
           icon="el-icon-circle-plus-outline"
@@ -18,9 +21,9 @@
           <el-dropdown-item
             v-for="(item, index) in texture"
             :key="index"
-            v-text="item.label"
             :command="item"
-          ></el-dropdown-item>
+            v-text="item.label"
+          />
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -28,59 +31,61 @@
     <div class="box-container">
       <div class="texture-main">
         <div
-          class="texture-elem"
           v-for="(item, index) in textureList"
           :key="index"
+          class="texture-elem"
         >
           <div
-            class="render-box"
-            :class="{ active: active.vid === item.vid }"
             :id="item.vid"
             :ref="item.vid"
+            class="render-box"
+            :class="{ active: active.vid === item.vid }"
             @click="
               () => {
                 $store.commit('texture/setCurrentTexture', item.vid);
               }
             "
-          ></div>
+          />
           <div
-            class="operate-box"
             v-tooltip.top="'删除'"
+            class="operate-box"
             @click="deleteTexture(item)"
           >
-            <vis-icon code="#iconshanchu" color="red"></vis-icon>
+            <vis-icon
+              code="#iconshanchu"
+              color="red"
+            />
           </div>
           <div
+            v-tooltip.bottom="item.name"
             class="element-title"
             v-text="item.name"
-            v-tooltip.bottom="item.name"
-          ></div>
+          />
         </div>
       </div>
     </div>
 
-    <file-system ref="fileSystem"></file-system>
+    <texture-file-system ref="textureFileSystem" />
+    <canvas-file-system ref="canvasFileSystem" />
   </div>
 </template>
 
 <script>
 import { engine, textureDisplayer } from "@/editor/assets/js/vis";
 import {
-  EquirectangularRefractionMapping,
-  LinearEncoding,
-  LinearFilter,
-} from "three";
-import {
   CONFIGTYPE,
   createSymbol,
   generateConfig,
 } from "@vis-three/middleware";
+import { Message } from "element-ui";
 
-const fileSystem = () => import("./textureLibrary/fileSystem.vue");
+const textureFileSystem = () => import("./textureLibrary/fileSystem.vue");
+const canvasFileSystem = () => import("./canvasLibrary/fileSystem.vue");
 
 export default {
   components: {
-    fileSystem,
+    textureFileSystem,
+    canvasFileSystem,
   },
   data() {
     return {
@@ -105,6 +110,11 @@ export default {
           label: "加载贴图",
           type: CONFIGTYPE.LOADTEXTURE,
         },
+        {
+          icon: "#icontexture",
+          label: "画布贴图",
+          type: CONFIGTYPE.CANVASTEXTURE,
+        },
       ],
       canvasMap: {}, // 材质展示器的map ： vid --> displayer
       watchMap: {}, // 监听器的map: vid --> $watch
@@ -121,23 +131,71 @@ export default {
       return this.$store.getters.urls;
     },
   },
+
+  watch: {
+    textureList: {
+      handler(newValue, oldValue) {
+        this.$nextTick(() => {
+          Object.keys(newValue).forEach((vid) => {
+            // 生成展示器
+            if (!this.$refs[vid]) {
+              console.error(`can not found this dom: '${vid}'`);
+              return false;
+            }
+
+            if (this.canvasMap[vid]) {
+              return false;
+            }
+
+            const targetDom = this.$refs[vid][0];
+            const canvas = document.createElement("canvas");
+
+            canvas.setAttribute("width", 75);
+            canvas.setAttribute("height", 55);
+
+            targetDom.appendChild(canvas);
+
+            this.canvasMap[vid] = canvas;
+
+            // 主动监听当前对象的属性改变更新displayer
+            this.watchMap[vid] = this.$watch(
+              function () {
+                return this.textureList[vid];
+              },
+              (newVal) => {
+                this.updateTextureDisplay(vid);
+              },
+              {
+                deep: true,
+                immediate: true,
+              }
+            );
+          });
+        });
+      },
+      immediate: true,
+    },
+  },
   methods: {
     // 添加贴图方法
     addtexture(item) {
-      this.$refs.fileSystem.open({
-        confirm: ({ files: textureList }) => {
-          console.log(textureList);
-          if (item.type === CONFIGTYPE.CUBETEXTURE) {
-            this.loadCubeTexture(textureList);
-            return;
-          }
-          if (item.type === CONFIGTYPE.LOADTEXTURE) {
-            this.loadLoadTexture(textureList);
-            return;
-          }
-          this.loadTexture(textureList, item.type);
-        },
-      });
+      if (item.type === CONFIGTYPE.CANVASTEXTURE) {
+        this.loadCanvasTexture(item);
+      } else {
+        this.$refs.textureFileSystem.open({
+          confirm: ({ files: textureList }) => {
+            if (item.type === CONFIGTYPE.CUBETEXTURE) {
+              this.loadCubeTexture(textureList);
+              return;
+            }
+            if (item.type === CONFIGTYPE.LOADTEXTURE) {
+              this.loadLoadTexture(textureList);
+              return;
+            }
+            this.loadTexture(textureList, item.type);
+          },
+        });
+      }
     },
 
     loadTexture(textureList, configType) {
@@ -162,6 +220,53 @@ export default {
             this.$store.commit("texture/add", config);
           });
         });
+    },
+
+    loadCanvasTexture(item) {
+      this.$refs.canvasFileSystem.open({
+        confirm: async ({ files }) => {
+          const vid = createSymbol();
+          const texture = generateConfig(item.type, {
+            vid,
+            name: `${item.label}-${vid.slice(-2)}`,
+          });
+          this.$store.commit("texture/add", texture);
+
+          const file = files[0];
+
+          const urls = this.$store.getters.urls;
+
+          let url = urls[`canvas-${file.id}`];
+
+          if (!url) {
+            url = URL.createObjectURL(file.canvas);
+            this.$store.commit("cacheUrl", {
+              module: "canvas",
+              file,
+              url,
+            });
+          }
+
+          const loading = Message.loading("正在生成贴图...");
+
+          const { config, packageJSON } = await engine.generateCanvas(
+            url,
+            file.pkg,
+            {
+              $cid: createSymbol(),
+            }
+          );
+          this.$store.commit("canvas/add", {
+            config,
+            configuration: packageJSON.configuration,
+          });
+
+          loading.close();
+
+          texture.url = config.$cid;
+          engine.canvasManager.eventDocking(config.$cid, texture);
+        },
+      });
     },
 
     loadCubeTexture(textureList) {
@@ -285,51 +390,6 @@ export default {
           message: `删除成功! 影响了：${num} 个材质。`,
         });
       });
-    },
-  },
-
-  watch: {
-    textureList: {
-      handler(newValue, oldValue) {
-        this.$nextTick(() => {
-          Object.keys(newValue).forEach((vid) => {
-            // 生成展示器
-            if (!this.$refs[vid]) {
-              console.error(`can not found this dom: '${vid}'`);
-              return false;
-            }
-
-            if (this.canvasMap[vid]) {
-              return false;
-            }
-
-            const targetDom = this.$refs[vid][0];
-            const canvas = document.createElement("canvas");
-
-            canvas.setAttribute("width", 75);
-            canvas.setAttribute("height", 55);
-
-            targetDom.appendChild(canvas);
-
-            this.canvasMap[vid] = canvas;
-
-            // 主动监听当前对象的属性改变更新displayer
-            this.watchMap[vid] = this.$watch(
-              function () {
-                return this.textureList[vid];
-              },
-              (newVal) => {
-                this.updateTextureDisplay(vid);
-              },
-              {
-                deep: true,
-                immediate: true,
-              }
-            );
-          });
-        });
-      },
-      immediate: true,
     },
   },
 };

@@ -1,43 +1,47 @@
 <template>
   <div class="AmbientLight-container">
-    <de-collapse-layout label="设置" icon="#iconshezhi" arrowPosition="left">
+    <de-collapse-layout
+      label="设置"
+      icon="#iconshezhi"
+      arrow-position="left"
+    >
       <template #container>
         <de-controller-picker
+          v-model="config.color"
           label="颜色"
           :animation="{
             target: config.vid,
             attribute: 'color',
           }"
-          v-model="config.color"
-        ></de-controller-picker>
+        />
         <de-controller-number
+          v-model="config.intensity"
           label="亮度"
           :step="0.1"
-          :dragMultply="10"
+          :drag-multply="10"
           :min="0"
-          :displayAccuracy="1"
+          :display-accuracy="1"
           :animation="{
             target: config.vid,
             attribute: 'intensity',
           }"
-          v-model="config.intensity"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.width"
           :keyframe="false"
           label="宽度"
           :step="1"
-          :dragMultply="5"
+          :drag-multply="5"
           :min="0"
-          v-model="config.width"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.height"
           :keyframe="false"
           label="高度"
           :step="1"
-          :dragMultply="5"
+          :drag-multply="5"
           :min="0"
-          v-model="config.height"
-        ></de-controller-number>
+        />
       </template>
     </de-collapse-layout>
   </div>

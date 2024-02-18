@@ -1,31 +1,35 @@
 <template>
   <div class="VisUnrealBloomPass-container">
-    <de-collapse-layout label="设置" icon="#iconshezhi" arrowPosition="left">
+    <de-collapse-layout
+      label="设置"
+      icon="#iconshezhi"
+      arrow-position="left"
+    >
       <template #container>
         <de-controller-number
+          v-model="config.resolution.x"
           label="宽分辨率"
           :step="0.01"
-          :dragMultply="3"
+          :drag-multply="3"
           :min="0"
-          :displayAccuracy="2"
+          :display-accuracy="2"
           :animation="{
             target: config.vid,
             attribute: 'resolution.x',
           }"
-          v-model="config.resolution.x"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.resolution.y"
           label="高分辨率"
           :step="0.01"
-          :dragMultply="3"
+          :drag-multply="3"
           :min="0"
-          :displayAccuracy="2"
+          :display-accuracy="2"
           :animation="{
             target: config.vid,
             attribute: 'resolution.y',
           }"
-          v-model="config.resolution.y"
-        ></de-controller-number>
+        />
       </template>
     </de-collapse-layout>
   </div>

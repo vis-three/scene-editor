@@ -3,39 +3,40 @@
     <de-collapse-layout
       label="参数设置"
       icon="#iconshezhi"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-picker
+          v-model="config.color"
           :keyframe="false"
           label="材质颜色"
-          v-model="config.color"
-        ></de-controller-picker>
+        />
         <de-controller-switch
+          v-model="config.sizeAttenuation"
           :keyframe="false"
           label="深度衰减"
-          v-model="config.sizeAttenuation"
-        ></de-controller-switch>
+        />
         <de-controller-number
+          v-model="config.size"
           label="点大小"
           :step="0.1"
-          :dragMultply="5"
+          :drag-multply="5"
           :min="0"
-          v-model="config.size"
           :animation="{
             target: config,
             attribute: 'size',
           }"
-        ></de-controller-number>
+        />
       </template>
     </de-collapse-layout>
     <de-collapse-layout
       label="贴图设置"
       icon="#icontexture"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-select
+          v-model="config.map"
           :keyframe="false"
           label="表面贴图"
           :options="textureList"
@@ -43,10 +44,10 @@
             label: 'name',
             value: 'vid',
           }"
-          v-model="config.map"
-        ></de-controller-select>
+        />
 
         <de-controller-select
+          v-model="config.alphaMap"
           :keyframe="false"
           label="透明贴图"
           :options="textureList"
@@ -54,8 +55,7 @@
             label: 'name',
             value: 'vid',
           }"
-          v-model="config.alphaMap"
-        ></de-controller-select>
+        />
       </template>
     </de-collapse-layout>
   </div>

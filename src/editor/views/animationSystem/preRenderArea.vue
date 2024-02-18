@@ -6,7 +6,7 @@
         left: arrowLeftOffset,
       }"
       @mousedown="stretchLeft"
-    ></div>
+    />
     <div
       class="preRenderArea-bar"
       :style="{
@@ -14,15 +14,15 @@
         left: `${scrollBarLeft}%`,
       }"
       @mousedown="scrollTrack"
-    ></div>
+    />
     <div class="preRenderArea-ready-box">
       <div
+        v-for="(item, index) in totalFrame"
+        :key="index"
         class="area-ready"
         :class="{ ready: cacheSignMap[index] }"
-        v-for="(item, index) in totalFrame"
         :data-ready="index"
-        :key="index"
-      ></div>
+      />
     </div>
     <div
       class="preRenderArea-arrow"
@@ -30,7 +30,7 @@
         left: `${arrowRightOffset}%`,
       }"
       @mousedown="stretchRight"
-    ></div>
+    />
   </div>
 </template>
 

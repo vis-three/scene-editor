@@ -3,65 +3,65 @@
     <de-collapse-layout
       label="形状"
       icon="#iconjichubianhuan"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-number
+          v-model="config.radius"
           :keyframe="false"
           label="底部半径"
           :step="1"
           :min="0"
-          v-model="config.radius"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.height"
           :keyframe="false"
           label="高度"
           :step="1"
           :min="0"
-          v-model="config.height"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="config.radialSegments"
           :keyframe="false"
           label="侧面分段"
           :step="1"
           :min="3"
-          v-model="config.radialSegments"
-        ></de-controller-number>
+        />
       </template>
     </de-collapse-layout>
     <de-collapse-layout
       label="高级"
       icon="#iconzhuanshupeizhi"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-switch
+          v-model="config.openEnded"
           :keyframe="false"
           label="开放底面"
-          v-model="config.openEnded"
-        ></de-controller-switch>
+        />
         <de-controller-number
+          v-model="thetaStart"
           :keyframe="false"
           label="起始角度"
           :step="1"
-          :dragMultply="5"
+          :drag-multply="5"
           :min="0"
           :max="360"
           unit="°"
-          :displayAccuracy="0"
-          v-model="thetaStart"
-        ></de-controller-number>
+          :display-accuracy="0"
+        />
         <de-controller-number
+          v-model="thetaLength"
           :keyframe="false"
           label="闭合角度"
           :step="1"
-          :dragMultply="5"
+          :drag-multply="5"
           :min="0"
           :max="360"
           unit="°"
-          :displayAccuracy="0"
-          v-model="thetaLength"
-        ></de-controller-number>
+          :display-accuracy="0"
+        />
       </template>
     </de-collapse-layout>
   </div>

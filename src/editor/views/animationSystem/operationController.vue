@@ -3,11 +3,11 @@
     <div class="operationGeneral-container">
       <div class="operationGeneral-search">
         <el-input
+          v-model="searchValue"
           size="mini"
           placeholder="搜索"
           prefix-icon="el-icon-search"
-          v-model="searchValue"
-        ></el-input>
+        />
       </div>
       <div class="operationGeneral-time">
         <span>{{ clipCurrentTime + "/" + totalTime }}</span>
@@ -21,12 +21,12 @@
               $store.commit('animation/lastFrame');
             }
           "
-        ></vis-icon>
+        />
         <vis-icon
           title="播放"
-          @click.native="togglePlay"
           :code="play ? '#iconzantingtingzhi' : '#iconbofang'"
-        ></vis-icon>
+          @click.native="togglePlay"
+        />
         <vis-icon
           code="#iconkuaijin"
           @click.native="
@@ -34,19 +34,29 @@
               $store.commit('animation/nextFrame');
             }
           "
-        ></vis-icon>
+        />
       </div>
     </div>
     <div class="operationMain-container">
       <!-- 标题栏 STR -->
       <div class="operationMain-title-box">
         <div class="operation-helper">
-          <vis-icon code="#iconshanchu" type="error" title="删除"></vis-icon>
-          <vis-icon code="#iconsanjiaojiantouyou" title="播放"></vis-icon>
-          <vis-icon code="#iconshengyin" title="声音"></vis-icon>
+          <vis-icon
+            code="#iconshanchu"
+            type="error"
+            title="删除"
+          />
+          <vis-icon
+            code="#iconsanjiaojiantouyou"
+            title="播放"
+          />
+          <vis-icon
+            code="#iconshengyin"
+            title="声音"
+          />
         </div>
         <div class="operation-name">
-          <vis-icon code="#iconbiaoqian"></vis-icon>
+          <vis-icon code="#iconbiaoqian" />
           <span>名称</span>
         </div>
         <div class="operation-add">
@@ -62,17 +72,21 @@
               :key="item.vid"
               :label="item.name || item.vid"
               :value="item.vid"
-            ></el-option>
+            />
           </el-select>
         </div>
       </div>
       <!-- 标题栏 END -->
       <!-- 选项栏 STR -->
-      <div class="operationMain-item-box" @scroll="scroll" ref="item-box">
+      <div
+        ref="item-box"
+        class="operationMain-item-box"
+        @scroll="scroll"
+      >
         <div
-          class="operationMain-item"
           v-for="(item, index) in animationMap"
           :key="index"
+          class="operationMain-item"
           :class="{ 'operationMain-item-chouse': item.chouse }"
           @click="chouseObject(item)"
         >
@@ -83,32 +97,35 @@
                   code="#iconshanchu"
                   title="删除"
                   type="error"
-                ></vis-icon>
+                />
               </div>
               <div class="item-helper-checkBox">
                 <vis-icon
+                  v-show="item.lock"
                   code="#iconsanjiaojiantouyou"
                   title="播放"
-                  v-show="item.lock"
-                ></vis-icon>
+                />
               </div>
               <div class="item-helper-checkBox">
                 <vis-icon
+                  v-show="item.voice"
                   code="#iconshengyin"
                   title="声音"
-                  v-show="item.voice"
-                ></vis-icon>
+                />
               </div>
             </div>
-            <div class="item-open-sign" @click="triggleItem(item)">
+            <div
+              class="item-open-sign"
+              @click="triggleItem(item)"
+            >
               <vis-icon
                 :class="{ 'sign-active': item.open }"
                 style="transform: scale(0.7)"
                 code="#iconsanjiaojiantouyou"
-              ></vis-icon>
+              />
             </div>
             <div class="item-name">
-              <span v-text="getObjectName(index)"></span>
+              <span v-text="getObjectName(index)" />
             </div>
             <div class="item-animation-select">
               <el-dropdown
@@ -121,11 +138,15 @@
                     code="#iconjia1"
                     type="primary"
                     title="添加动画"
-                  ></vis-icon>
+                  />
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item command="load">加载动画</el-dropdown-item>
-                  <el-dropdown-item command="script">脚本动画</el-dropdown-item>
+                  <el-dropdown-item command="load">
+                    加载动画
+                  </el-dropdown-item>
+                  <el-dropdown-item command="script">
+                    脚本动画
+                  </el-dropdown-item>
                   <el-dropdown-item command="keyframe">
                     关键帧动画
                   </el-dropdown-item>
@@ -135,19 +156,19 @@
           </div>
 
           <div
-            class="load-animation-box"
             v-if="animationTrack[index].load.length"
             v-show="item.open"
+            class="load-animation-box"
           >
             <div
-              class="item-track"
               v-for="(trackItem, trackIndex) in animationTrack[index].load"
               :key="trackIndex"
+              class="item-track"
             >
               <span
                 class="track-title"
                 v-text="actionMap[trackItem].name"
-              ></span>
+              />
 
               <el-select
                 v-model="actionMap[trackItem].clip"
@@ -159,19 +180,19 @@
                   :key="item.vid"
                   :label="item.name"
                   :value="item.vid"
-                ></el-option>
+                />
               </el-select>
             </div>
           </div>
           <div
-            class="script-animation-box"
             v-if="Object.keys(animationTrack[index].script).length"
             v-show="item.open"
+            class="script-animation-box"
           >
             <div
-              class="item-track"
               v-for="(trackItem, trackIndex) in animationTrack[index].script"
               :key="trackIndex"
+              class="item-track"
             >
               <span
                 v-if="!trackItem.name"
@@ -180,9 +201,16 @@
                 @click="pickup(trackItem)"
               >
                 拾取属性
-                <vis-icon code="#iconxiguan_huaban1" color="white"></vis-icon>
+                <vis-icon
+                  code="#iconxiguan_huaban1"
+                  color="white"
+                />
               </span>
-              <span v-else class="track-title" v-text="trackItem.name"></span>
+              <span
+                v-else
+                class="track-title"
+                v-text="trackItem.name"
+              />
               <el-select
                 v-model="trackItem.script.name"
                 placeholder="选择脚本"
@@ -200,15 +228,15 @@
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
-                ></el-option>
+                />
               </el-select>
             </div>
           </div>
           <div
-            class="keyframe-animation-box"
             v-if="Object.keys(animationTrack[index].keyframe).length"
             v-show="item.open"
-          ></div>
+            class="keyframe-animation-box"
+          />
         </div>
       </div>
       <!-- 选项栏 END -->
@@ -286,6 +314,16 @@ export default {
       }, []);
     },
   },
+  created() {
+    this.aniScriptOptions = Object.values(aniScrpit).map((elem) => ({
+      label: elem.desp,
+      value: elem.name,
+    }));
+    this.aniScriptOptions.unshift({
+      label: "选择脚本",
+      value: "",
+    });
+  },
   methods: {
     triggleItem(item) {
       item.open = !item.open;
@@ -362,16 +400,6 @@ export default {
     pickup(item) {
       this.$store.commit("animationTrack/pickup", item);
     },
-  },
-  created() {
-    this.aniScriptOptions = Object.values(aniScrpit).map((elem) => ({
-      label: elem.desp,
-      value: elem.name,
-    }));
-    this.aniScriptOptions.unshift({
-      label: "选择脚本",
-      value: "",
-    });
   },
 };
 </script>

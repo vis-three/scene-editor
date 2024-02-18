@@ -1,16 +1,23 @@
 <template>
-  <div class="componentSettingModule-container" v-if="cid">
-    <de-collapse-layout label="组件配置" icon="#iconvuejs" arrowPosition="left">
+  <div
+    v-if="cid"
+    class="componentSettingModule-container"
+  >
+    <de-collapse-layout
+      label="组件配置"
+      icon="#iconvuejs"
+      arrow-position="left"
+    >
       <component
-        slot="container"
-        v-for="(item, index) in controllers"
-        :key="index"
         :is="item.component"
-        :label="item.label"
+        v-for="(item, index) in controllers"
+        slot="container"
+        :key="index"
         v-model="config[item.key]"
+        :label="item.label"
         v-bind="item.props"
         :keyframe="false"
-      ></component>
+      />
     </de-collapse-layout>
   </div>
 </template>

@@ -3,187 +3,187 @@
     <de-collapse-layout
       label="渲染器设置"
       icon="#iconchangjing1"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-picker
-          label="背景色"
-          showAlpha
           v-model="renderer.clearColor"
+          label="背景色"
+          show-alpha
           :animation="{
             target: renderer,
             attribute: 'clearColor',
           }"
-        ></de-controller-picker>
+        />
         <de-controller-number
+          v-model="renderer.toneMappingExposure"
           label="映射曝光"
           :step="0.01"
-          :dragMultply="10"
+          :drag-multply="10"
           :min="0"
-          v-model="renderer.toneMappingExposure"
           :animation="{
             target: renderer,
             attribute: 'toneMappingExposure',
           }"
-        ></de-controller-number>
+        />
         <de-controller-switch
+          v-model="renderer.physicallyCorrectLights"
           :keyframe="false"
           label="物理光照"
-          v-model="renderer.physicallyCorrectLights"
           :animation="{
             target: renderer,
             attribute: 'physicallyCorrectLights',
           }"
-        ></de-controller-switch>
+        />
         <de-controller-switch
+          v-model="renderer.shadowMap.enabled"
           :keyframe="false"
           label="全局阴影"
-          v-model="renderer.shadowMap.enabled"
           :animation="{
             target: renderer.shadowMap,
             attribute: 'enabled',
           }"
-        ></de-controller-switch>
+        />
         <de-controller-switch
+          v-model="renderer.adaptiveCamera"
           :keyframe="false"
           label="适应相机"
-          v-model="renderer.adaptiveCamera"
           :animation="{
             target: renderer,
             attribute: 'adaptiveCamera',
           }"
-        ></de-controller-switch>
+        />
         <de-controller-select
+          v-model="renderer.shadowMap.type"
           :keyframe="false"
           label="阴影类型"
           :options="shadowMapType"
-          v-model="renderer.shadowMap.type"
           :animation="{
             target: renderer.shadowMap,
             attribute: 'type',
           }"
-        ></de-controller-select>
+        />
         <de-controller-select
+          v-model="renderer.toneMapping"
           :keyframe="false"
           label="色调映射"
           :options="toneMapping"
-          v-model="renderer.toneMapping"
           :animation="{
             target: renderer,
             attribute: 'toneMapping',
           }"
-        ></de-controller-select>
+        />
         <de-controller-number
+          v-model="renderer.pixelRatio"
           :keyframe="false"
           label="像素比例"
           :step="0.01"
-          :dragMultply="2"
+          :drag-multply="2"
           :min="0"
-          :displayAccuracy="2"
-          v-model="renderer.pixelRatio"
+          :display-accuracy="2"
           :animation="{
             target: renderer,
             attribute: 'pixelRatio',
           }"
-        ></de-controller-number>
+        />
         <de-controller-select
+          v-model="renderer.outputEncoding"
           :keyframe="false"
           label="输出编码"
           :options="outputEncoding"
-          v-model="renderer.outputEncoding"
           :animation="{
             target: renderer,
             attribute: 'outputEncoding',
           }"
-        ></de-controller-select>
+        />
       </template>
     </de-collapse-layout>
     <de-collapse-layout
       label="轨道控制器设置"
       icon="#iconchangjing1"
-      arrowPosition="left"
+      arrow-position="left"
     >
       <template #container>
         <de-controller-switch
+          v-model="orbitControls.enablePan"
           :keyframe="false"
           label="允许平移"
-          v-model="orbitControls.enablePan"
-        ></de-controller-switch>
+        />
         <de-controller-switch
+          v-model="orbitControls.enableRotate"
           :keyframe="false"
           label="允许旋转"
-          v-model="orbitControls.enableRotate"
-        ></de-controller-switch>
+        />
         <de-controller-switch
+          v-model="orbitControls.enableZoom"
           :keyframe="false"
           label="允许缩放"
-          v-model="orbitControls.enableZoom"
-        ></de-controller-switch>
+        />
         <de-controller-switch
+          v-model="orbitControls.autoRotate"
           :keyframe="false"
           label="自动旋转"
-          v-model="orbitControls.autoRotate"
-        ></de-controller-switch>
+        />
         <de-controller-switch
+          v-model="orbitControls.enableDamping"
           :keyframe="false"
           label="阻尼感"
-          v-model="orbitControls.enableDamping"
-        ></de-controller-switch>
+        />
         <de-controller-number
+          v-model="orbitControls.autoRotateSpeed"
           :keyframe="false"
           label="旋转速度"
           :step="0.01"
-          :dragMultply="10"
-          v-model="orbitControls.autoRotateSpeed"
-        ></de-controller-number>
+          :drag-multply="10"
+        />
         <de-controller-number
+          v-model="orbitControls.dampingFactor"
           :keyframe="false"
           label="阻尼系数"
           :step="0.01"
-          :dragMultply="10"
+          :drag-multply="10"
           :min="0"
-          v-model="orbitControls.dampingFactor"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="orbitControls.maxDistance"
           :keyframe="false"
           label="最大距离"
           :step="1"
-          :dragMultply="5"
+          :drag-multply="5"
           :min="0"
-          v-model="orbitControls.maxDistance"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="orbitControls.minDistance"
           :keyframe="false"
           label="最小距离"
           :step="1"
-          :dragMultply="5"
+          :drag-multply="5"
           :min="0"
-          v-model="orbitControls.minDistance"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="orbitControls.panSpeed"
           :keyframe="false"
           label="平移速度"
           :step="0.01"
-          :dragMultply="5"
+          :drag-multply="5"
           :min="0"
-          v-model="orbitControls.panSpeed"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="orbitControls.rotateSpeed"
           :keyframe="false"
           label="旋转速度"
           :step="0.01"
-          :dragMultply="5"
+          :drag-multply="5"
           :min="0"
-          v-model="orbitControls.rotateSpeed"
-        ></de-controller-number>
+        />
         <de-controller-number
+          v-model="orbitControls.zoomSpeed"
           :keyframe="false"
           label="缩放速度"
           :step="0.01"
-          :dragMultply="5"
+          :drag-multply="5"
           :min="0"
-          v-model="orbitControls.zoomSpeed"
-        ></de-controller-number>
+        />
       </template>
     </de-collapse-layout>
   </div>
