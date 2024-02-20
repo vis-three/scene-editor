@@ -15,4 +15,6 @@ db.version(1).stores({
   template: "++id, classifyId, name, template, editor, preview, delete",
   canvasClassify: "++id, name, parentId, level, delete",
   canvas: "++id, classifyId, name, canvas, pkg, preview, size, delete",
+  shaderClassify: "++id, name, parentId, level, delete",
+  shader: "++id, classifyId, name, shader, pkg, preview, size, delete",
 });

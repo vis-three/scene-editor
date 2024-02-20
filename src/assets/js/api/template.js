@@ -10,7 +10,7 @@ export default {
         arr.map((item) => {
           item.dir = true;
           return item;
-        })
+        }),
       );
 
     if (classifyId) {
@@ -19,7 +19,7 @@ export default {
           .where("classifyId")
           .equals(classifyId)
           .and((item) => !item.delete)
-          .toArray())
+          .toArray()),
       );
     }
     return list;
@@ -69,10 +69,10 @@ export default {
     return params;
   },
 
-  async saveTemplate({ id, name, template, editor, preview }) {
+  async modifyTemplate({ id, name, template, editor, preview }) {
     return await db.template
       .where("id")
-      .equals(id)
+      .equals(Number(id))
       .modify({ name, template, editor, preview });
   },
 

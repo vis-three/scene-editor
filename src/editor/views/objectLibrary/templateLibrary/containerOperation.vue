@@ -1,21 +1,12 @@
 vabse
 <template>
   <div class="containerOperation-container">
-    <div
-      v-show="loading"
-      class="loading-mask"
-    >
-      <vis-icon
-        class="ani"
-        code="#iconxuanzhuan"
-      />
+    <div v-show="loading" class="loading-mask">
+      <vis-icon class="ani" code="#iconxuanzhuan" />
       <span>正在加载...</span>
     </div>
 
-    <div
-      v-if="!loading && !floderChildren.length"
-      class="empty-tips"
-    >
+    <div v-if="!loading && !floderChildren.length" class="empty-tips">
       <span>这里暂时是空的哦</span>
     </div>
 
@@ -27,40 +18,23 @@ vabse
       class="file-item-box"
     >
       <template v-if="item.dir">
-        <vis-icon
-          :size="iconSize"
-          code="#iconwenjianjia"
-        />
+        <vis-icon :size="iconSize" code="#iconwenjianjia" />
       </template>
       <template v-else>
-        <img :src="item.preview">
+        <img :src="item.preview" />
         <div
           v-show="selected.id === item.id"
           class="item-selected-mask"
           @click.stop="$store.commit('templateLibrary/cancelSelected')"
         >
-          <vis-icon
-            class="item-selected"
-            size="60px"
-            code="#icongou"
-          />
+          <vis-icon class="item-selected" size="60px" code="#icongou" />
         </div>
       </template>
 
-      <span
-        class="item-title"
-        v-text="item.name"
-      />
+      <span class="item-title" v-text="item.name" />
 
-      <span
-        v-if="item.dir"
-        class="item-operate-box"
-      >
-        <vis-icon
-          v-tooltip.bottom="`移动`"
-          size="20px"
-          code="#iconpingyi"
-        />
+      <span v-if="item.dir" class="item-operate-box">
+        <vis-icon v-tooltip.bottom="`移动`" size="20px" code="#iconpingyi" />
         <vis-icon
           v-tooltip.bottom="`打开`"
           size="20px"
@@ -76,10 +50,7 @@ vabse
         />
       </span>
 
-      <span
-        v-else
-        class="item-operate-box"
-      >
+      <span v-else class="item-operate-box">
         <vis-icon
           v-tooltip.bottom="`更新`"
           size="16px"
@@ -126,7 +97,9 @@ import {
 
 import { Pipeline } from "@vis-three/utils";
 
-import { history, engine } from "@/editor/assets/js/vis";
+import { engine } from "@/editor/assets/js/vis";
+
+import templateApi from "@/assets/js/api/template.js";
 
 export default {
   data() {
@@ -191,7 +164,7 @@ export default {
             confirmButtonText: "确定",
             cancelButtonText: "取消",
             type: "warning",
-          }
+          },
         ).then(() => {
           // this.axios
           //   .post("/model/removeModel", {
@@ -249,7 +222,7 @@ export default {
 
               jsonConfig = jsonConfig.replace(
                 new RegExp(canvas.$cid, "g"),
-                newCid
+                newCid,
               );
 
               detail[canvas.$cid] = newCid;
@@ -298,8 +271,8 @@ export default {
                 "shaderAssets",
                 "canvasAssets",
               ],
-            }
-          )
+            },
+          ),
         )
         .get();
 
@@ -327,6 +300,13 @@ export default {
             });
           });
 
+          res.shaders.forEach((shader) => {
+            this.$store.commit("shader/add", {
+              vid: shader.config.vid,
+              configuration: shader.packageJSON.configuration,
+            });
+          });
+
           res.canvas.forEach((canvas) => {
             this.$store.commit("canvas/add", {
               config: canvas.config,
@@ -344,12 +324,14 @@ export default {
     },
 
     async updateTempalte(item) {
-      return;
       console.log(item);
       const loading = this.$message.loading("正在更新模板...");
-      const config = engine.exportConfig();
-      // config.component = this.$store.getters["component/get"];
-      // 模板去除全局灯光, 控制器, 渲染器, 多场景
+      let config = await this.$store.dispatch(
+        "urlTransform",
+        engine.exportConfig(),
+      );
+      const editor = await this.$store.dispatch("exportConfig");
+
       config[MODULETYPE.CONTROLS] && delete config[MODULETYPE.CONTROLS];
       config[MODULETYPE.RENDERER] && delete config[MODULETYPE.RENDERER];
       config[MODULETYPE.SCENE] && delete config[MODULETYPE.SCENE];
@@ -368,15 +350,16 @@ export default {
           }
         });
       }
-      this.axios
-        .post("/template/modify", {
+
+      templateApi
+        .modifyTemplate({
           id: item.id,
-          templateName: item.name,
-          classifyId: item.classifyId,
-          config: JSON.stringify(config, JSONHandler.stringify),
+          name: item.name,
+          template: config,
+          editor: editor,
           preview: await engine.getScreenshot({
-            width: 1920,
-            height: 1080,
+            width: 960,
+            height: 540,
           }),
         })
         .then((res) => {

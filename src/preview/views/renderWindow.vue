@@ -7,11 +7,7 @@
       scrolling="no"
       class="render-mask"
     />
-    <div
-      ref="renderElement"
-      class="render-window"
-      tabindex="0"
-    />
+    <div ref="renderElement" class="render-window" tabindex="0" />
   </div>
 </template>
 
@@ -29,6 +25,7 @@ import modelApi from "@/assets/js/api/model.js";
 import textureApi from "@/assets/js/api/texture.js";
 import componentApi from "@/assets/js/api/component.js";
 import canvasApi from "@/assets/js/api/canvas.js";
+import shaderApi from "@/assets/js/api/shader.js";
 
 import parse from "url-parse";
 
@@ -53,7 +50,7 @@ export default {
           engine.stop();
         }
       },
-      { immediate: true }
+      { immediate: true },
     );
 
     // 自动窗口大小
@@ -111,12 +108,12 @@ export default {
                 const url = URL.createObjectURL(file.model);
                 configJson = configJson.replace(
                   new RegExp(`<${item.module}-${item.id}>`, "g"),
-                  url
+                  url,
                 );
                 resolve({ url, ext: file.ext });
               })
               .catch(reject);
-          })
+          }),
         );
       } else if (item.module === "texture") {
         assetsPromise.push(
@@ -127,12 +124,12 @@ export default {
                 const url = URL.createObjectURL(file.texture);
                 configJson = configJson.replace(
                   new RegExp(`<${item.module}-${item.id}>`, "g"),
-                  url
+                  url,
                 );
                 resolve({ url, ext: file.ext });
               })
               .catch(reject);
-          })
+          }),
         );
       }
     });
@@ -148,12 +145,33 @@ export default {
               const url = URL.createObjectURL(file.canvas);
               configJson = configJson.replace(
                 new RegExp(`<${item.module}-${item.id}>`, "g"),
-                url
+                url,
               );
               resolve({ url, file });
             })
             .catch(reject);
-        })
+        }),
+      );
+    });
+
+    const shaderAssetsPromise = [];
+
+    config.shaderAssets.forEach((item) => {
+      shaderAssetsPromise.push(
+        new Promise((resolve, reject) => {
+          shaderApi
+            .getShader(item.id)
+            .then((file) => {
+              const url = URL.createObjectURL(file.shader);
+
+              configJson = configJson.replace(
+                new RegExp(`<${item.module}-${item.id}>`, "g"),
+                url,
+              );
+              resolve({ url, pkg: file.pkg, file });
+            })
+            .catch(reject);
+        }),
       );
     });
 
@@ -169,7 +187,7 @@ export default {
 
             configJson = configJson.replace(
               new RegExp(`<${module}-${id}>`, "g"),
-              url
+              url,
             );
 
             item.$url = url;
@@ -177,23 +195,25 @@ export default {
 
             resolve(item);
           });
-        })
+        }),
       );
     });
 
     config.assets = await Promise.all(assetsPromise);
     config.canvasAssets = await Promise.all(canvasAssetsPromise);
+    config.shaderAssets = await Promise.all(shaderAssetsPromise);
     config.component = await Promise.all(componentsPromise);
 
     configJson = JSON.parse(configJson, JSONHandler.parse);
     configJson.assets = config.assets;
     configJson.canvasAssets = config.canvasAssets;
+    configJson.shaderAssets = config.shaderAssets;
     configJson.component = config.component;
 
     configJson.canvas &&
       configJson.canvas.forEach((elem) => {
         elem.$pkg = config.canvasAssets.find(
-          (item) => item.url === elem.$url
+          (item) => item.url === elem.$url,
         ).file.pkg;
       });
 
@@ -206,8 +226,14 @@ export default {
           strict: false,
         }),
       {
-        filter: ["assets", "component", "canvasAssets", "canvas"],
-      }
+        filter: [
+          "assets",
+          "component",
+          "canvasAssets",
+          "canvas",
+          "shaderAssets",
+        ],
+      },
     );
 
     await engine.loadConfigAsync(config);

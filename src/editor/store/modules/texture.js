@@ -34,6 +34,8 @@ export const module = {
 
     setCurrentTexture(state, vid) {
       state.currentTexture = state.map[vid];
+      this.commit("active/functionModule", "texture");
+      this.commit("active/texture", state.currentTexture);
     },
 
     remove(state, vid) {

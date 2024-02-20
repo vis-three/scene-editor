@@ -1,7 +1,7 @@
 {
   "name": "vis-three-display-editor",
   "author": "Shiotsuki_",
-  "version": "0.6.13",
+  "version": "0.6.14",
   "license": "AGPL-3.0",
   "private": false,
   "type": "module",
@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@vis-resm/importmap": "^0.0.11",
-    "@vis-three/convenient": "^0.5.1",
+    "@vis-three/convenient": "^0.6.6",
     "@vis-three/engine-display-support": "^0.6.9",
     "@vis-three/engine-modeling-support": "^0.6.12",
     "@vis-three/library-animate-script": "^0.6.0",

@@ -3,6 +3,7 @@ import modelApi from "@/assets/js/api/model.js";
 import textureApi from "@/assets/js/api/texture.js";
 import componentApi from "@/assets/js/api/component.js";
 import canvasApi from "@/assets/js/api/canvas.js";
+import shaderApi from "@/assets/js/api/shader.js";
 import { Message } from "element-ui";
 import Vue from "vue";
 import Vuex from "vuex";
@@ -143,6 +144,22 @@ export default new Vuex.Store({
         return result;
       });
 
+      app.shaderAssets = app.shaderAssets.map((url) => {
+        const result = {
+          id: null,
+          module: "shader",
+        };
+
+        if (!urlDetails[url]) {
+          Message.error(`导出失败，未找到相关资源缓存：${url}`);
+        } else {
+          const file = urlDetails[url];
+          result.id = file.id;
+        }
+
+        return result;
+      });
+
       app.component.forEach((elem) => {
         const result = {
           id: null,
@@ -166,8 +183,8 @@ export default new Vuex.Store({
       appJson = JSON.parse(appJson, JSONHandler.parse);
       appJson.assets = app.assets;
       appJson.canvasAssets = app.canvasAssets;
+      appJson.shaderAssets = app.shaderAssets;
       app = appJson;
-
       return app;
     },
     async assetsTransform(ctx, config) {
@@ -175,6 +192,7 @@ export default new Vuex.Store({
 
       !config.assets && (config.assets = []);
       !config.canvasAssets && (config.canvasAssets = []);
+      !config.shaderAssets && (config.shaderAssets = []);
 
       const assetsPromise = [];
 
@@ -251,6 +269,32 @@ export default new Vuex.Store({
         );
       });
 
+      const shaderAssetsPromise = [];
+
+      config.shaderAssets.forEach((item) => {
+        shaderAssetsPromise.push(
+          new Promise((resolve, reject) => {
+            shaderApi
+              .getShader(item.id)
+              .then((file) => {
+                const url = URL.createObjectURL(file.shader);
+                ctx.commit("cacheUrl", {
+                  module: "shader",
+                  file,
+                  url,
+                });
+
+                configJson = configJson.replace(
+                  new RegExp(`<${item.module}-${item.id}>`, "g"),
+                  url,
+                );
+                resolve({ url, pkg: file.pkg, file });
+              })
+              .catch(reject);
+          }),
+        );
+      });
+
       !config.component && (config.component = []);
       const componentsPromise = [];
 
@@ -282,11 +326,13 @@ export default new Vuex.Store({
 
       config.assets = await Promise.all(assetsPromise);
       config.canvasAssets = await Promise.all(canvasAssetsPromise);
+      config.shaderAssets = await Promise.all(shaderAssetsPromise);
       config.component = await Promise.all(componentsPromise);
 
       configJson = JSON.parse(configJson, JSONHandler.parse);
       configJson.assets = config.assets;
       configJson.canvasAssets = config.canvasAssets;
+      configJson.shaderAssets = config.shaderAssets;
       configJson.component = config.component;
 
       configJson.canvas &&

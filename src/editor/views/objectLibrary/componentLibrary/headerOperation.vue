@@ -30,10 +30,7 @@
           code="#iconsanjiaojiantouyou"
           :style="{ transform: 'scale(0.6)' }"
         />
-        <span
-          class="address-title"
-          v-text="item.name"
-        />
+        <span class="address-title" v-text="item.name" />
       </span>
     </div>
     <div class="operate-operation">
@@ -51,11 +48,7 @@
           placeholder="输入分类名称"
         />
         <div class="popover-operation">
-          <el-button
-            size="mini"
-            type="text"
-            @click="addClassify"
-          >
+          <el-button size="mini" type="text" @click="addClassify">
             确定
           </el-button>
         </div>
@@ -82,7 +75,7 @@
         style="display: none"
         accept=".zip, .tgz"
         @change="fileHandler"
-      >
+      />
     </div>
   </div>
 </template>
@@ -169,7 +162,7 @@ export default {
 
       if (!indexPath) {
         this.$message.warning(
-          "上传失败！无法从package.json中获取有效的入口路径。"
+          "上传失败！无法从package.json中获取有效的入口路径。",
         );
         this.$refs.uploadInput.value = "";
         return;
@@ -183,7 +176,7 @@ export default {
 
       if (!files[indexPath]) {
         this.$message.warning(
-          "上传失败！无法根据package.json的相关字段获取入口文件。"
+          "上传失败！无法根据package.json的相关字段获取入口文件。",
         );
         this.$refs.uploadInput.value = "";
         return;
@@ -212,7 +205,7 @@ export default {
           pkg,
           preview,
           size: Object.values(files).reduce((total, item) => {
-            return total + item._data.uncompressedSize;
+            return item.dir ? total : total + item._data.uncompressedSize;
           }, 0),
         })
         .then((data) => {

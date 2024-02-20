@@ -35,11 +35,7 @@
       </template>
     </position-layout-box>
 
-    <position-layout-box
-      class="top-function-box"
-      :offset-x="5"
-      :offset-y="5"
-    >
+    <position-layout-box class="top-function-box" :offset-x="5" :offset-y="5">
       <template #main>
         <performance-monitor />
       </template>
@@ -156,7 +152,7 @@ export default {
           engine.stop();
         }
       },
-      { immediate: true }
+      { immediate: true },
     );
 
     // 自动窗口大小
@@ -187,7 +183,7 @@ export default {
 
     let config = await this.$store.dispatch(
       "assetsTransform",
-      appMessage.app || {}
+      appMessage.app || {},
     );
 
     config = Template.handler(
@@ -197,8 +193,14 @@ export default {
           strict: false,
         }),
       {
-        filter: ["assets", "component", "canvasAssets", "canvas"],
-      }
+        filter: [
+          "assets",
+          "component",
+          "canvasAssets",
+          "canvas",
+          "shaderAssets",
+        ],
+      },
     );
 
     engine.loadConfigAsync(config).then((res) => {
@@ -216,9 +218,16 @@ export default {
         });
       });
 
+      res.shaders.forEach((shader) => {
+        this.$store.commit("shader/add", {
+          vid: shader.config.vid,
+          configuration: shader.packageJSON.configuration,
+        });
+      });
+
       this.$store.commit(
         "renderer/webGLRenderer",
-        uniqueSymbol(CONFIGTYPE.WEBGLRENDERER)
+        uniqueSymbol(CONFIGTYPE.WEBGLRENDERER),
       );
       this.$store.commit("scene/currentScene", uniqueSymbol(CONFIGTYPE.SCENE));
       this.$store.commit("notifyAll");

@@ -15,10 +15,11 @@ import {
 } from "@vis-three/middleware";
 
 import { PathSupportControlsPlugin } from "@vis-three/plugin-path-support-controls";
-import { ComponentManagerPlugin } from "./plugins/ComponentManager";
-import { CanvasManagerPlugin } from "./plugins/CanvasManager";
+import { ComponentManagerPlugin } from "@/assets/js/vis/plugins/ComponentManager";
+import { CanvasManagerPlugin } from "@/assets/js/vis/plugins/CanvasManager";
+import { ShaderManagerPlugin } from "@/assets/js/vis/plugins/ShaderManager";
 
-import { GLTFLoader } from "./loaders/GLTFLoader";
+import { GLTFLoader } from "@/assets/js/vis/loaders/GLTFLoader";
 
 import { MeshoptDecoder } from "three/examples/jsm/libs/meshopt_decoder.module.js";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
@@ -50,7 +51,8 @@ defineOption({
 export const engine = new ModelingEngineSupport()
   .install(PathSupportControlsPlugin())
   .install(ComponentManagerPlugin())
-  .install(CanvasManagerPlugin());
+  .install(CanvasManagerPlugin())
+  .install(ShaderManagerPlugin());
 
 const gltfLoader = new GLTFLoader();
 

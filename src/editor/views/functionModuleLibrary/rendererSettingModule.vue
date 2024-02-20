@@ -98,7 +98,7 @@
         />
       </template>
     </de-collapse-layout>
-    <de-collapse-layout
+    <!-- <de-collapse-layout
       label="轨道控制器设置"
       icon="#iconchangjing1"
       arrow-position="left"
@@ -185,7 +185,7 @@
           :min="0"
         />
       </template>
-    </de-collapse-layout>
+    </de-collapse-layout> -->
   </div>
 </template>
 

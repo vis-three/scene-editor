@@ -30,10 +30,7 @@
           code="#iconsanjiaojiantouyou"
           :style="{ transform: 'scale(0.6)' }"
         />
-        <span
-          class="address-title"
-          v-text="item.name"
-        />
+        <span class="address-title" v-text="item.name" />
       </span>
     </div>
     <div class="operate-operation">
@@ -51,11 +48,7 @@
           placeholder="输入分类名称"
         />
         <div class="popover-operation">
-          <el-button
-            size="mini"
-            type="text"
-            @click="addClassify"
-          >
+          <el-button size="mini" type="text" @click="addClassify">
             确定
           </el-button>
         </div>
@@ -82,7 +75,7 @@
         style="display: none"
         accept=".zip, .tgz"
         @change="fileHandler"
-      >
+      />
     </div>
   </div>
 </template>
@@ -177,7 +170,7 @@ export default {
 
       if (!modelFile) {
         this.$message.warning(
-          `不支持的模型文件格式。支持的模型文件格式：${modelExt.join(", ")}`
+          `不支持的模型文件格式。支持的模型文件格式：${modelExt.join(", ")}`,
         );
       }
 
@@ -197,7 +190,7 @@ export default {
           model,
           ext: this.$tool.getFileExt(modelFile),
           size: Object.values(files).reduce((total, item) => {
-            return total + item._data.uncompressedSize;
+            return item.dir ? total : total + item._data.uncompressedSize;
           }, 0),
           preview,
         })

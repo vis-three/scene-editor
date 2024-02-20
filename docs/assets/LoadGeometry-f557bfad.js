@@ -1,0 +1,1 @@
+import{n as o}from"./texture-e454a176.js";import"./three-679cdae3.js";var s=function(){var e=this,t=e.$createElement,r=e._self._c||t;return r("div")},_=[];const c={},n={};var a=o(c,s,_,!1,l,null,null,null);function l(e){for(let t in n)this[t]=n[t]}const v=function(){return a.exports}();export{v as default};

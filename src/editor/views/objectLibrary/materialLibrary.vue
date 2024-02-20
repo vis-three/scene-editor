@@ -6,10 +6,7 @@
         prefix-icon="el-icon-search"
         placeholder="材质筛选"
       />
-      <el-dropdown
-        trigger="click"
-        @command="addMaterial"
-      >
+      <el-dropdown trigger="click" @command="addMaterial">
         <el-button
           size="mini"
           icon="el-icon-circle-plus-outline"
@@ -49,10 +46,7 @@
             class="operate-box"
             @click="deleteMaterial(item)"
           >
-            <vis-icon
-              code="#iconshanchu"
-              color="red"
-            />
+            <vis-icon code="#iconshanchu" color="red" />
           </div>
           <div
             v-tooltip.bottom="item.name"
@@ -62,15 +56,20 @@
         </div>
       </div>
     </div>
+
+    <file-system ref="fileSystem"></file-system>
   </div>
 </template>
 
 <script>
-import { v4 as getUuid } from "uuid";
 import { engine, materialDisplayer } from "@/editor/assets/js/vis";
 import { CONFIGTYPE, generateConfig } from "@vis-three/middleware";
+const fileSystem = () => import("./shaderLibrary/filesystem.vue");
 
 export default {
+  components: {
+    fileSystem,
+  },
   data() {
     return {
       material: [
@@ -104,6 +103,11 @@ export default {
           label: "基础线条材质",
           material: CONFIGTYPE.LINEBASICMATERIAL,
         },
+        {
+          icon: "#icondengpao",
+          label: "着色器材质",
+          material: CONFIGTYPE.SHADERMATERIAL,
+        },
       ],
       canvasMap: {}, // 材质展示器的map ： vid --> canvas
       watchMap: {}, // 监听器的map: vid --> $watch
@@ -122,7 +126,7 @@ export default {
   },
   watch: {
     materialList: {
-      handler(newValue, oldValue) {
+      handler(newValue) {
         this.$nextTick(() => {
           Object.keys(newValue).forEach((vid) => {
             // 生成展示器
@@ -158,7 +162,7 @@ export default {
               {
                 deep: true,
                 immediate: true,
-              }
+              },
             );
           });
         });
@@ -194,7 +198,7 @@ export default {
             }, this.throttleTime);
           }
         };
-        const dragOver = ($event) => {
+        const dragOver = () => {
           document.body.removeChild(image);
           document.body.removeEventListener("mousemove", dragMove);
           document.body.removeEventListener("mouseup", dragOver);
@@ -207,18 +211,74 @@ export default {
     },
 
     addMaterial(item) {
-      const vid = getUuid();
-      const config = generateConfig(item.material, {
-        vid,
-        name: item.label + vid.slice(0, 2),
-      });
+      if (item.material === CONFIGTYPE.SHADERMATERIAL) {
+        this.addShaderMaterial(item);
+        return;
+      }
+
+      const config = generateConfig(item.material);
+
+      config.name = item.label + config.vid.slice(0, 2);
+
       this.$store.commit("material/add", config);
       this.changeCurrentMaterial(config.vid);
+    },
+
+    addShaderMaterial(item) {
+      const config = generateConfig(
+        CONFIGTYPE.SHADERMATERIAL,
+        {},
+        {
+          observer: false,
+        },
+      );
+      config.name = item.label + config.vid.slice(0, 2);
+      this.$refs.fileSystem.open({
+        confirm: async ({ files }) => {
+          const file = files[0];
+          const loading = this.$message.loading("正在生成材质...");
+
+          const urls = this.$store.getters.urls;
+
+          let url = urls[`shader-${file.id}`];
+
+          if (!url) {
+            url = URL.createObjectURL(file.shader);
+            this.$store.commit("cacheUrl", {
+              module: "shader",
+              file,
+              url,
+            });
+          }
+
+          const { config: shaderConfig, packageJSON } =
+            await engine.generateShader(url, file.pkg, config.vid);
+
+          this.$store.commit("shader/add", {
+            vid: config.vid,
+            configuration: packageJSON.configuration,
+          });
+
+          config.shader = shaderConfig.shader;
+
+          Object.assign(config.uniforms, shaderConfig.uniforms);
+          console.log(this.config);
+          loading.close();
+
+          const obConfig = generateConfig(config.type, config, {
+            strict: false,
+          });
+
+          this.$store.commit("material/add", obConfig);
+          this.changeCurrentMaterial(obConfig.vid);
+        },
+      });
     },
 
     changeCurrentMaterial(vid) {
       const material = this.$store.getters["material/get"][vid];
       this.$store.commit("active/material", material);
+      this.$store.commit("active/functionModule", "material");
     },
 
     updateMaterialDisplay(vid) {
@@ -245,7 +305,7 @@ export default {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning",
-        }
+        },
       ).then(() => {
         // store删除
         this.$store.commit("material/remove", item.vid);

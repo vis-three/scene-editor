@@ -387,20 +387,32 @@ export default {
               icon: "#iconjingling",
               label: "精灵",
               click: function (item) {
-                const config = generateConfig(
+                const material = generateConfig(
+                  CONFIGTYPE.SPRITEMATERIAL,
+                  { sizeAttenuation: false },
+                  { observer: false },
+                );
+                material.name = `精灵材质-${material.vid.slice(-2)}`;
+
+                const sprite = generateConfig(
                   CONFIGTYPE.SPRITE,
-                  {},
+                  {
+                    material: material.vid,
+
+                    scale: { x: 0.2, y: 0.2 },
+                  },
                   {
                     observer: false,
                   },
                 );
-                config.name = `${item.label}-${config.vid.slice(-2)}`;
+                sprite.name = `${item.label}-${sprite.vid.slice(-2)}`;
 
                 history.apply(
                   new AddSpriteAction({
                     engine,
                     store: this.$store,
-                    config,
+                    material,
+                    sprite,
                   }),
                   true,
                 );

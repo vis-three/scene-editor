@@ -4,11 +4,7 @@ module.exports = {
   globals: {
     VIS: true,
   },
-  extends: [
-    "eslint-config-prettier",
-    "eslint:recommended",
-    "plugin:vue/recommended",
-  ],
+  extends: ["eslint:recommended", "plugin:vue/recommended", "prettier"],
   parser: "vue-eslint-parser",
   parserOptions: {
     ecmaFeatures: {

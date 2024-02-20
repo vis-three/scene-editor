@@ -116,7 +116,7 @@
 
 <script>
 import { engine } from "@/editor/assets/js/vis";
-import { CONFIGTYPE, JSONHandler, MODULETYPE } from "@vis-three/middleware";
+import { CONFIGTYPE, MODULETYPE } from "@vis-three/middleware";
 import templateApi from "@/assets/js/api/template.js";
 
 export default {
@@ -136,7 +136,6 @@ export default {
     // 可以上传的标识
     canUpload() {
       const floderChildren = this.currentFloder.children;
-      console.log(this.currentFloder);
       if (floderChildren.length && !floderChildren[0].dir) {
         return true;
       } else if (!floderChildren.length && this.currentFloder.name !== "/") {

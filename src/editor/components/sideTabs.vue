@@ -11,6 +11,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    active: {
+      type: Number,
+      default: 0,
+    },
   },
   data() {
     const control = new Array(this.$slots.default.length).fill(false);
@@ -19,6 +23,26 @@ export default {
       control,
       activePlane: 0,
     };
+  },
+
+  watch: {
+    active: {
+      handler(newVal) {
+        if (newVal !== this.activePlane) {
+          this.activePlaneHandler(newVal);
+        }
+      },
+      immediate: true,
+    },
+  },
+
+  methods: {
+    activePlaneHandler(i) {
+      this.control[this.activePlane] = false;
+      this.control[i] = true;
+      this.activePlane = i;
+      this.$forceUpdate();
+    },
   },
 
   render(h) {
@@ -47,16 +71,15 @@ export default {
                 },
               ],
               on: {
-                click: () => {
-                  this.control[this.activePlane] = false;
-                  this.control[i] = true;
-                  this.activePlane = i;
-                  this.$forceUpdate();
-                },
+                click: () => this.activePlaneHandler(i),
               },
             },
-            [<vis-icon code={vnode.componentOptions.propsData.icon}></vis-icon>]
-          )
+            [
+              <vis-icon
+                code={vnode.componentOptions.propsData.icon}
+              ></vis-icon>,
+            ],
+          ),
         );
         if (this.cache) {
           planeListDom.push(
@@ -65,7 +88,7 @@ export default {
               style={{ display: this.control[i] ? "block" : "none" }}
             >
               {vnode}
-            </div>
+            </div>,
           );
         } else {
           if (this.control[i]) {

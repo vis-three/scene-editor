@@ -38,7 +38,7 @@
 import editorFrame from "./views/editorFrame.vue";
 import workbench from "./views/workbench.vue";
 import renderMarkdown from "@/editor/components/renderMarkdown.vue";
-import { markdown } from "../version/0-6-13.md";
+import { markdown } from "../version/0-6-14.md";
 import { version } from "../../package.json";
 
 const loadingManager = () => import("./views/loadingManager.vue");
