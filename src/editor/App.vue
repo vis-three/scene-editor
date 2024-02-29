@@ -11,22 +11,11 @@
       center
     >
       <render-markdown :md="notice" />
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button
-          size="mini"
-          type="primary"
-          @click="noticeVisible = false"
-        >
+      <span slot="footer" class="dialog-footer">
+        <el-button size="mini" type="primary" @click="noticeVisible = false">
           关闭
         </el-button>
-        <el-button
-          size="mini"
-          type="primary"
-          @click="notPrompting"
-        >
+        <el-button size="mini" type="primary" @click="notPrompting">
           不再提示
         </el-button>
       </span>
@@ -38,7 +27,7 @@
 import editorFrame from "./views/editorFrame.vue";
 import workbench from "./views/workbench.vue";
 import renderMarkdown from "@/editor/components/renderMarkdown.vue";
-import { markdown } from "../version/0-6-14.md";
+import { markdown } from "../version/0-6-15.md";
 import { version } from "../../package.json";
 
 const loadingManager = () => import("./views/loadingManager.vue");
@@ -82,6 +71,7 @@ export default {
 <style lang="less" scoped>
 #app {
   .boxSetting();
+  background-color: @darkestTheme-backgroundColor;
 
   /deep/ .markdown {
     max-height: 60vh;

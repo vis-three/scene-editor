@@ -79,6 +79,7 @@ export default {
     // 显示精度
     displayAccuracy: {
       type: Number,
+      default: 0,
     },
     // 单位步长按钮
     showButton: {
@@ -91,6 +92,7 @@ export default {
     },
     value: {
       type: Number,
+      default: 0,
     },
   },
   data() {

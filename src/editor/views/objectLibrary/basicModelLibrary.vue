@@ -65,11 +65,6 @@ export default {
               geometry: CONFIGTYPE.TORUSGEOMETRY,
             },
             {
-              icon: "#iconjiyati",
-              label: "挤压体",
-              geometry: CONFIGTYPE.EXTRUDEGEOMETRY,
-            },
-            {
               icon: "#iconjuxing",
               label: "矩形",
               geometry: CONFIGTYPE.PLANEGEOMETRY,
@@ -115,10 +110,144 @@ export default {
                 meshConfig,
                 helperConfig,
                 store: this.$store,
-                engine: VIS.engine,
+                engine: engine,
               }),
               true,
             );
+          },
+        },
+        {
+          icon: "#iconpingmianjihe",
+          label: "展示平面",
+          list: [
+            {
+              icon: "#iconjingling",
+              label: "精灵",
+              click: function (item) {
+                const material = generateConfig(
+                  CONFIGTYPE.SPRITEMATERIAL,
+                  { sizeAttenuation: false },
+                  { observer: false },
+                );
+                material.name = `精灵材质-${material.vid.slice(-2)}`;
+
+                const sprite = generateConfig(
+                  CONFIGTYPE.SPRITE,
+                  {
+                    material: material.vid,
+
+                    scale: { x: 0.2, y: 0.2 },
+                  },
+                  {
+                    observer: false,
+                  },
+                );
+                sprite.name = `${item.label}-${sprite.vid.slice(-2)}`;
+
+                history.apply(
+                  new AddSpriteAction({
+                    engine,
+                    store: this.$store,
+                    material,
+                    sprite,
+                  }),
+                  true,
+                );
+              },
+            },
+            {
+              icon: "#iconC2jingling",
+              label: "C2精灵",
+              click: function (item) {
+                const config = generateConfig(
+                  CONFIGTYPE.CSS2DPLANE,
+                  {
+                    width: 200,
+                    height: 200,
+                  },
+                  {
+                    observer: false,
+                  },
+                );
+                config.name = `${item.label}-${config.vid.slice(-2)}`;
+
+                history.apply(
+                  new AddCSS2DAction({
+                    engine,
+                    store: this.$store,
+                    config,
+                  }),
+                  true,
+                );
+              },
+            },
+            {
+              icon: "#iconC3pingmian",
+              label: "C3平面",
+              click: function (item) {
+                const config = generateConfig(
+                  CONFIGTYPE.CSS3DPLANE,
+                  {
+                    width: 300,
+                    height: 300,
+                    scale: {
+                      x: 0.1,
+                      y: 0.1,
+                      z: 0.1,
+                    },
+                  },
+                  {
+                    observer: false,
+                  },
+                );
+                config.name = `${item.label}-${config.vid.slice(-2)}`;
+
+                history.apply(
+                  new AddCSS3DAction({
+                    engine,
+                    store: this.$store,
+                    config,
+                  }),
+                  true,
+                );
+              },
+            },
+            {
+              icon: "#iconC3jingling",
+              label: "C3精灵",
+              click: function (item) {
+                const config = generateConfig(
+                  CONFIGTYPE.CSS3DSPRITE,
+                  {
+                    width: 100,
+                    height: 100,
+                    scale: {
+                      x: 0.2,
+                      y: 0.2,
+                      z: 0.2,
+                    },
+                  },
+                  {
+                    observer: false,
+                  },
+                );
+                config.name = `${item.label}-${config.vid.slice(-2)}`;
+
+                history.apply(
+                  new AddCSS3DAction({
+                    engine,
+                    store: this.$store,
+                    config,
+                  }),
+                  true,
+                );
+              },
+            },
+          ],
+          click: function (item) {
+            if (item.click) {
+              item.click.call(this, item);
+            }
           },
         },
         {
@@ -127,13 +256,13 @@ export default {
           list: [
             {
               icon: "#iconlujing",
-              label: "路径",
+              label: "3D路径",
               click: function (item) {
-                const path = generateConfig(CONFIGTYPE.PATH, {
+                const path = generateConfig(CONFIGTYPE.PATH3, {
                   curves: [],
                 });
 
-                path.name = `路径-${path.vid.slice(-2)}`;
+                path.name = `${item.label}-${path.vid.slice(-2)}`;
 
                 engine.applyConfig(path);
 
@@ -145,9 +274,59 @@ export default {
                   geometry: geometry.vid,
                 });
 
-                line.name = `${item.label}-${line.vid.slice(-2)}`;
+                line.name = path.name;
 
-                geometry.name = `路径几何-${line.name}`;
+                geometry.name = `路径几何-${geometry.vid.slice(-2)}`;
+
+                engine.applyConfig(geometry, line);
+
+                const scene = this.$store.getters["scene/currentScene"];
+
+                scene.children.push(line.vid);
+                this.$store.commit("path/notify");
+                this.$store.commit("line/notify");
+
+                this.$store.commit("path/draw", {
+                  status: !this.draw,
+                  geometry: geometry,
+                  drawType: "3d",
+                });
+
+                //TODO: add action
+                // history.apply(
+                //   new AddLineAction({
+                //     engine,
+                //     store: this.$store,
+                //     geometry,
+                //     line,
+                //   }),
+                //   true
+                // );
+              },
+            },
+            {
+              icon: "#iconlujing",
+              label: "2D路径",
+              click: function (item) {
+                const path = generateConfig(CONFIGTYPE.PATH, {
+                  curves: [],
+                });
+
+                path.name = `${item.label}-${path.vid.slice(-2)}`;
+
+                engine.applyConfig(path);
+
+                const geometry = generateConfig(CONFIGTYPE.PATHGEOMETRY, {
+                  path: path.vid,
+                  space: false,
+                });
+                const line = generateConfig(CONFIGTYPE.LINE, {
+                  geometry: geometry.vid,
+                });
+
+                line.name = path.name;
+
+                geometry.name = `路径几何-${geometry.vid.slice(-2)}`;
 
                 engine.applyConfig(geometry, line);
 
@@ -155,11 +334,13 @@ export default {
 
                 scene.children.push(line.vid);
 
+                this.$store.commit("path/notify");
                 this.$store.commit("line/notify");
 
                 this.$store.commit("path/draw", {
                   status: !this.draw,
                   geometry: geometry,
+                  drawType: "2d",
                 });
 
                 //TODO: add action
@@ -178,11 +359,18 @@ export default {
               icon: "#iconxingzhuang",
               label: "形状",
               click: function (item) {
-                const shape = generateConfig(CONFIGTYPE.SHAPE);
+                const path = generateConfig(CONFIGTYPE.PATH, {
+                  curves: [],
+                  autoClose: true,
+                });
 
-                shape.name = `形状-${shape.vid.slice(-2)}`;
+                path.name = `路径-${path.vid.slice(-2)}`;
 
-                engine.applyConfig(shape);
+                const shape = generateConfig(CONFIGTYPE.SHAPE, {
+                  shape: path.vid,
+                });
+
+                shape.name = `${item.label}-${shape.vid.slice(-2)}`;
 
                 const geometry = generateConfig(CONFIGTYPE.SHAPEGEOMETRY, {
                   shape: shape.vid,
@@ -190,68 +378,449 @@ export default {
                 const mesh = generateConfig(CONFIGTYPE.MESH, {
                   geometry: geometry.vid,
                 });
-                mesh.name = `${item.label}-${mesh.vid.slice(-2)}`;
+                mesh.name = shape.name;
 
-                history.apply(
-                  new AddMeshAction({
-                    geometryConfig: geometry,
-                    meshConfig: mesh,
-                    store: this.$store,
-                    engine,
-                  }),
-                  true,
-                );
+                engine.applyConfig(path, shape, geometry, mesh);
+
+                const scene = this.$store.getters["scene/currentScene"];
+
+                scene.children.push(mesh.vid);
+
+                this.$store.commit("shape/notify");
+                this.$store.commit("mesh/notify");
+
+                this.$store.commit("path/draw", {
+                  status: !this.draw,
+                  geometry: geometry,
+                  drawType: "2d",
+                });
               },
             },
+          ],
+          click: function (item) {
+            if (item.click) {
+              item.click.call(this, item);
+            }
+          },
+        },
+        {
+          icon: "#iconpingmianjihe",
+          label: "应用物体",
+          list: [
             {
               icon: "#iconguandao",
               label: "管道",
-              geometry: CONFIGTYPE.PATHTUBEGEOMETRY,
+              click: function (item) {
+                if (!Object.keys(this.$store.getters["path/get"]).length) {
+                  this.$message.warning("您还未创建路径。");
+                  return;
+                }
+
+                this.$message.info("请选择场景中的一个3D路径。");
+
+                const selectFun = (event) => {
+                  const objectConfig = engine.getConfigBySymbol(
+                    event.objectSymbols[0],
+                  );
+
+                  if (!objectConfig) {
+                    console.error(
+                      `engine can not found object with vid: ${event.objectSymbols[0]}`,
+                    );
+                    this.$message.warning("未知错误，请重新选择。");
+                    return;
+                  }
+
+                  const geometryConfig = engine.getConfigBySymbol(
+                    objectConfig.geometry,
+                  );
+
+                  if (
+                    !geometryConfig ||
+                    geometryConfig.type !== CONFIGTYPE.PATHGEOMETRY
+                  ) {
+                    this.$message.warning(
+                      "您选择的不是一个3D路径物体，请重新选择。",
+                    );
+                    return;
+                  }
+
+                  const pathConfig = engine.getConfigBySymbol(
+                    geometryConfig.path,
+                  );
+
+                  if (!pathConfig || pathConfig.type !== CONFIGTYPE.PATH3) {
+                    this.$message.warning(
+                      "您选择的不是一个3D路径物体，请重新选择。",
+                    );
+                    return;
+                  }
+
+                  const geometry = generateConfig(CONFIGTYPE.PATHTUBEGEOMETRY, {
+                    path: geometryConfig.path,
+                  });
+
+                  const mesh = generateConfig(CONFIGTYPE.MESH, {
+                    geometry: geometry.vid,
+                  });
+
+                  mesh.name = `${item.label}-${mesh.vid.slice(-2)}`;
+
+                  geometry.name = `${item.label}-${mesh.name}`;
+
+                  const helper = generateConfig(
+                    CONFIGTYPE.OBJECTHELPER,
+                    {
+                      target: mesh.vid,
+                      shape: true,
+                    },
+                    {
+                      observer: false,
+                    },
+                  );
+
+                  history.apply(
+                    new AddMeshAction({
+                      geometryConfig: geometry,
+                      meshConfig: mesh,
+                      helperConfig: helper,
+                      store: this.$store,
+                      engine: engine,
+                    }),
+                    true,
+                  );
+
+                  engine.removeEventListener("selected", selectFun);
+                };
+
+                engine.addEventListener("selected", selectFun);
+              },
+            },
+            // {
+            //   icon: "#iconxixian",
+            //   label: "细线",
+            //   click: function (item) {
+            //     if (!Object.keys(this.$store.getters["path/get"]).length) {
+            //       this.$message.warning("您还未创建路径。");
+            //       return;
+            //     }
+
+            //     this.$message.info("请选择场景中的一个路径。");
+
+            //     const selectFun = (event) => {
+            //       const objectConfig = engine.getConfigBySymbol(
+            //         event.objectSymbols[0],
+            //       );
+
+            //       if (!objectConfig) {
+            //         console.error(
+            //           `engine can not found object with vid: ${event.objectSymbols[0]}`,
+            //         );
+            //         this.$message.warning("未知错误，请重新选择。");
+            //         return;
+            //       }
+
+            //       const geometry = engine.getConfigBySymbol(
+            //         objectConfig.geometry,
+            //       );
+
+            //       const line = generateConfig(CONFIGTYPE.LINE, {
+            //         geometry: objectConfig.geometry,
+            //       });
+
+            //       line.name = `${item.label}-${line.vid.slice(-2)}`;
+
+            //       history.apply(
+            //         new AddLineAction({
+            //           geometry,
+            //           line,
+            //           store: this.$store,
+            //           engine: engine,
+            //         }),
+            //         true,
+            //       );
+
+            //       engine.removeEventListener("selected", selectFun);
+            //     };
+
+            //     engine.addEventListener("selected", selectFun);
+            //   },
+            // },
+            // {
+            //   icon: "#iconcuxian",
+            //   label: "粗线",
+            //   click: function (item) {
+            //     if (!Object.keys(this.$store.getters["path/get"]).length) {
+            //       this.$message.warning("您还未创建路径。");
+            //       return;
+            //     }
+
+            //     this.$message.info("请选择场景中的一个路径。");
+
+            //     const selectFun = (event) => {
+            //       const objectConfig = engine.getConfigBySymbol(
+            //         event.objectSymbols[0],
+            //       );
+
+            //       if (!objectConfig) {
+            //         console.error(
+            //           `engine can not found object with vid: ${event.objectSymbols[0]}`,
+            //         );
+            //         this.$message.warning("未知错误，请重新选择。");
+            //         return;
+            //       }
+
+            //       const geometry = engine.getConfigBySymbol(
+            //         objectConfig.geometry,
+            //       );
+
+            //       const line = generateConfig(CONFIGTYPE.LINE2, {
+            //         geometry: objectConfig.geometry,
+            //       });
+
+            //       line.name = `${item.label}-${line.vid.slice(-2)}`;
+
+            //       history.apply(
+            //         new AddLineAction({
+            //           geometry,
+            //           line,
+            //           store: this.$store,
+            //           engine: engine,
+            //         }),
+            //         true,
+            //       );
+
+            //       engine.removeEventListener("selected", selectFun);
+            //     };
+
+            //     engine.addEventListener("selected", selectFun);
+            //   },
+            // },
+            {
+              icon: "#iconjiyati",
+              label: "挤压体",
+              click: function (item) {
+                if (!Object.keys(this.$store.getters["shape/get"]).length) {
+                  this.$message.warning("您还未创建形状。");
+                  return;
+                }
+
+                this.$message.info("请选择场景中的一个形状。");
+
+                const selectFun = (event) => {
+                  const objectConfig = engine.getConfigBySymbol(
+                    event.objectSymbols[0],
+                  );
+
+                  if (!objectConfig) {
+                    console.error(
+                      `engine can not found object with vid: ${event.objectSymbols[0]}`,
+                    );
+                    this.$message.warning("未知错误，请重新选择。");
+                    return;
+                  }
+
+                  const geometryConfig = engine.getConfigBySymbol(
+                    objectConfig.geometry,
+                  );
+
+                  if (
+                    !geometryConfig ||
+                    geometryConfig.type !== CONFIGTYPE.SHAPEGEOMETRY
+                  ) {
+                    this.$message.warning("您选择的不是一个形状，请重新选择。");
+                    return;
+                  }
+
+                  const geometry = generateConfig(CONFIGTYPE.EXTRUDEGEOMETRY, {
+                    shapes: geometryConfig.shape,
+                    center: false,
+                    options: {
+                      steps: 128,
+                      depth: 10,
+                    },
+                  });
+
+                  const mesh = generateConfig(CONFIGTYPE.MESH, {
+                    geometry: geometry.vid,
+                  });
+
+                  mesh.name = `${item.label}-${mesh.vid.slice(-2)}`;
+
+                  geometry.name = `${item.label}几何-${geometry.vid.slice(-2)}`;
+
+                  const helper = generateConfig(
+                    CONFIGTYPE.OBJECTHELPER,
+                    {
+                      target: mesh.vid,
+                      shape: true,
+                    },
+                    {
+                      observer: false,
+                    },
+                  );
+
+                  history.apply(
+                    new AddMeshAction({
+                      geometryConfig: geometry,
+                      meshConfig: mesh,
+                      helperConfig: helper,
+                      store: this.$store,
+                      engine: engine,
+                    }),
+                    true,
+                  );
+
+                  engine.removeEventListener("selected", selectFun);
+                };
+
+                engine.addEventListener("selected", selectFun);
+              },
             },
             {
-              icon: "#iconxixian",
-              label: "细线",
-              object: CONFIGTYPE.LINE,
-            },
-            {
-              icon: "#iconcuxian",
-              label: "粗线",
-              object: CONFIGTYPE.LINE2,
+              icon: "#iconjiyati",
+              label: "车削体",
+              click: function (item) {
+                if (!Object.keys(this.$store.getters["path/get"]).length) {
+                  this.$message.warning("您还未创建路径。");
+                  return;
+                }
+
+                this.$message.info("请选择场景中的一个2D路径。");
+
+                const selectFun = (event) => {
+                  const objectConfig = engine.getConfigBySymbol(
+                    event.objectSymbols[0],
+                  );
+
+                  if (!objectConfig) {
+                    console.error(
+                      `engine can not found object with vid: ${event.objectSymbols[0]}`,
+                    );
+                    this.$message.warning("未知错误，请重新选择。");
+                    return;
+                  }
+
+                  const geometryConfig = engine.getConfigBySymbol(
+                    objectConfig.geometry,
+                  );
+
+                  if (
+                    !geometryConfig ||
+                    geometryConfig.type !== CONFIGTYPE.PATHGEOMETRY
+                  ) {
+                    this.$message.warning(
+                      "您选择的不是一个2D路径物体，请重新选择。",
+                    );
+                    return;
+                  }
+
+                  const pathConfig = engine.getConfigBySymbol(
+                    geometryConfig.path,
+                  );
+
+                  if (!pathConfig || pathConfig.type !== CONFIGTYPE.PATH) {
+                    this.$message.warning(
+                      "您选择的不是一个2D路径物体，请重新选择。",
+                    );
+                    return;
+                  }
+
+                  const geometry = generateConfig(CONFIGTYPE.LATHEGEOMETRY, {
+                    path: geometryConfig.path,
+                    center: false,
+                  });
+
+                  const mesh = generateConfig(CONFIGTYPE.MESH, {
+                    geometry: geometry.vid,
+                  });
+
+                  mesh.name = `${item.label}-${mesh.vid.slice(-2)}`;
+
+                  geometry.name = `${item.label}-${mesh.name}`;
+
+                  const helper = generateConfig(
+                    CONFIGTYPE.OBJECTHELPER,
+                    {
+                      target: mesh.vid,
+                      shape: true,
+                    },
+                    {
+                      observer: false,
+                    },
+                  );
+
+                  history.apply(
+                    new AddMeshAction({
+                      geometryConfig: geometry,
+                      meshConfig: mesh,
+                      helperConfig: helper,
+                      store: this.$store,
+                      engine: engine,
+                    }),
+                    true,
+                  );
+
+                  engine.removeEventListener("selected", selectFun);
+                };
+
+                engine.addEventListener("selected", selectFun);
+              },
             },
             {
               icon: "#icondianyun",
               label: "点云",
               object: CONFIGTYPE.POINTS,
               click: function (item) {
-                const material = generateConfig(
-                  CONFIGTYPE.POINTSMATERIAL,
-                  undefined,
-                  {
-                    observer: false,
-                  },
-                );
-                const points = generateConfig(
-                  CONFIGTYPE.POINTS,
-                  {
-                    material: material.vid,
-                  },
-                  {
-                    observer: false,
-                  },
-                );
-                points.name = `点云-${points.vid.slice(-2)}`;
-                points.icon = item.icon;
-                material.name = `${points.name}的材质`;
+                this.$message.info("请选择场景中的一个几何物体。");
 
-                history.apply(
-                  new AddPointsAction({
-                    materialConfig: material,
-                    pointsConfig: points,
-                    store: this.$store,
-                    engine,
-                  }),
-                  true,
-                );
+                const selectFun = (event) => {
+                  const objectConfig = engine.getConfigBySymbol(
+                    event.objectSymbols[0],
+                  );
+
+                  if (!objectConfig) {
+                    console.error(
+                      `engine can not found object with vid: ${event.objectSymbols[0]}`,
+                    );
+                    return;
+                  }
+
+                  const material = generateConfig(
+                    CONFIGTYPE.POINTSMATERIAL,
+                    undefined,
+                    {
+                      observer: false,
+                    },
+                  );
+                  const points = generateConfig(
+                    CONFIGTYPE.POINTS,
+                    {
+                      material: material.vid,
+                      geometry: objectConfig.geometry,
+                    },
+                    {
+                      observer: false,
+                    },
+                  );
+                  points.name = `点云-${points.vid.slice(-2)}`;
+                  points.icon = item.icon;
+                  material.name = `${points.name}的材质`;
+
+                  history.apply(
+                    new AddPointsAction({
+                      materialConfig: material,
+                      pointsConfig: points,
+                      store: this.$store,
+                      engine,
+                    }),
+                    true,
+                  );
+
+                  engine.removeEventListener("selected", selectFun);
+                };
+
+                engine.addEventListener("selected", selectFun);
               },
             },
             {
@@ -379,140 +948,7 @@ export default {
             }
           },
         },
-        {
-          icon: "#iconpingmianjihe",
-          label: "平面",
-          list: [
-            {
-              icon: "#iconjingling",
-              label: "精灵",
-              click: function (item) {
-                const material = generateConfig(
-                  CONFIGTYPE.SPRITEMATERIAL,
-                  { sizeAttenuation: false },
-                  { observer: false },
-                );
-                material.name = `精灵材质-${material.vid.slice(-2)}`;
 
-                const sprite = generateConfig(
-                  CONFIGTYPE.SPRITE,
-                  {
-                    material: material.vid,
-
-                    scale: { x: 0.2, y: 0.2 },
-                  },
-                  {
-                    observer: false,
-                  },
-                );
-                sprite.name = `${item.label}-${sprite.vid.slice(-2)}`;
-
-                history.apply(
-                  new AddSpriteAction({
-                    engine,
-                    store: this.$store,
-                    material,
-                    sprite,
-                  }),
-                  true,
-                );
-              },
-            },
-            {
-              icon: "#iconC2jingling",
-              label: "C2精灵",
-              click: function (item) {
-                const config = generateConfig(
-                  CONFIGTYPE.CSS2DPLANE,
-                  {
-                    width: 200,
-                    height: 200,
-                  },
-                  {
-                    observer: false,
-                  },
-                );
-                config.name = `${item.label}-${config.vid.slice(-2)}`;
-
-                history.apply(
-                  new AddCSS2DAction({
-                    engine,
-                    store: this.$store,
-                    config,
-                  }),
-                  true,
-                );
-              },
-            },
-            {
-              icon: "#iconC3pingmian",
-              label: "C3平面",
-              click: function (item) {
-                const config = generateConfig(
-                  CONFIGTYPE.CSS3DPLANE,
-                  {
-                    width: 300,
-                    height: 300,
-                    scale: {
-                      x: 0.2,
-                      y: 0.2,
-                      z: 0.2,
-                    },
-                  },
-                  {
-                    observer: false,
-                  },
-                );
-                config.name = `${item.label}-${config.vid.slice(-2)}`;
-
-                history.apply(
-                  new AddCSS3DAction({
-                    engine,
-                    store: this.$store,
-                    config,
-                  }),
-                  true,
-                );
-              },
-            },
-            {
-              icon: "#iconC3jingling",
-              label: "C3精灵",
-              click: function (item) {
-                const config = generateConfig(
-                  CONFIGTYPE.CSS3DSPRITE,
-                  {
-                    width: 100,
-                    height: 100,
-                    scale: {
-                      x: 0.2,
-                      y: 0.2,
-                      z: 0.2,
-                    },
-                  },
-                  {
-                    observer: false,
-                  },
-                );
-                config.name = `${item.label}-${config.vid.slice(-2)}`;
-
-                history.apply(
-                  new AddCSS3DAction({
-                    engine,
-                    store: this.$store,
-                    config,
-                  }),
-                  true,
-                );
-              },
-            },
-          ],
-          click: function (item) {
-            if (item.click) {
-              item.click.call(this, item);
-            }
-          },
-        },
         {
           icon: "#iconpingmianjihe",
           label: "辅助",

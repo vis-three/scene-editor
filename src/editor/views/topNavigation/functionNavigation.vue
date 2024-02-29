@@ -60,10 +60,10 @@
       <top-navigation-function-elem
         tooltip="平移"
         icon="#iconpingyi"
-        :active="mode === 'translate'"
+        :active="mode === 'position'"
         @click.native="
           () => {
-            transformControls.mode = 'translate';
+            transformControls.mode = 'position';
           }
         "
       />
@@ -80,10 +80,10 @@
       <top-navigation-function-elem
         tooltip="旋转"
         icon="#iconxuanzhuan1"
-        :active="mode === 'rotate'"
+        :active="mode === 'rotation'"
         @click.native="
           () => {
-            transformControls.mode = 'rotate';
+            transformControls.mode = 'rotation';
           }
         "
       />

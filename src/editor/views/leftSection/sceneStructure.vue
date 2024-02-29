@@ -144,7 +144,7 @@ export default {
           objectSymbols: [data.vid],
           store: this.$store,
         }),
-        true
+        true,
       );
     },
 
@@ -159,11 +159,13 @@ export default {
         cancelButtonText: "取消",
         type: "warning",
       }).then(() => {
-        new DeleteObjectAction({
-          store: this.store,
-          engine,
-          objectSymbol: data.vid,
-        }).next();
+        history.apply(
+          new DeleteObjectAction({
+            store: this.store,
+            engine,
+          }),
+          true,
+        );
         this.$message({
           type: "success",
           message: "删除成功!",

@@ -18,6 +18,7 @@
         $store.commit('path/draw', {
           status: false,
           geometry: '',
+          drawType: drawType,
         })
       "
     >
@@ -36,28 +37,6 @@ import Vue from "vue";
 export default {
   data() {
     return {
-      curveList: [
-        {
-          icon: "#iconzhexian",
-          name: "line",
-          label: "直线",
-        },
-        {
-          icon: "#iconyuanhu",
-          name: "arc",
-          label: "圆弧",
-        },
-        {
-          icon: "#iconercibeisaier",
-          name: "quadratic",
-          label: "二次贝塞尔",
-        },
-        {
-          icon: "#iconsancibeisaier",
-          name: "bezier",
-          label: "三次贝塞尔",
-        },
-      ],
       count: 0,
     };
   },
@@ -74,6 +53,51 @@ export default {
     drawPath() {
       return this.$store.getters["path/drawPath"];
     },
+    drawType() {
+      return this.$store.getters["path/drawType"];
+    },
+    curveList() {
+      return this.drawType === "2d"
+        ? [
+            {
+              icon: "#iconzhexian",
+              name: "line",
+              label: "直线",
+            },
+            {
+              icon: "#iconyuanhu",
+              name: "arc",
+              label: "圆弧",
+            },
+            {
+              icon: "#iconercibeisaier",
+              name: "quadratic",
+              label: "二次贝塞尔",
+            },
+            {
+              icon: "#iconsancibeisaier",
+              name: "cubic",
+              label: "三次贝塞尔",
+            },
+          ]
+        : [
+            {
+              icon: "#iconzhexian",
+              name: "line",
+              label: "直线",
+            },
+            {
+              icon: "#iconercibeisaier",
+              name: "quadratic",
+              label: "二次贝塞尔",
+            },
+            {
+              icon: "#iconsancibeisaier",
+              name: "cubic",
+              label: "三次贝塞尔",
+            },
+          ];
+    },
   },
   watch: {
     draw: {
@@ -83,7 +107,9 @@ export default {
           engine.selectionDisable = true;
           sketcher.addEventListener("write", (event) => {
             this.drawPath.curves.push(
-              Vue.observable(curveGenerator[this.drawPen](event))
+              Vue.observable(
+                curveGenerator[this.drawType][this.drawPen](event),
+              ),
             );
             this.count += 1;
             this.drawGeometry.divisions = this.count * 100;
@@ -95,15 +121,20 @@ export default {
 
             if (segment.curve !== this.drawPen) {
               this.drawPath.curves.pop();
-              const newSegment = curveGenerator[this.drawPen](event);
+              const newSegment = Vue.observable(
+                curveGenerator[this.drawType][this.drawPen](event),
+              );
               newSegment.params[0] = segment.params[0];
               newSegment.params[1] = segment.params[1];
+              if (this.drawType === "3d") {
+                newSegment.params[2] = segment.params[2];
+              }
 
               this.drawPath.curves.push(newSegment);
             }
-            curveEditManager[this.drawPen](
+            curveEditManager[this.drawType][this.drawPen](
               event,
-              this.drawPath.curves[this.drawPath.curves.length - 1]
+              this.drawPath.curves[this.drawPath.curves.length - 1],
             );
           });
 

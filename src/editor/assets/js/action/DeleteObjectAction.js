@@ -1,10 +1,12 @@
 import { Action } from "@vis-three/convenient";
+import { SelectionAction } from "./SelectionAction";
 import { generateConfig, JSONHandler } from "@vis-three/middleware";
 export class DeleteObjectAction extends Action {
-  constructor({ store, engine, objectSymbol }) {
+  constructor({ store, engine }) {
     super();
     this.$store = store;
     this.engine = engine;
+    this.cacheSelected = [];
     this.cacheConfig = [];
 
     // 递归 symbolbox children
@@ -13,6 +15,11 @@ export class DeleteObjectAction extends Action {
 
       if (!config) {
         console.warn(`can not found vid in engine: ${objectSymbol}`);
+      }
+
+      if (config.helper) {
+        const helper = engine.getConfigBySymbol(config.helper);
+        this.cacheConfig.push(JSONHandler.clone(helper));
       }
 
       this.cacheConfig.push(JSONHandler.clone(config));
@@ -24,10 +31,16 @@ export class DeleteObjectAction extends Action {
       }
     };
 
-    recursion(objectSymbol);
+    engine.selectionBox.forEach((object) => {
+      const config = engine.getObjectConfig(object);
+      this.cacheSelected.push(JSONHandler.clone(config));
+      recursion(config.vid);
+    });
   }
 
   next() {
+    SelectionAction.touch = true;
+    this.engine.setSelectionBox([]);
     // 先移除所有child
     this.cacheConfig.forEach((config) => {
       if (config.parent) {
@@ -52,9 +65,21 @@ export class DeleteObjectAction extends Action {
       .concat(this.cacheConfig)
       .reverse()
       .forEach((config) => {
-        this.engine.applyConfig(generateConfig(config.type, config));
+        this.engine.applyConfig(
+          generateConfig(config.type, config, {
+            strict: false,
+          }),
+        );
       });
-    const parent = this.engine.getConfigBySymbol(this.cacheConfig[0].parent);
-    parent.children.push(this.cacheConfig[0].vid);
+
+    SelectionAction.touch = true;
+    this.engine.setSelectionBoxBySymbol(
+      this.cacheSelected.map((config) => {
+        const parent = this.engine.getConfigBySymbol(config.parent);
+        parent.children.push(config.vid);
+
+        return config.vid;
+      }),
+    );
   }
 }

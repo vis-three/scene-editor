@@ -67,16 +67,13 @@ engine.keyboardManager
       event.preventDefault();
       event.stopPropagation();
 
-      const object = store.getters["active/object"];
-
-      if (object) {
+      if (engine.selectionBox.size) {
         history.apply(
           new DeleteObjectAction({
             store,
             engine,
-            objectSymbol: object.vid,
           }),
-          true
+          true,
         );
       }
     },
@@ -97,7 +94,7 @@ engine.addEventListener("selected", (event) => {
   }
 
   history.apply(
-    new SelectionAction({ engine, objectSymbols: event.objectSymbols, store })
+    new SelectionAction({ engine, objectSymbols: event.objectSymbols, store }),
   );
 
   if (event.objectSymbols.length === 1) {
@@ -109,8 +106,18 @@ engine.addEventListener("selected", (event) => {
       ? engine.getConfigBySymbol(obejctConfig.geometry)
       : null;
 
-    if (geometryConfig && geometryConfig.type === "PathGeometry") {
-      const pathConfig = engine.getConfigBySymbol(geometryConfig.path);
+    if (
+      geometryConfig &&
+      ["PathGeometry", "ShapeGeometry"].includes(geometryConfig.type)
+    ) {
+      let pathConfig;
+
+      if (geometryConfig.type === "PathGeometry") {
+        pathConfig = engine.getConfigBySymbol(geometryConfig.path);
+      } else if (geometryConfig.type === "ShapeGeometry") {
+        const shape = engine.getConfigBySymbol(geometryConfig.shape);
+        pathConfig = engine.getConfigBySymbol(shape.shape);
+      }
 
       engine.pathSupportControls.visible = true;
       engine.pathSupportControls
@@ -167,7 +174,7 @@ engine.eventManager.addEventListener("pointerup", (event) => {
               objectSymbol: vid,
               materialSymbol: store.getters["active/material"].vid,
             }),
-            true
+            true,
           );
           store.commit("material/dragging", false);
         } else if (

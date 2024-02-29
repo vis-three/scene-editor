@@ -44,8 +44,8 @@ export default {
   components,
   data() {
     return {
-      active: "",
-      cacheActive: "",
+      active: "basic-model-library",
+      cacheActive: "basic-model-library",
       list: [
         {
           label: "几何物体",

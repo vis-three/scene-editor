@@ -12,6 +12,9 @@ export const module = {
     get(state) {
       return state.map;
     },
+    list(state) {
+      return Object.values(state.map);
+    },
   },
   mutations: {
     add(state, config) {

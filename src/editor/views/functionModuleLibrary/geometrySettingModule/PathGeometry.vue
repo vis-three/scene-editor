@@ -47,11 +47,13 @@ export default {
         this.$store.commit("path/draw", {
           status: !this.draw,
           geometry: this.config,
+          drawType: this.path.type === "Path" ? "2d" : "3d",
         });
       } else {
         this.$store.commit("path/draw", {
           status: !this.draw,
           geometry: "",
+          drawType: this.path.type === "Path" ? "2d" : "3d",
         });
       }
     },

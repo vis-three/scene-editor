@@ -30,10 +30,7 @@
           code="#iconsanjiaojiantouyou"
           :style="{ transform: 'scale(0.6)' }"
         />
-        <span
-          class="address-title"
-          v-text="item.name"
-        />
+        <span class="address-title" v-text="item.name" />
       </span>
     </div>
     <div class="operate-operation">
@@ -51,11 +48,7 @@
           placeholder="输入分类名称"
         />
         <div class="popover-operation">
-          <el-button
-            size="mini"
-            type="text"
-            @click="addClassify"
-          >
+          <el-button size="mini" type="text" @click="addClassify">
             确定
           </el-button>
         </div>
@@ -81,7 +74,7 @@
         :accept="ext"
         multiple="multiple"
         @change="fileHandler"
-      >
+      />
     </div>
   </div>
 </template>
@@ -94,7 +87,7 @@ export default {
     return {
       classifyName: "", // 分类名
       classifyVisible: false,
-      ext: [".jpg", ".png", ".jpeg", ".video", ".hdr", ".dds"],
+      ext: [".jpg", ".png", ".jpeg", ".hdr", ".dds", ".mp4", ".wmv"],
     };
   },
   computed: {
@@ -162,7 +155,7 @@ export default {
             texture: await this.$tool.fileToBlob(file),
             ext: this.$tool.getFileExt(file.name),
             size: file.size,
-          })
+          }),
         );
       }
 
