@@ -25,5 +25,6 @@ module.exports = {
     "vue/no-mutating-props": "off",
     "vue/multi-word-component-names": "off",
     "vue/no-v-text-v-html-on-component": "off",
+    "vue/require-default-prop": "off",
   },
 };

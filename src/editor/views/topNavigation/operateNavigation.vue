@@ -7,20 +7,8 @@
     >
       快照
     </el-button>
-    <el-button
-      size="mini"
-      type="success"
-      @click="save"
-    >
-      保存
-    </el-button>
-    <el-button
-      size="mini"
-      type="info"
-      @click="display"
-    >
-      展示
-    </el-button>
+    <el-button size="mini" type="success" @click="save">保存</el-button>
+    <el-button size="mini" type="info" @click="display">展示</el-button>
     <!-- <el-button size="mini" type="info" @click="download">导出</el-button> -->
     <el-dialog
       title="快照设置"
@@ -28,15 +16,9 @@
       width="30%"
       center
     >
-      <el-form
-        label-position="left"
-        label-width="90px"
-      >
+      <el-form label-position="left" label-width="90px">
         <el-form-item label="文件名">
-          <el-input
-            v-model="screenshotSetting.name"
-            size="mini"
-          />
+          <el-input v-model="screenshotSetting.name" size="mini" />
         </el-form-item>
         <el-form-item label="宽度（px）">
           <el-input-number
@@ -53,21 +35,11 @@
           />
         </el-form-item>
       </el-form>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button
-          size="mini"
-          @click="screenshotDialogVisible = false"
-        >
+      <span slot="footer" class="dialog-footer">
+        <el-button size="mini" @click="screenshotDialogVisible = false">
           取 消
         </el-button>
-        <el-button
-          size="mini"
-          type="primary"
-          @click="getScreenshot"
-        >
+        <el-button size="mini" type="primary" @click="getScreenshot">
           确 定
         </el-button>
       </span>
@@ -78,6 +50,8 @@
 <script>
 import { engine } from "@/editor/assets/js/vis";
 import appApi from "@/assets/js/api/app.js";
+import JSZip from "jszip";
+import { JSONHandler } from "@vis-three/middleware";
 
 export default {
   data() {
@@ -150,10 +124,8 @@ export default {
 
       let app = await this.$store.dispatch(
         "urlTransform",
-        engine.exportConfig()
+        engine.exportConfig(),
       );
-
-      console.log(app);
 
       appApi
         .saveApp({
@@ -176,15 +148,43 @@ export default {
       window.open(
         window.location.origin +
           window.location.pathname +
-          `/preview.html?id=${this.id}`
+          `/preview.html?id=${this.id}`,
       );
     },
 
-    download() {
+    async download() {
+      const loading = this.$loading({
+        text: "正在打包项目...",
+        background: "rgb(0, 0, 0)",
+        target: ".renderWindow-container",
+      });
+
+      const editor = await this.$store.dispatch("exportConfig");
+      const preview = await engine.getScreenshot({
+        width: 1920,
+        height: 1080,
+      });
+
+      const { app, zip } = await this.$store.dispatch(
+        "exportTransform",
+        engine.exportConfig(),
+      );
+
+      zip.file("editor.json", JSON.stringify(editor, JSONHandler.stringify));
+      zip.file("app.json", JSON.stringify(app, JSONHandler.stringify));
+      zip.file("preview.png", this.$tool.dataURLToBlob(preview));
+
+      const blob = await zip.generateAsync({ type: "blob" });
+
       const a = document.createElement("a");
+
       a.download = `${this.$store.getters.name}.zip`;
-      a.href = `/app/${this.$store.getters.id}/dist.zip`;
+
+      a.href = URL.createObjectURL(blob);
+
       a.click();
+
+      loading.close();
     },
   },
 };

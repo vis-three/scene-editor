@@ -7,6 +7,7 @@ import shaderApi from "@/assets/js/api/shader.js";
 import { Message } from "element-ui";
 import Vue from "vue";
 import Vuex from "vuex";
+import JSZip from "jszip";
 
 Vue.use(Vuex);
 
@@ -186,6 +187,126 @@ export default new Vuex.Store({
       appJson.shaderAssets = app.shaderAssets;
       app = appJson;
       return app;
+    },
+
+    exportTransform(ctx, app) {
+      let appJson = JSON.stringify(app, JSONHandler.stringify);
+      const zip = new JSZip();
+      const urlDetails = ctx.state.cacheUrlDetails;
+
+      const modelFolder = zip.folder("model");
+      const textureFolder = zip.folder("texture");
+      const shaderFolder = zip.folder("shader");
+      const componentFolder = zip.folder("component");
+      const canvasFolder = zip.folder("canvas");
+
+      const zipFromPkgFile = (rootFolder, file, blobKey) => {
+        const pkg = file.pkg;
+        const idFolder = rootFolder.folder(file.id);
+
+        idFolder.file("package.json", JSONHandler.stringify(pkg));
+
+        const scriptUrl = pkg.module || pkg.main;
+        const scriptDirList = scriptUrl
+          .replace(/\\/g, "/")
+          .split("/")
+          .filter((url) => Boolean(url));
+
+        if (scriptDirList.length > 1) {
+          const scriptFile = scriptDirList.pop();
+
+          let scriptFolder = "";
+
+          for (const url of scriptDirList) {
+            scriptFolder = idFolder.folder(url);
+          }
+
+          scriptFolder.file(scriptFile, file[blobKey]);
+        } else {
+          idFolder.file(scriptUrl, file[blobKey]);
+        }
+      };
+
+      app.assets = app.assets.map((elem) => {
+        let url = elem.url;
+
+        if (!urlDetails[elem.url]) {
+          Message.error(`导出失败，未找到相关资源缓存：${elem.url}`);
+        } else {
+          const file = urlDetails[elem.url];
+
+          if (file.model) {
+            url = `/model/${file.id}/${file.name}`;
+            modelFolder.folder(file.id).file(file.name, file.model);
+          } else if (file.texture) {
+            url = `/texture/${file.id}/${file.name}`;
+            textureFolder.folder(file.id).file(file.name, file.texture);
+          }
+
+          appJson = appJson.replace(new RegExp(elem.url, "g"), url);
+        }
+
+        return url;
+      });
+
+      app.canvasAssets = app.canvasAssets.map((url) => {
+        let newUrl = url;
+
+        if (!urlDetails[url]) {
+          Message.error(`导出失败，未找到相关资源缓存：${url}`);
+        } else {
+          const file = urlDetails[url];
+
+          zipFromPkgFile(canvasFolder, file, "canvas");
+
+          newUrl = `/canvas/${file.id}`;
+
+          appJson = appJson.replace(new RegExp(url, "g"), newUrl);
+        }
+
+        return newUrl;
+      });
+
+      app.shaderAssets = app.shaderAssets.map((url) => {
+        let newUrl = url;
+
+        if (!urlDetails[url]) {
+          Message.error(`导出失败，未找到相关资源缓存：${url}`);
+        } else {
+          const file = urlDetails[url];
+
+          zipFromPkgFile(shaderFolder, file, "shader");
+
+          newUrl = `/shader/${file.id}`;
+        }
+
+        return newUrl;
+      });
+
+      app.component.forEach((elem) => {
+        let url = elem.$url;
+
+        if (!urlDetails[elem.$url]) {
+          Message.error(`导出失败，未找到相关资源缓存：${elem.$url}`);
+        } else {
+          const file = urlDetails[elem.$url];
+
+          zipFromPkgFile(componentFolder, file, "component");
+
+          url = `/component/${file.id}`;
+
+          appJson = appJson.replace(new RegExp(elem.$url, "g"), url);
+        }
+
+        elem.$url = url;
+      });
+
+      appJson = JSON.parse(appJson, JSONHandler.parse);
+      appJson.assets = app.assets;
+      appJson.canvasAssets = app.canvasAssets;
+      appJson.shaderAssets = app.shaderAssets;
+      app = appJson;
+      return { app, zip };
     },
     async assetsTransform(ctx, config) {
       let configJson = JSON.stringify(config, JSONHandler.stringify);
