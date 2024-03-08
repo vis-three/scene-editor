@@ -249,6 +249,7 @@ export default {
             if (isObjectModule(module)) {
               Object.values(c[module]).forEach((config) => {
                 if (config.parent === uniqueSymbol(CONFIGTYPE.SCENE)) {
+                  config.parent = "";
                   sceneChildren.push(config.vid);
                 }
               });
@@ -315,6 +316,7 @@ export default {
           });
 
           this.currentScene.children.push(...sceneChildren);
+
           this.$store.commit("notifyAll");
           this.$store.dispatch("appendTemplateInit", editor);
         })
