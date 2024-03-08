@@ -1,21 +1,12 @@
 vabse
 <template>
   <div class="containerOperation-container">
-    <div
-      v-show="loading"
-      class="loading-mask"
-    >
-      <vis-icon
-        class="ani"
-        code="#iconxuanzhuan"
-      />
+    <div v-show="loading" class="loading-mask">
+      <vis-icon class="ani" code="#iconxuanzhuan" />
       <span>正在加载...</span>
     </div>
 
-    <div
-      v-if="!loading && !floderChildren.length"
-      class="empty-tips"
-    >
+    <div v-if="!loading && !floderChildren.length" class="empty-tips">
       <span>这里暂时是空的哦</span>
       <el-button
         v-if="currentFloder.url === '/'"
@@ -38,30 +29,20 @@ vabse
       @click="chouseFile(item)"
     >
       <template v-if="item.dir">
-        <vis-icon
-          :size="iconSize"
-          code="#iconwenjianjia"
-        />
+        <vis-icon :size="iconSize" code="#iconwenjianjia" />
       </template>
       <template v-else>
-        <img :src="item.preview">
+        <img :src="item.preview" />
         <div
           v-show="selected.id === item.id"
           class="item-selected-mask"
           @click.stop="$store.commit('appLibrary/cancelSelected')"
         >
-          <vis-icon
-            class="item-selected"
-            size="60px"
-            code="#icongou"
-          />
+          <vis-icon class="item-selected" size="60px" code="#icongou" />
         </div>
       </template>
 
-      <span
-        class="item-title"
-        v-text="item.name"
-      />
+      <span class="item-title" v-text="item.name" />
       <vis-icon
         v-tooltip.bottom="`删除`"
         class="item-delete"
@@ -121,6 +102,7 @@ export default {
     },
     // 删除文件
     remove(item) {
+      return this.$tool.devTips();
       if (item.dir) {
         this.$confirm(`是否删除此分类: ${item.name}?`, "提示", {
           confirmButtonText: "确定",
@@ -151,7 +133,7 @@ export default {
             confirmButtonText: "确定",
             cancelButtonText: "取消",
             type: "warning",
-          }
+          },
         ).then(() => {
           this.axios
             .post("/model/removeModel", {

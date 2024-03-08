@@ -23,6 +23,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      "@ROOT": path.resolve(__dirname),
       vue: "vue/dist/vue.esm.js",
     },
   },

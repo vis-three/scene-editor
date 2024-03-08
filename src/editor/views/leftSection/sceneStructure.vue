@@ -11,6 +11,7 @@
           size="mini"
           suffix-icon="el-icon-search"
           placeholder="结构筛选"
+          @focus="tips"
         />
       </div>
     </div>
@@ -197,6 +198,9 @@ export default {
     filterNode(value, data) {
       if (!value) return true;
       return data.name.includes(value);
+    },
+    tips() {
+      this.$tool.devTips();
     },
   },
 };

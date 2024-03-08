@@ -6,10 +6,7 @@
         prefix-icon="el-icon-search"
         placeholder="贴图筛选"
       />
-      <el-dropdown
-        trigger="click"
-        @command="addtexture"
-      >
+      <el-dropdown trigger="click" @command="addtexture">
         <el-button
           size="mini"
           icon="el-icon-circle-plus-outline"
@@ -51,10 +48,7 @@
             class="operate-box"
             @click="deleteTexture(item)"
           >
-            <vis-icon
-              code="#iconshanchu"
-              color="red"
-            />
+            <vis-icon code="#iconshanchu" color="red" />
           </div>
           <div
             v-tooltip.bottom="item.name"
@@ -168,7 +162,7 @@ export default {
               {
                 deep: true,
                 immediate: true,
-              }
+              },
             );
           });
         });
@@ -226,10 +220,17 @@ export default {
       this.$refs.canvasFileSystem.open({
         confirm: async ({ files }) => {
           const vid = createSymbol();
-          const texture = generateConfig(item.type, {
-            vid,
-            name: `${item.label}-${vid.slice(-2)}`,
-          });
+          const texture = generateConfig(
+            item.type,
+            {
+              vid,
+              name: `${item.label}-${vid.slice(-2)}`,
+              $version: 0,
+            },
+            {
+              strict: false,
+            },
+          );
           this.$store.commit("texture/add", texture);
 
           const file = files[0];
@@ -254,7 +255,7 @@ export default {
             file.pkg,
             {
               $cid: createSymbol(),
-            }
+            },
           );
           this.$store.commit("canvas/add", {
             config,
@@ -319,7 +320,7 @@ export default {
         .then((event) => {
           textureList.forEach((elem) => {
             const config = engine.generateLoadTextureConfig(
-              this.urls[`texture-${elem.id}`]
+              this.urls[`texture-${elem.id}`],
             );
             config.name = `${elem.name}-${config.vid.slice(-2)}`;
             console.log(config);
@@ -351,7 +352,7 @@ export default {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning",
-        }
+        },
       ).then(() => {
         // store删除
         this.$store.commit("texture/remove", item.vid);

@@ -2,6 +2,8 @@ import { install } from "@vis-resm/importmap";
 import Vue from "vue";
 
 export class CanvasManager {
+  static textureUpdate = function (texture) {};
+
   constructor() {
     this.map = new Map(); // cid -> instanceof
     this.cacheReactor = {}; // url -> Reactor
@@ -54,9 +56,9 @@ export class CanvasManager {
     const reactor = new Reactor(
       Vue.observable(
         JSON.parse(
-          JSON.stringify(Object.assign(defaultConfig, config, { $url: url }))
-        )
-      )
+          JSON.stringify(Object.assign(defaultConfig, config, { $url: url })),
+        ),
+      ),
     );
 
     this.map.set(config.$cid, reactor);
@@ -78,10 +80,12 @@ export class CanvasManager {
 
     const updateFun = () => {
       texture.needsUpdate = true;
+      CanvasManager.textureUpdate(texture);
     };
 
     const reloadFun = () => {
       texture.url = texture.url;
+      CanvasManager.textureUpdate(texture);
     };
 
     this.cacheFun[cid] = {
@@ -122,7 +126,7 @@ export class CanvasManager {
       const pkg = this.cachePkg[reactor.data.$url];
       if (!pkg) {
         console.warn(
-          `can not found pkg in canvasManager: ${reactor.data.$url}`
+          `can not found pkg in canvasManager: ${reactor.data.$url}`,
         );
         continue;
       }

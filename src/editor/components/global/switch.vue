@@ -7,10 +7,7 @@
   >
     <template #controller>
       <div class="switch-controller">
-        <el-switch
-          v-model="inputValue"
-          size="mini"
-        />
+        <el-switch v-model="inputValue" size="mini" />
       </div>
     </template>
   </control-layout>
@@ -71,6 +68,10 @@ export default {
       }
     },
     clickWatch(value) {
+      if (!this.$store.getters["animationTrack/currentPickup"]) {
+        return this.$tool.devTips();
+      }
+
       const animation = this.animation;
       if (!value) {
         this.$store.commit("animationTrack/remove", {

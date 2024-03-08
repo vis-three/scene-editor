@@ -25,6 +25,8 @@ import { MeshoptDecoder } from "three/examples/jsm/libs/meshopt_decoder.module.j
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import { KTX2Loader } from "three/examples/jsm/loaders/KTX2Loader.js";
 
+import { version } from "@ROOT/package.json";
+
 Object.values(AniScriptLibrary).forEach((config) => {
   AniScriptGeneratorManager.register(config);
 });
@@ -33,7 +35,10 @@ Object.values(EventLibrary).forEach((config) => {
   EventGeneratorManager.register(config);
 });
 
-window.VIS = {};
+window.VIS = {
+  encode: "*-F-P",
+  version,
+};
 
 export const materialDisplayer = new MaterialDisplayer();
 materialDisplayer.setSize(76, 55);

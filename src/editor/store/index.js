@@ -4,6 +4,7 @@ import textureApi from "@/assets/js/api/texture.js";
 import componentApi from "@/assets/js/api/component.js";
 import canvasApi from "@/assets/js/api/canvas.js";
 import shaderApi from "@/assets/js/api/shader.js";
+import tool from "@/editor/assets/js/tool";
 import { Message } from "element-ui";
 import Vue from "vue";
 import Vuex from "vuex";
@@ -204,7 +205,7 @@ export default new Vuex.Store({
         const pkg = file.pkg;
         const idFolder = rootFolder.folder(file.id);
 
-        idFolder.file("package.json", JSONHandler.stringify(pkg));
+        idFolder.file("package.json", JSON.stringify(pkg));
 
         const scriptUrl = pkg.module || pkg.main;
         const scriptDirList = scriptUrl
@@ -225,6 +226,10 @@ export default new Vuex.Store({
         } else {
           idFolder.file(scriptUrl, file[blobKey]);
         }
+
+        if (file.preview) {
+          idFolder.file("preview.png", tool.dataURLToBlob(file.preview));
+        }
       };
 
       app.assets = app.assets.map((elem) => {
@@ -237,7 +242,11 @@ export default new Vuex.Store({
 
           if (file.model) {
             url = `/model/${file.id}/${file.name}`;
-            modelFolder.folder(file.id).file(file.name, file.model);
+            const idFolder = modelFolder.folder(file.id);
+            idFolder.file(file.name, file.model);
+            if (file.preview) {
+              idFolder.file("preview.png", tool.dataURLToBlob(file.preview));
+            }
           } else if (file.texture) {
             url = `/texture/${file.id}/${file.name}`;
             textureFolder.folder(file.id).file(file.name, file.texture);
@@ -308,6 +317,7 @@ export default new Vuex.Store({
       app = appJson;
       return { app, zip };
     },
+
     async assetsTransform(ctx, config) {
       let configJson = JSON.stringify(config, JSONHandler.stringify);
 

@@ -255,7 +255,7 @@ export default {
           label: "路径与形状",
           list: [
             {
-              icon: "#iconlujing",
+              icon: "#icona-3Dlujing",
               label: "3D路径",
               click: function (item) {
                 const path = generateConfig(CONFIGTYPE.PATH3, {
@@ -678,7 +678,7 @@ export default {
               },
             },
             {
-              icon: "#iconjiyati",
+              icon: "#iconchexiao",
               label: "车削体",
               click: function (item) {
                 if (!Object.keys(this.$store.getters["path/get"]).length) {

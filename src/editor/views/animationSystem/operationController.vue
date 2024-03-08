@@ -7,6 +7,7 @@
           size="mini"
           placeholder="搜索"
           prefix-icon="el-icon-search"
+          @focus="devTips"
         />
       </div>
       <div class="operationGeneral-time">
@@ -16,44 +17,23 @@
         <vis-icon
           code="#iconkuaijin"
           style="transform: rotate(180deg)"
-          @click.native="
-            () => {
-              $store.commit('animation/lastFrame');
-            }
-          "
+          @click.native="devTips"
         />
         <vis-icon
           title="播放"
           :code="play ? '#iconzantingtingzhi' : '#iconbofang'"
           @click.native="togglePlay"
         />
-        <vis-icon
-          code="#iconkuaijin"
-          @click.native="
-            () => {
-              $store.commit('animation/nextFrame');
-            }
-          "
-        />
+        <vis-icon code="#iconkuaijin" @click.native="devTips" />
       </div>
     </div>
     <div class="operationMain-container">
       <!-- 标题栏 STR -->
       <div class="operationMain-title-box">
         <div class="operation-helper">
-          <vis-icon
-            code="#iconshanchu"
-            type="error"
-            title="删除"
-          />
-          <vis-icon
-            code="#iconsanjiaojiantouyou"
-            title="播放"
-          />
-          <vis-icon
-            code="#iconshengyin"
-            title="声音"
-          />
+          <vis-icon code="#iconshanchu" type="error" title="删除" />
+          <vis-icon code="#iconsanjiaojiantouyou" title="播放" />
+          <vis-icon code="#iconshengyin" title="声音" />
         </div>
         <div class="operation-name">
           <vis-icon code="#iconbiaoqian" />
@@ -78,11 +58,7 @@
       </div>
       <!-- 标题栏 END -->
       <!-- 选项栏 STR -->
-      <div
-        ref="item-box"
-        class="operationMain-item-box"
-        @scroll="scroll"
-      >
+      <div ref="item-box" class="operationMain-item-box" @scroll="scroll">
         <div
           v-for="(item, index) in animationMap"
           :key="index"
@@ -93,11 +69,7 @@
           <div class="item-rootObject">
             <div class="item-helper">
               <div class="item-helper-checkBox">
-                <vis-icon
-                  code="#iconshanchu"
-                  title="删除"
-                  type="error"
-                />
+                <vis-icon code="#iconshanchu" title="删除" type="error" />
               </div>
               <div class="item-helper-checkBox">
                 <vis-icon
@@ -114,10 +86,7 @@
                 />
               </div>
             </div>
-            <div
-              class="item-open-sign"
-              @click="triggleItem(item)"
-            >
+            <div class="item-open-sign" @click="triggleItem(item)">
               <vis-icon
                 :class="{ 'sign-active': item.open }"
                 style="transform: scale(0.7)"
@@ -134,19 +103,11 @@
                 "
               >
                 <span class="el-dropdown-link">
-                  <vis-icon
-                    code="#iconjia1"
-                    type="primary"
-                    title="添加动画"
-                  />
+                  <vis-icon code="#iconjia1" type="primary" title="添加动画" />
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item command="load">
-                    加载动画
-                  </el-dropdown-item>
-                  <el-dropdown-item command="script">
-                    脚本动画
-                  </el-dropdown-item>
+                  <el-dropdown-item command="load">加载动画</el-dropdown-item>
+                  <el-dropdown-item command="script">脚本动画</el-dropdown-item>
                   <el-dropdown-item command="keyframe">
                     关键帧动画
                   </el-dropdown-item>
@@ -165,10 +126,7 @@
               :key="trackIndex"
               class="item-track"
             >
-              <span
-                class="track-title"
-                v-text="actionMap[trackItem].name"
-              />
+              <span class="track-title" v-text="actionMap[trackItem].name" />
 
               <el-select
                 v-model="actionMap[trackItem].clip"
@@ -201,16 +159,9 @@
                 @click="pickup(trackItem)"
               >
                 拾取属性
-                <vis-icon
-                  code="#iconxiguan_huaban1"
-                  color="white"
-                />
+                <vis-icon code="#iconxiguan_huaban1" color="white" />
               </span>
-              <span
-                v-else
-                class="track-title"
-                v-text="trackItem.name"
-              />
+              <span v-else class="track-title" v-text="trackItem.name" />
               <el-select
                 v-model="trackItem.script.name"
                 placeholder="选择脚本"
@@ -301,7 +252,7 @@ export default {
       const list = [].concat(this.$store.getters.objectMapList);
       list.push(
         this.$store.getters["material/get"],
-        this.$store.getters["texture/get"]
+        this.$store.getters["texture/get"],
       );
 
       return list.reduce((li, item) => {
@@ -329,6 +280,7 @@ export default {
       item.open = !item.open;
     },
     togglePlay() {
+      this.$tool.devTips();
       this.$store.commit("animation/play", !this.play);
     },
     scroll($event) {
@@ -352,7 +304,7 @@ export default {
             attribute: item.attribute,
             script: AniScriptGeneratorManager.generateConfig(scirpt),
           },
-          { strict: false }
+          { strict: false },
         );
         engine.applyConfig(config);
 
@@ -399,6 +351,10 @@ export default {
 
     pickup(item) {
       this.$store.commit("animationTrack/pickup", item);
+    },
+
+    devTips() {
+      this.$tool.devTips();
     },
   },
 };

@@ -124,22 +124,13 @@
         "
       />
       <top-navigation-function-elem tooltip="平移">
-        <el-input
-          v-model="transformControls.translationSnap"
-          size="mini"
-        />
+        <el-input v-model="transformControls.translationSnap" size="mini" />
       </top-navigation-function-elem>
       <top-navigation-function-elem tooltip="旋转">
-        <el-input
-          v-model="rotationSnap"
-          size="mini"
-        />
+        <el-input v-model="rotationSnap" size="mini" />
       </top-navigation-function-elem>
       <top-navigation-function-elem tooltip="缩放">
-        <el-input
-          v-model="transformControls.scaleSnap"
-          size="mini"
-        />
+        <el-input v-model="transformControls.scaleSnap" size="mini" />
       </top-navigation-function-elem>
     </div>
   </div>

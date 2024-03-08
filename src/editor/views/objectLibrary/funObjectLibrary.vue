@@ -46,20 +46,38 @@ export default {
             },
           ],
           click(item) {
-            const config = generateConfig(item.camera, {
-              vid: createSymbol(),
-            });
+            const config = generateConfig(
+              item.camera,
+              {
+                vid: createSymbol(),
+              },
+              {
+                observer: false,
+              },
+            );
 
             config.icon = item.icon;
             config.name = `${item.label}${config.vid.slice(-2)}`;
 
+            const helperConfig = generateConfig(
+              CONFIGTYPE.OBJECTHELPER,
+              {
+                target: config.vid,
+                shape: true,
+              },
+              {
+                observer: false,
+              },
+            );
+
             VIS.history.apply(
               new AddCameraAction({
                 config,
+                helper: helperConfig,
                 store: this.$store,
                 engine: VIS.engine,
               }),
-              true
+              true,
             );
           },
         },
@@ -100,7 +118,7 @@ export default {
                 attribute: ".material.uniforms.time.value",
                 script: AniScriptGeneratorManager.generateConfig("linearTime"),
               },
-              { strict: false }
+              { strict: false },
             );
 
             engine.applyConfig(config);
@@ -124,7 +142,7 @@ export default {
             this.$store.commit("particle/add", particle);
 
             this.$store.getters["scene/currentScene"].children.push(
-              particle.vid
+              particle.vid,
             );
 
             const config = generateConfig(
@@ -134,7 +152,7 @@ export default {
                 attribute: ".material.uniforms.time.value",
                 script: AniScriptGeneratorManager.generateConfig("linearTime"),
               },
-              { strict: false }
+              { strict: false },
             );
 
             engine.applyConfig(config);

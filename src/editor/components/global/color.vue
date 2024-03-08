@@ -7,10 +7,7 @@
   >
     <template #controller>
       <div class="color-controller">
-        <el-input
-          v-model="inputValue"
-          size="mini"
-        />
+        <el-input v-model="inputValue" size="mini" />
         <el-color-picker
           v-model="inputValue"
           size="mini"
@@ -90,6 +87,9 @@ export default {
       }
     },
     clickWatch(value) {
+      if (!this.$store.getters["animationTrack/currentPickup"]) {
+        return this.$tool.devTips();
+      }
       const animation = this.animation;
       if (!value) {
         this.$store.commit("animationTrack/remove", {

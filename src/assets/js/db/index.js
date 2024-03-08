@@ -17,4 +17,5 @@ db.version(1).stores({
   canvas: "++id, classifyId, name, canvas, pkg, preview, size, delete",
   shaderClassify: "++id, name, parentId, level, delete",
   shader: "++id, classifyId, name, shader, pkg, preview, size, delete",
+  history: "++id, appId, date, name, app, editor, preview, mode, delete",
 });

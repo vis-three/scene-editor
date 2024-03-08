@@ -7,9 +7,17 @@
     >
       快照
     </el-button>
-    <el-button size="mini" type="success" @click="save">保存</el-button>
+    <el-button
+      :loading="autoSave.saving"
+      :disable="autoSave.saving"
+      size="mini"
+      type="success"
+      @click="save"
+    >
+      {{ autoSave.saving ? "自动保存" : "保存" }}
+    </el-button>
     <el-button size="mini" type="info" @click="display">展示</el-button>
-    <!-- <el-button size="mini" type="info" @click="download">导出</el-button> -->
+    <el-button size="mini" type="info" @click="download">导出</el-button>
     <el-dialog
       title="快照设置"
       :visible.sync="screenshotDialogVisible"
@@ -50,7 +58,7 @@
 <script>
 import { engine } from "@/editor/assets/js/vis";
 import appApi from "@/assets/js/api/app.js";
-import JSZip from "jszip";
+import historyApi from "@/assets/js/api/history.js";
 import { JSONHandler } from "@vis-three/middleware";
 
 export default {
@@ -67,6 +75,13 @@ export default {
       exportSetting: {
         name: "vis-scene",
       },
+
+      autoSave: {
+        saving: false,
+        time: 1000 * 180,
+      },
+
+      timer: "",
     };
   },
 
@@ -89,6 +104,14 @@ export default {
         this.save();
       },
     });
+
+    this.timer = window.setInterval(() => {
+      this.autoSaveHanlder();
+    }, this.autoSave.time);
+  },
+
+  destroyed() {
+    clearInterval(this.timer);
   },
 
   methods: {
@@ -127,7 +150,7 @@ export default {
         engine.exportConfig(),
       );
 
-      appApi
+      await appApi
         .saveApp({
           id: this.id,
           name: this.name,
@@ -135,13 +158,71 @@ export default {
           editor,
           preview,
         })
-        .then((res) => {
-          console.log(res);
-          this.$message.success("保存成功！");
-        })
-        .finally(() => {
-          loading.close();
+        .catch((err) => {
+          this.$message.error("接口有误：appApi/saveApp");
+          console.error(err);
         });
+
+      await historyApi
+        .creatHistory({
+          appId: this.id,
+          date: new Date().getTime(),
+          name: this.name,
+          app,
+          editor,
+          preview,
+          mode: "manual",
+        })
+        .catch((err) => {
+          this.$message.error("接口有误：historyApi/creatHistory");
+          console.error(err);
+        });
+
+      this.$message.success("保存成功！");
+      loading.close();
+    },
+
+    async autoSaveHanlder() {
+      this.autoSave.saving = true;
+      const editor = await this.$store.dispatch("exportConfig");
+      let app = await this.$store.dispatch(
+        "urlTransform",
+        engine.exportConfig(),
+      );
+
+      await appApi
+        .saveApp({
+          id: this.id,
+          name: this.name,
+          app,
+          editor,
+        })
+        .catch((err) => {
+          this.$message.error("appApi/saveApp");
+          console.error(err);
+        });
+
+      await historyApi
+        .creatHistory({
+          appId: this.id,
+          date: new Date().getTime(),
+          name: this.name,
+          app,
+          editor,
+          preview: "",
+          mode: "auto",
+        })
+        .catch((err) => {
+          this.$message.error("接口有误：historyApi/creatHistory");
+          console.error(err);
+        });
+
+      this.autoSave.saving = false;
+
+      this.$notify.success({
+        title: "自动保存成功。",
+        message: "时间：" + new Date().toLocaleString(),
+      });
     },
 
     display() {
@@ -170,8 +251,28 @@ export default {
         engine.exportConfig(),
       );
 
-      zip.file("editor.json", JSON.stringify(editor, JSONHandler.stringify));
+      zip.file("editor.json", JSON.stringify(editor));
       zip.file("app.json", JSON.stringify(app, JSONHandler.stringify));
+      zip.file(
+        "reference.json",
+        JSON.stringify({
+          id: this.$store.getters.id,
+          name: this.$store.getters.name,
+          type: "app",
+          date: new Date().toLocaleString(),
+          encode: window.VIS.encode,
+          version: window.VIS.version,
+          webgl: {
+            memory: engine.webGLRenderer.info.memory,
+            render: engine.webGLRenderer.info.render,
+          },
+          system: {
+            url: window.location.href,
+            user: window.navigator.userAgent,
+            languages: window.navigator.languages,
+          },
+        }),
+      );
       zip.file("preview.png", this.$tool.dataURLToBlob(preview));
 
       const blob = await zip.generateAsync({ type: "blob" });

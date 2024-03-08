@@ -140,7 +140,9 @@ export default {
       }
     },
     upload() {
-      this.$refs.uploadInput.click();
+      this.$tool.safeTips().then(() => {
+        this.$refs.uploadInput.click();
+      });
     },
     async fileHandler(event) {
       const file = event.target.files[0];

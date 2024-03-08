@@ -10,6 +10,23 @@ export const CanvasManagerPlugin = function () {
     deps: [...PLUGINS, WEBGL_RENDERER_PLUGIN],
     install(engine) {
       const canvasManager = new CanvasManager();
+
+      CanvasManager.textureUpdate = function (texture) {
+        let count = 0;
+
+        const updateFun = () => {
+          texture.flipY = !texture.flipY;
+          texture.needsUpdate = true;
+
+          count += 1;
+          if (count === 2) {
+            engine.renderManager.removeEventListener("render", updateFun);
+          }
+        };
+
+        engine.renderManager.addEventListener("render", updateFun);
+      };
+
       engine.canvasManager = canvasManager;
       engine.generateCanvas = async function (url, pkg, config) {
         const msg = await this.canvasManager.generate(url, pkg, config);
@@ -32,8 +49,8 @@ export const CanvasManagerPlugin = function () {
         if (config.canvas) {
           canvas = await Promise.all(
             config.canvas.map((con) =>
-              this.generateCanvas(con.$url, con.$pkg, con)
-            )
+              this.generateCanvas(con.$url, con.$pkg, con),
+            ),
           );
         }
 

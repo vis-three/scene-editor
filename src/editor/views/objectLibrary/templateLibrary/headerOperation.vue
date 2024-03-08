@@ -30,10 +30,7 @@
           code="#iconsanjiaojiantouyou"
           :style="{ transform: 'scale(0.6)' }"
         />
-        <span
-          class="address-title"
-          v-text="item.name"
-        />
+        <span class="address-title" v-text="item.name" />
       </span>
     </div>
     <div class="operate-operation">
@@ -51,11 +48,7 @@
           placeholder="输入分类名称"
         />
         <div class="popover-operation">
-          <el-button
-            size="mini"
-            type="text"
-            @click="addClassify"
-          >
+          <el-button size="mini" type="text" @click="addClassify">
             确定
           </el-button>
         </div>
@@ -80,11 +73,7 @@
           placeholder="输入模板名称"
         />
         <div class="popover-operation">
-          <el-button
-            size="mini"
-            type="text"
-            @click="addTemplate"
-          >
+          <el-button size="mini" type="text" @click="addTemplate">
             确定
           </el-button>
         </div>
@@ -173,7 +162,9 @@ export default {
       }
     },
     upload() {
-      this.$refs.uploadInput.click();
+      this.$tool.safeTips().then(() => {
+        this.$refs.uploadInput.click();
+      });
     },
     fileHandler(event) {
       const file = event.target.files[0];
@@ -218,7 +209,7 @@ export default {
       const loading = this.$message.loading("正在保存为模板...");
       let config = await this.$store.dispatch(
         "urlTransform",
-        engine.exportConfig()
+        engine.exportConfig(),
       );
       const editor = await this.$store.dispatch("exportConfig");
       // config.component = this.$store.getters["component/get"];

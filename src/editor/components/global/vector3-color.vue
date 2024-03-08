@@ -7,10 +7,7 @@
   >
     <template #controller>
       <div class="color-controller">
-        <el-input
-          v-model="inputValue"
-          size="mini"
-        />
+        <el-input v-model="inputValue" size="mini" />
         <el-color-picker
           v-model="inputValue"
           size="mini"
@@ -69,7 +66,7 @@ export default {
     inputValue: {
       get() {
         return `rgb(${Math.round(this.value.r * 255)}, ${Math.round(
-          this.value.g * 255
+          this.value.g * 255,
         )},${Math.round(this.value.b * 255)})`;
       },
       set(value) {
@@ -100,6 +97,10 @@ export default {
       }
     },
     clickWatch(value) {
+      if (!this.$store.getters["animationTrack/currentPickup"]) {
+        return this.$tool.devTips();
+      }
+
       const animation = this.animation;
       if (!value) {
         this.$store.commit("animationTrack/remove", {

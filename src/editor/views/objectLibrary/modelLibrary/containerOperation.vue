@@ -1,21 +1,12 @@
 vabse
 <template>
   <div class="containerOperation-container">
-    <div
-      v-show="loading"
-      class="loading-mask"
-    >
-      <vis-icon
-        class="ani"
-        code="#iconxuanzhuan"
-      />
+    <div v-show="loading" class="loading-mask">
+      <vis-icon class="ani" code="#iconxuanzhuan" />
       <span>正在加载...</span>
     </div>
 
-    <div
-      v-if="!loading && !floderChildren.length"
-      class="empty-tips"
-    >
+    <div v-if="!loading && !floderChildren.length" class="empty-tips">
       <span>这里暂时是空的哦</span>
     </div>
 
@@ -29,19 +20,13 @@ vabse
       @click="chouseFile(item)"
     >
       <template v-if="item.dir">
-        <vis-icon
-          :size="iconSize"
-          code="#iconwenjianjia"
-        />
+        <vis-icon :size="iconSize" code="#iconwenjianjia" />
       </template>
       <template v-else>
-        <img :src="item.preview">
+        <img :src="item.preview" />
       </template>
 
-      <span
-        class="item-title"
-        v-text="item.name"
-      />
+      <span class="item-title" v-text="item.name" />
       <vis-icon
         v-tooltip.bottom="`删除`"
         class="item-delete"
@@ -151,7 +136,7 @@ export default {
         });
 
         const reactive = Template.handler(config, (config) =>
-          generateConfig(config.type, config)
+          generateConfig(config.type, config),
         );
 
         engine.loadConfigAsync(Vue.observable(reactive)).then((res) => {
@@ -159,7 +144,7 @@ export default {
             this.$store.commit("notifyAll");
             this.$nextTick(() => {
               this.currentScene.children.push(
-                detail[this.configRootCache[url]]
+                detail[this.configRootCache[url]],
               );
             });
           }
@@ -168,6 +153,8 @@ export default {
     },
     // 删除文件
     remove(item) {
+      return this.$tool.devTips();
+
       if (item.dir) {
         this.$confirm(`是否删除此分类: ${item.name}?`, "提示", {
           confirmButtonText: "确定",
@@ -198,7 +185,7 @@ export default {
             confirmButtonText: "确定",
             cancelButtonText: "取消",
             type: "warning",
-          }
+          },
         ).then(() => {
           this.axios
             .post("/model/removeModel", {
@@ -262,6 +249,11 @@ export default {
       height: unset !important;
       color: @error-color;
       opacity: 0;
+    }
+
+    img {
+      width: 100%;
+      object-fit: fill;
     }
   }
   .active {

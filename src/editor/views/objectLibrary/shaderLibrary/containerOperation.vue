@@ -100,6 +100,7 @@ export default {
     },
     // 删除文件
     remove(item) {
+      return this.$tool.devTips();
       if (item.dir) {
         this.$confirm(`是否删除此分类: ${item.name}?`, "提示", {
           confirmButtonText: "确定",

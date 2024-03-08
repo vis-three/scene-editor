@@ -10,7 +10,7 @@ export default {
         arr.map((item) => {
           item.dir = true;
           return item;
-        })
+        }),
       );
 
     if (classifyId) {
@@ -19,7 +19,7 @@ export default {
           .where("classifyId")
           .equals(classifyId)
           .and((item) => !item.delete)
-          .toArray())
+          .toArray()),
       );
     }
     return list;
@@ -52,13 +52,13 @@ export default {
     return params;
   },
 
-  async creatApp({ classifyId, name }) {
+  async creatApp({ classifyId, name, app = {}, editor = {}, preview = {} }) {
     const params = {
       classifyId,
       name,
-      app: {},
-      editor: {},
-      preview: null,
+      app,
+      editor,
+      preview,
       delete: false,
     };
 
@@ -70,10 +70,11 @@ export default {
   },
 
   async saveApp({ id, name, app, editor, preview }) {
-    return await db.app
-      .where("id")
-      .equals(id)
-      .modify({ name, app, editor, preview });
+    const params = { name, app, editor };
+
+    preview && (params.preview = preview);
+
+    return await db.app.where("id").equals(id).modify(params);
   },
 
   async getApp(id) {

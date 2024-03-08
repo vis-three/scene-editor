@@ -179,6 +179,10 @@ export default {
       }
     },
     clickWatch(value) {
+      if (!this.$store.getters["animationTrack/currentPickup"]) {
+        return this.$tool.devTips();
+      }
+
       const animation = this.animation;
       if (!value) {
         this.$store.commit("animationTrack/remove", {

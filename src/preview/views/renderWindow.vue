@@ -239,6 +239,7 @@ export default {
     await engine.loadConfigAsync(config);
 
     engine.setSceneBySymbol(config.scene[0].vid);
+    config.camera[0] && engine.setCameraBySymbol(config.camera[0].vid);
 
     engine.play();
 
