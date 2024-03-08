@@ -2,7 +2,11 @@
 
 [vis-three 框架](https://github.com/Shiotsukikaedesari/vis-three)衍生出的纯静态自定义 3D 场景编辑器。
 
-在线地址：[https://vis-three.github.io/scene-editor/](https://vis-three.github.io/scene-editor/)
+在线地址:
+
+- github: [https://vis-three.github.io/scene-editor/](https://vis-three.github.io/scene-editor/)
+
+- gitee: [https://vis-three.gitee.io/scene-editor/](https://vis-three.gitee.io/scene-editor/)
 
 <p>
   <img alt="NPM" src="https://img.shields.io/badge/license-AGPL3.0-blue">
